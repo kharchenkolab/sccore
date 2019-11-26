@@ -1,0 +1,13 @@
+Package: sccore
+Title: Core utilities for single-cell RNA-seq
+Version: 0.1
+Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = c("aut", "cre")),
+             person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"))
+Description: Core utilities for single-cell RNA-seq
+License: GPL-3.0
+Encoding: UTF-8
+LazyData: true
+Imports:
+    ggplot2,
+    magrittr
+RoxygenNote: 6.1.1
