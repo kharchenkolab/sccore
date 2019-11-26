@@ -17,6 +17,7 @@ RoxygenNote: 6.1.1
 Depends: 
     Matrix
 Suggests: 
-    ggrastr (>= 0.1.7)
+    ggrastr (>= 0.1.7),
+    pROC
 Remotes: 
     VPetukhov/ggrastr
