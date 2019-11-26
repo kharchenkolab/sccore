@@ -9,5 +9,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     ggplot2,
-    magrittr
+    magrittr,
+    igraph
 RoxygenNote: 6.1.1
+Depends: 
+    Matrix
