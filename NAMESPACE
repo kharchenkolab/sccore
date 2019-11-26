@@ -2,6 +2,7 @@
 
 export(appendSpecificityMetricsToDE)
 export(embeddingPlot)
+export(fac2col)
 export(getClusterGraph)
 import(igraph)
 importFrom(magrittr,"%$%")
