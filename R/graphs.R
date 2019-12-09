@@ -26,12 +26,12 @@ collapseGraphPaga <- function(graph, groups, linearize=T, winsorize=F) {
     graph %<>% igraph::remove.vertex.attribute("name")
   }
 
-  groups %<>% .[!is.na(.)]
+  groups %<>% .[!is.na(.)] %>% as.factor() %>% droplevels()
   if (length(groups) != length(igraph::V(graph)))
     stop("groups must be provided for all graph vertices")
 
   cluster.names <- levels(groups)
-  groups %<>% as.factor() %>% as.integer()
+  groups %<>% as.integer()
 
   vc <- igraph::make_clusters(graph, membership = groups, algorithm = 'conos',
                               merges = NULL, modularity = F)
