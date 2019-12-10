@@ -1,6 +1,11 @@
 #' @export
 appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts, low.expression.threshold=0, append.auc=FALSE) {
+  if (length(de.df) == 0 || nrow(de.df) == 0)
+    return(de.df)
+
   cluster.mask <- setNames(clusters == cluster.id, names(clusters))
+  if (!any(cluster.mask))
+    stop("Cluster ", cluster.id, " not presented in the data")
 
   counts.bin <- (p2.counts[names(cluster.mask), de.df$Gene, drop=F] > low.expression.threshold)
   counts.bin.sums <- Matrix::colSums(counts.bin)
