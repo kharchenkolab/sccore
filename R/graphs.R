@@ -74,7 +74,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
     simplify(edge.attr.comb=list(weight="sum","ignore"))
 
   if(normalize) {
-    ex <- outer(V(gcon)$num,V(gcon)$num)/(sum(V(gcon)$num)*(sum(V(gcon)$num)-1)/2)*sum(E(g)$weight)
+    ex <- outer(V(gcon)$num,V(gcon)$num)/(sum(V(gcon)$num)*(sum(V(gcon)$num)-1)/2)*sum(E(graph)$weight)
     gcon2 <- graph_from_adjacency_matrix(as(as_adjacency_matrix(gcon,attr = "weight",sparse = F)/ex,'dgCMatrix'),mode = "undirected",weighted=TRUE)
     V(gcon2)$num <- V(gcon)$num
     gcon <- gcon2;
