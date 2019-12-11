@@ -8,7 +8,7 @@ appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts,
 
   if (append.auc) {
     if (requireNamespace("pROC", quietly = TRUE)) {
-      de.df$AUC <- apply(counts.bin, 2, function(col) pROC::auc(as.integer(cluster.mask), as.integer(col)))
+      de.df$AUC <- apply(counts.bin, 2, function(col) pROC::auc(as.integer(cluster.mask), as.integer(col),quiet=TRUE))
     } else {
       warning("You have to install pROC package to use append.auc")
     }
