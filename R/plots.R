@@ -103,7 +103,7 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
 
     if (length(color.range) == 1) {
       if (color.range == "all") {
-        color.range <- range(colors)
+        color.range <- range(na.omit(colors))
       } else if (color.range == "data") {
         color.range <- NULL
       } else {
