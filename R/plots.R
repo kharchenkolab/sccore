@@ -27,6 +27,26 @@ fac2col <- function(x,s=1,v=1,shuffle=FALSE,min.group.size=1,return.details=F,un
   }
 }
 
+# encodes logic of how to handle named-vector and functional palettes
+fac2palette <- function(groups,palette,unclassified.cell.color='gray50') {
+  groups <- as.factor(groups);
+  if(class(palette)=='function') {
+    return(palette(length(levels(groups))))
+  }
+  if(is.list(palette)) { palette <- setNames(unlist(palette),names(palette)) }
+  if(is.vector(palette)) {
+    if(any(levels(groups) %in% names(palette))) {
+      cols <- setNames(palette[match(levels(groups),names(palette))],levels(groups));
+      cols[is.na(cols)] <- unclassified.cell.color;
+      return(cols)
+    } else {
+      # just take first n?
+      if(length(palette)<length(levels(groups))) stop("provided palette does not have enough colors to show ",length(levels(groups))," levels")
+      return(setNames(palette[1:length(levels(groups))],levels(groups)))
+    }
+  }
+}
+
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
   groups <- as.factor(groups)
 
@@ -67,7 +87,9 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
     palette <- rainbow
   }
 
-  color.vals <- palette(length(levels(groups)))
+  color.vals <- fac2palette(groups,palette);
+
+  
   if (shuffle.colors) {
     color.vals <- sample(color.vals)
   }
@@ -106,6 +128,16 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
         color.range <- range(na.omit(colors))
       } else if (color.range == "data") {
         color.range <- NULL
+      } else if (color.range == "symmetric") {
+        if(is.numeric(colors)) {
+          if(all(sign(colors)>=0)) {
+            color.range <- range(na.omit(colors))    
+          } else {
+            color.range <- c(-1,1)*max(abs(colors))
+          }
+        } else {
+          color.range <- NULL
+        }
       } else {
         stop("Unknown color.range: ", color.range)
       }
@@ -195,7 +227,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @return ggplot2 object
 #' @export
 embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
-                          show.legend=FALSE, alpha=0.4, size=0.8, title=NULL, plot.theme=NULL, palette=NULL, color.range="all",
+                          show.legend=FALSE, alpha=0.4, size=0.8, title=NULL, plot.theme=NULL, palette=NULL, color.range="symmetric",
                           font.size=c(3, 7), show.ticks=FALSE, show.labels=FALSE, legend.position=NULL, legend.title=NULL,
                           gradient.range.quantile=1, raster=FALSE, raster.width=NULL, raster.height=NULL, raster.dpi=300,
                           shuffle.colors=FALSE, keep.limits=!is.null(subgroups),
