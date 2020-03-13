@@ -295,6 +295,9 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param cell.groups Named factor containing cell groups (clusters) and cell names
 #' @param marker.colour Character or numeric vector
 #' @param cluster.colour Character or numeric vector
+#' @param xlab X axis title
+#' @param ylab Y axis title
+#' @param ... Additional input to sccore:::plapply, see man for description.
 #' @return ggplot2 object
 #' @export
 dotPlot <- function (markers,
@@ -314,6 +317,8 @@ dotPlot <- function (markers,
                      scale.by = "radius",
                      scale.min = NA,
                      scale.max = NA,
+                     xlab = "Marker",
+                     ylab = "Cluster",
                      ...) {
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
   if(!is.character(markers)) stop("'markers' must be a character vector.")
@@ -361,7 +366,7 @@ dotPlot <- function (markers,
   data.plot$avg.exp.scaled <- data.plot$gene %>% unique %>% sapply(function(g) {
     data.plot %>% .[.$gene == g, 'avg.exp'] %>%
       scale %>%
-      seurat::MinMax(min = col.min, max = col.max)
+      setMinMax(min = col.min, max = col.max)
   }) %>% unlist %>% as.numeric
 
   data.plot$pct.exp[data.plot$pct.exp < dot.min] <- NA
@@ -377,7 +382,7 @@ dotPlot <- function (markers,
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank()) +
     guides(size = guide_legend(title = 'Percent expressed'), color = guide_colorbar(title = 'Average expression')) +
-    labs(x = 'Marker', y = 'Cluster') +
+    labs(x = xlab, y = ylab) +
     scale_color_gradient(low = cols[1], high = cols[2])
   return(plot)
 }
