@@ -15,3 +15,17 @@ plapply <- function(..., n.cores=1, progress=F, mc.preschedule=TRUE, mc.allow.re
 
   return(parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive))
 }
+
+#' Set range for values in object
+#'
+#' @description Changes values outside of range to min or max. Adapted from Seurat::MinMax
+#' @param obj Object to manipulate
+#' @param min Minimum value
+#' @param max Maximum value
+#' @return An object with the same dimensions as input but with altered range in values
+#' @export
+setMinMax <- function(obj, min, max) {
+  obj[obj<min] <- min
+  obj[obj>max] <- max
+  return(obj)
+}

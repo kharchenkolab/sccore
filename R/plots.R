@@ -361,7 +361,7 @@ dotPlot <- function (markers,
   data.plot$avg.exp.scaled <- data.plot$gene %>% unique %>% sapply(function(g) {
     data.plot %>% .[.$gene == g, 'avg.exp'] %>%
       scale %>%
-      seurat::MinMax(min = col.min, max = col.max)
+      setMinMax(min = col.min, max = col.max)
   }) %>% unlist %>% as.numeric
 
   data.plot$pct.exp[data.plot$pct.exp < dot.min] <- NA
