@@ -330,7 +330,7 @@ dotPlot <- function (markers,
   }
 
   marker.table <- table(markers)
-  if(sum(marker.table>1)!=0) cat("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.")
+  if(sum(marker.table>1)!=0) cat("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.\n")
 
   if(verbose) cat("Extracting gene expression...\n")
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
