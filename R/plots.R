@@ -133,7 +133,7 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
         color.range <- NULL
       } else if (color.range == "symmetric") {
         if(is.numeric(colors)) {
-          if(all(sign(colors)>=0)) {
+          if(all(sign(na.omit(colors))>=0)) {
             color.range <- range(na.omit(colors))
           } else {
             color.range <- c(-1,1)*max(abs(colors))
