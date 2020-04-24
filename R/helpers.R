@@ -1,10 +1,11 @@
 #' @importFrom magrittr %>% %<>% %$%
 NULL
 
-#' Parallel Lapply
-#' @description parallel, optionally verbose lapply
-#' @param n.cores number of cores to use
-#' @param progress show progress bar
+#' Parallel lapply
+#' @description Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
+#' @param n.cores Sumber of cores to use (default=1)
+#' @param progress Show progress bar (default=F)
+#' @export
 plapply <- function(..., n.cores=1, progress=F, mc.preschedule=TRUE, mc.allow.recursive=TRUE) {
   if (progress && requireNamespace("pbapply", quietly=TRUE))
     return(pbapply::pblapply(..., cl=n.cores))
@@ -13,4 +14,18 @@ plapply <- function(..., n.cores=1, progress=F, mc.preschedule=TRUE, mc.allow.re
     return(lapply(...))
 
   return(parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive))
+}
+
+#' Set range for values in object
+#'
+#' @description Changes values outside of range to min or max. Adapted from Seurat::MinMax
+#' @param obj Object to manipulate
+#' @param min Minimum value
+#' @param max Maximum value
+#' @return An object with the same dimensions as input but with altered range in values
+#' @export
+setMinMax <- function(obj, min, max) {
+  obj[obj<min] <- min
+  obj[obj>max] <- max
+  return(obj)
 }

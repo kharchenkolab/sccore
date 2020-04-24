@@ -1,3 +1,6 @@
+#' @import ggplot2
+NULL
+
 #' Factor to Color
 #' @description a utility function to translate factor into colors
 #' @export
@@ -24,6 +27,26 @@ fac2col <- function(x,s=1,v=1,shuffle=FALSE,min.group.size=1,return.details=F,un
     return(list(colors=y,palette=col))
   } else {
     return(y);
+  }
+}
+
+# encodes logic of how to handle named-vector and functional palettes
+fac2palette <- function(groups,palette,unclassified.cell.color='gray50') {
+  groups <- as.factor(groups);
+  if(class(palette)=='function') {
+    return(palette(length(levels(groups))))
+  }
+  if(is.list(palette)) { palette <- setNames(unlist(palette),names(palette)) }
+  if(is.vector(palette)) {
+    if(any(levels(groups) %in% names(palette))) {
+      cols <- setNames(palette[match(levels(groups),names(palette))],levels(groups));
+      cols[is.na(cols)] <- unclassified.cell.color;
+      return(cols)
+    } else {
+      # just take first n?
+      if(length(palette)<length(levels(groups))) stop("provided palette does not have enough colors to show ",length(levels(groups))," levels")
+      return(setNames(palette[1:length(levels(groups))],levels(groups)))
+    }
   }
 }
 
@@ -67,7 +90,9 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
     palette <- rainbow
   }
 
-  color.vals <- palette(length(levels(groups)))
+  color.vals <- fac2palette(groups,palette);
+
+
   if (shuffle.colors) {
     color.vals <- sample(color.vals)
   }
@@ -103,9 +128,19 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
 
     if (length(color.range) == 1) {
       if (color.range == "all") {
-        color.range <- range(colors)
+        color.range <- range(na.omit(colors))
       } else if (color.range == "data") {
         color.range <- NULL
+      } else if (color.range == "symmetric") {
+        if(is.numeric(colors)) {
+          if(all(sign(na.omit(colors))>=0)) {
+            color.range <- range(na.omit(colors))
+          } else {
+            color.range <- c(-1,1)*max(abs(colors))
+          }
+        } else {
+          color.range <- NULL
+        }
       } else {
         stop("Unknown color.range: ", color.range)
       }
@@ -195,7 +230,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @return ggplot2 object
 #' @export
 embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
-                          show.legend=FALSE, alpha=0.4, size=0.8, title=NULL, plot.theme=NULL, palette=NULL, color.range="all",
+                          show.legend=FALSE, alpha=0.4, size=0.8, title=NULL, plot.theme=NULL, palette=NULL, color.range="symmetric",
                           font.size=c(3, 7), show.ticks=FALSE, show.labels=FALSE, legend.position=NULL, legend.title=NULL,
                           gradient.range.quantile=1, raster=FALSE, raster.width=NULL, raster.height=NULL, raster.dpi=300,
                           shuffle.colors=FALSE, keep.limits=!is.null(subgroups),
@@ -250,4 +285,107 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
   gg <- styleEmbeddingPlot(gg, plot.theme=plot.theme, title=title, legend.position=legend.position,
                            show.legend=show.legend, show.ticks=show.ticks, show.labels=show.labels)
   return(gg)
+}
+
+#' Dot plot for group markers
+#'
+#' @description Dot plot adapted from Seurat:::DotPlot, see man for description.
+#' @param markers Vector of gene markers to plot
+#' @param count.matrix Merged count matrix, e.g., through con.obj$getJointCountMatrix(raw=F)
+#' @param cell.groups Named factor containing cell groups (clusters) and cell names
+#' @param marker.colour Character or numeric vector
+#' @param cluster.colour Character or numeric vector
+#' @param xlab X axis title
+#' @param ylab Y axis title
+#' @param ... Additional input to sccore:::plapply, see man for description.
+#' @return ggplot2 object
+#' @export
+dotPlot <- function (markers,
+                     count.matrix,
+                     cell.groups,
+                     verbose=T,
+                     n.cores=1,
+                     marker.colour="black",
+                     cluster.colour="black",
+                     text.angle = 45,
+                     gene.order = NULL,
+                     cols = c("blue", "red"),
+                     col.min = -2.5,
+                     col.max = 2.5,
+                     dot.min = 0,
+                     dot.scale = 6,
+                     scale.by = "radius",
+                     scale.min = NA,
+                     scale.max = NA,
+                     xlab = "Marker",
+                     ylab = "Cluster",
+                     ...) {
+  scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
+  if(!is.character(markers)) stop("'markers' must be a character vector.")
+
+  missing.markers <- setdiff(markers, colnames(count.matrix))
+  if(length(missing.markers)>0) {
+    cat("Not all markers are in 'count.matrix'. The following are missing:\n",paste(missing.markers, collapse=" "),"\n")
+    stop("Please update 'markers'.")
+  }
+
+  marker.table <- table(markers)
+  if(sum(marker.table>1)!=0) cat("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.\n")
+
+  if(verbose) cat("Extracting gene expression...\n")
+  # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
+  p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
+  if (is.logical(gene.order) && gene.order) {
+    gene.order <- unique(markers)
+  } else {
+    gene.order <- NULL
+  }
+
+  if (!is.null(gene.order)) {
+    p.df %<>% dplyr::mutate(Gene = factor(as.character(Gene),
+                                          levels = gene.order))
+  }
+
+  # Adapted from Seurat:::DotPlot
+  if(verbose) cat("Calculating expression distributions...\n")
+  data.plot <- levels(cell.groups) %>% plapply(function(t) {
+    markers %>% lapply(function(g) {
+      df <- p.df %>% filter(Type==t, Gene==g)
+      pct.exp <- sum(df$Expr>0)/dim(df)[1]*100
+      avg.exp <- mean(df$Expr[df$Expr>0])
+      res <- data.frame(gene=g,
+                        pct.exp=pct.exp,
+                        avg.exp=avg.exp)
+      return(res)
+    }) %>% Reduce(rbind, .)
+  }, n.cores=n.cores, progress=verbose, ...) %>%
+    setNames(levels(cell.groups)) %>%
+    dplyr::bind_rows(., .id="cluster")
+
+  data.plot$cluster %<>% factor(., levels=rev(unique(.)))
+
+  data.plot %<>% dplyr::arrange(gene)
+
+  data.plot$avg.exp.scaled <- data.plot$gene %>% unique %>% sapply(function(g) {
+    data.plot %>% .[.$gene == g, 'avg.exp'] %>%
+      scale %>%
+      setMinMax(min = col.min, max = col.max)
+  }) %>% unlist %>% as.numeric
+
+  data.plot$pct.exp[data.plot$pct.exp < dot.min] <- NA
+
+  cluster.colour %<>% rev
+
+  plot <- ggplot(data.plot, aes_string("gene", "cluster")) +
+    geom_point(aes_string(size = "pct.exp", color = "avg.exp.scaled")) +
+    scale.func(range = c(0, dot.scale), limits = c(scale.min, scale.max)) +
+    theme(axis.text.x = element_text(angle=text.angle, hjust = 1, colour=marker.colour),
+          axis.text.y = element_text(colour=cluster.colour),
+          panel.background = element_rect(fill = "white", colour = "black", size = 1, linetype = "solid"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    guides(size = guide_legend(title = 'Percent expressed'), color = guide_colorbar(title = 'Average expression')) +
+    labs(x = xlab, y = ylab) +
+    scale_color_gradient(low = cols[1], high = cols[2])
+  return(plot)
 }
