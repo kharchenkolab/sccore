@@ -291,7 +291,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #'
 #' @description Dot plot adapted from Seurat:::DotPlot, see man for description.
 #' @param markers Vector of gene markers to plot
-#' @param count.matrix Merged count matrix, e.g., through con.obj$getJointCountMatrix(raw=F)
+#' @param count.matrix Merged count matrix, e.g., through conos.obj$getJointCountMatrix()
 #' @param cell.groups Named factor containing cell groups (clusters) and cell names
 #' @param marker.colour Character or numeric vector
 #' @param cluster.colour Character or numeric vector
