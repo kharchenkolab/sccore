@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{sn}
 \alias{sn}
-\title{sn setNames wrapper function}
+\title{setNames wrapper function}
 \usage{
 sn(x)
 }

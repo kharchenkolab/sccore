@@ -1,11 +1,13 @@
-#' sn setNames wrapper function
+#' setNames wrapper function
+#'
 #' @description Wrapper function around setNames 
 #' @param x an object for which names attribute will be meaningful 
 #' @return An object with names assigned equal to values
 #' @export
 sn <- function(x) {setNames(x, x)}
 
-#' extendMatrix columns
+#' Include new columns in matrix
+#'
 #' @description Extend matrix
 #' @param mtx Matrix
 #' @param col.names Columns that should be included in matrix
@@ -18,7 +20,8 @@ extendMatrix <- function(mtx, col.names) {
   return(cbind(mtx, ext.mtx)[, col.names])
 }
 
-#' mergeCountMatrices
+#' Merge list of count matrices
+#'
 #' @description Merge count matrices
 #' @param cms List of count matrices
 #' @param transposed Indicate whether cms are transposed, e.g. cells in rows and genes in columns (default=FALSE)

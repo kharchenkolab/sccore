@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{extendMatrix}
 \alias{extendMatrix}
-\title{extendMatrix columns}
+\title{Include new columns in matrix}
 \usage{
 extendMatrix(mtx, col.names)
 }

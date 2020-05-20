@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{mergeCountMatrices}
 \alias{mergeCountMatrices}
-\title{mergeCountMatrices}
+\title{Merge list of count matrices}
 \usage{
 mergeCountMatrices(cms, transposed = FALSE, ...)
 }
