@@ -18,9 +18,9 @@ getClusterGraph(
 \arguments{
 \item{graph}{graph to be collapsed}
 
-\item{groups}{factor on vertives describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
+\item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{method}{either "sum" or "paga"}
+\item{method}{either "sum" or "paga" (default="sum")}
 
 \item{plot}{whether to show collapsed graph plot}
 }

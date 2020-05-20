@@ -2,13 +2,15 @@
 NULL
 
 #' Collapse Graph PAGA
+#' 
 #' @description Collapse graph using PAGA 1.2 algorithm
 #' @param graph graph to be collapsed
-#' @param groups factor on vertives describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
-#' @param linearize should normally be always `TRUE`
-#' @param winsorize winsorize final connectivity statistics value. Original PAGA has it always `TRUE`,
-#'   but in this case there is no way to distinguish level of connectivity for highly connected groups
+#' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
+#' @param linearize should normally be always `TRUE` (default=TRUE)
+#' @param winsorize winsorize final connectivity statistics value. (default=FALSE) Note: Original PAGA has it always `TRUE`,
+#'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
+
   if ((!(is(graph, "Matrix") || is(graph, "matrix")) || ncol(graph) != nrow(graph)) && !igraph::is.igraph(graph)) {
     stop("Unknown graph format. Only adjacency matrix or igraph are supported")
   }
@@ -16,7 +18,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
   if (!igraph::is.igraph(graph)) {
     ones <- graph %>% as('dgTMatrix') %>% as('symmetricMatrix')
     ones@x <- rep(1, length(ones@x))
-    graph <- igraph::graph_from_adjacency_matrix(ones, mode='directed', weighted=T)
+    graph <- igraph::graph_from_adjacency_matrix(ones, mode='directed', weighted=TRUE)
   } else {
     graph %<>% igraph::as.directed()
     igraph::edge.attributes(graph)$weight <- rep(1, igraph::gsize(graph))
@@ -35,8 +37,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
   cluster.names <- levels(groups)
   groups %<>% as.integer()
 
-  vc <- igraph::make_clusters(graph, membership = groups, algorithm = 'conos',
-                              merges = NULL, modularity = FALSE)
+  vc <- igraph::make_clusters(graph, membership = groups, algorithm = 'conos', merges = NULL, modularity = FALSE)
   ns <- igraph::sizes(vc)
   n <- sum(ns)
 
@@ -66,19 +67,21 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
   inter.es@x <- scaled.values
   dimnames(inter.es) <- list(cluster.names, cluster.names)
   return(inter.es)
+
 }
 
 #' Collapse Graph By Sum
 #'
-#' @param normalize whether recalculate edge weight as observed/oexpected
+#' @param normalize boolean whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @inheritParams collapseGraphPaga
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
-  gcon <- contract.vertices(graph, groups,vertex.attr.comb=list('num'='sum',"ignore")) %>%
+
+  gcon <- contract.vertices(graph, groups, vertex.attr.comb=list('num'='sum',"ignore")) %>%
     simplify(edge.attr.comb=list(weight="sum","ignore"))
 
   if(normalize) {
     ex <- outer(V(gcon)$num,V(gcon)$num)/(sum(V(gcon)$num)*(sum(V(gcon)$num)-1)/2)*sum(E(graph)$weight)
-    gcon2 <- graph_from_adjacency_matrix(as(as_adjacency_matrix(gcon,attr = "weight",sparse = F)/ex,'dgCMatrix'),mode = "undirected",weighted=TRUE)
+    gcon2 <- graph_from_adjacency_matrix(as(as_adjacency_matrix(gcon, attr = "weight", sparse = FALSE)/ex,'dgCMatrix'), mode = "undirected", weighted=TRUE)
     V(gcon2)$num <- V(gcon)$num
     gcon <- gcon2;
   }
@@ -98,29 +101,37 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' @description Collapse vertices belonging to each cluster in a graph
 #'
 #' @param plot whether to show collapsed graph plot
-#' @param method either "sum" or "paga"
+#' @param method either "sum" or "paga" (default="sum")
 #' @inheritParams collapseGraphPaga
 #' @return collapsed graph
 #' @export
 getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=50, edge.scale=50, edge.alpha=0.3, ...) {
-  V(graph)$num <- 1;
-  if(is.integer(groups) && is.null(names(groups))) {
+  
+  V(graph)$num <- 1
+
+  if (is.integer(groups) && is.null(names(groups))) {
     nv <- vcount(graph)
-    if(length(groups)!=nv) stop('length of groups should be equal to the number of vertices')
-    if(max(groups)>nv) stop('groups specifies ids that are larger than the number of vertices in the graph')
-    if(any(is.na(groups))) {
+    if (length(groups)!=nv) {
+      stop('Length of groups should be equal to the number of vertices')
+    }
+    if (max(groups)>nv) {
+      stop('Groups specifies ids that are larger than the number of vertices in the graph')
+    }
+    if (any(is.na(groups))) {
       # remove vertices that are not part of the groups
-      vi <- which(!is.na(groups));
-      g <- induced.subgraph(graph,vi);
-      groups <- groups[vi];
+      vi <- which(!is.na(groups))
+      g <- induced.subgraph(graph,vi)
+      groups <- groups[vi]
     } else {
-      g <- graph;
+      g <- graph
     }
   } else {
-    gn <- V(graph)$name;
-    groups <- na.omit(groups[names(groups) %in% gn]);
-    if(length(groups)<2) stop('valid names of groups elements include too few cells')
-    if(length(groups)<length(gn)) {
+    gn <- V(graph)$name
+    groups <- na.omit(groups[names(groups) %in% gn])
+    if (length(groups)<2) {
+      stop('Valid names of groups elements include too few cells')
+    }
+    if (length(groups)<length(gn)) {
       g <- induced.subgraph(graph,names(groups))
     } else {
       g <- graph;
@@ -140,11 +151,13 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
     stop("Unknown method: ", method)
   }
 
-  if(plot) {
+  if (plot) {
     set.seed(1)
     par(mar = rep(0.1, 4))
-    plot.igraph(gcon, layout=layout_with_fr(gcon), vertex.size=V(gcon)$num/(sum(V(gcon)$num)/node.scale), edge.width=E(gcon)$weight/sum(E(gcon)$weight/edge.scale),
-                adjustcolor('black', alpha.f=edge.alpha))
+    plot.igraph(gcon, layout=layout_with_fr(gcon), vertex.size=V(gcon)$num/(sum(V(gcon)$num)/node.scale), 
+        edge.width=E(gcon)$weight/sum(E(gcon)$weight/edge.scale), adjustcolor('black', alpha.f=edge.alpha))
   }
+
   return(invisible(gcon))
+
 }

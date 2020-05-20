@@ -8,7 +8,7 @@ dotPlot(
   markers,
   count.matrix,
   cell.groups,
-  verbose = T,
+  verbose = TRUE,
   n.cores = 1,
   marker.colour = "black",
   cluster.colour = "black",

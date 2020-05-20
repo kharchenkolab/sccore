@@ -270,7 +270,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 
   geom_point_w <- function(...) geom_point_w0(..., size=size, alpha=alpha)
 
-  if(!is.null(subgroups) && !is.null(groups)) {
+  if (!is.null(subgroups) && !is.null(groups)) {
     groups %<>% .[. %in% subgroups]
     if(length(groups)==0) {
       stop("'groups' is empty after filtering by 'subgroups'.")
@@ -293,7 +293,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     gg <- gg + geom_point_w(data=plot.info$na.plot.df, color='black', shape=4)
   }
 
-  if(keep.limits) {
+  if (keep.limits) {
     gg <- gg + ggplot2::lims(x=range(embedding[,1]), y=range(embedding[,2]))
   }
 
@@ -318,7 +318,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 dotPlot <- function (markers,
                      count.matrix,
                      cell.groups,
-                     verbose=T,
+                     verbose=TRUE,
                      n.cores=1,
                      marker.colour="black",
                      cluster.colour="black",
@@ -335,19 +335,25 @@ dotPlot <- function (markers,
                      xlab = "Marker",
                      ylab = "Cluster",
                      ...) {
+  
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
-  if(!is.character(markers)) stop("'markers' must be a character vector.")
+  if (!is.character(markers)) {
+    stop("'markers' must be a character vector.")
+  }
 
   missing.markers <- setdiff(markers, colnames(count.matrix))
-  if(length(missing.markers)>0) {
+  if (length(missing.markers)>0) {
     cat("Not all markers are in 'count.matrix'. The following are missing:\n",paste(missing.markers, collapse=" "),"\n")
     stop("Please update 'markers'.")
   }
 
   marker.table <- table(markers)
-  if(sum(marker.table>1)!=0) cat("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.\n")
-
-  if(verbose) cat("Extracting gene expression...\n")
+  if (sum(marker.table>1)!=0) {
+    cat("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.\n")
+  }
+  if (verbose) {
+    cat("Extracting gene expression...\n")
+  }
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
   p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
   if (is.logical(gene.order) && gene.order) {
@@ -362,7 +368,9 @@ dotPlot <- function (markers,
   }
 
   # Adapted from Seurat:::DotPlot
-  if(verbose) cat("Calculating expression distributions...\n")
+  if (verbose) { 
+    cat("Calculating expression distributions...\n")
+  }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {
     markers %>% lapply(function(g) {
       df <- p.df %>% filter(Type==t, Gene==g)
@@ -402,5 +410,6 @@ dotPlot <- function (markers,
     guides(size = guide_legend(title = 'Percent expressed'), color = guide_colorbar(title = 'Average expression')) +
     labs(x = xlab, y = ylab) +
     scale_color_gradient(low = cols[1], high = cols[2])
+
   return(plot)
 }
