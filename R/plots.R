@@ -218,30 +218,30 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #'
 #' @inheritDotParams ggrepel::geom_label_repel
 #' @param embedding two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors
-#' @param groups vector of cluster labels, names contain cell names
-#' @param colors vector of numbers, which must be shouwn with point colors, names contain cell names. This argument is ignored if groups are provided.
-#' @param subgroups subset of 'groups', selecting the cells for plot. Ignored if 'groups' is NULL
-#' @param plot.na plot points, for which groups / colors are missed (TRUE / FALSE)
-#' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed. This argument is ignored if groups aren't provided
-#' @param mark.groups plot cluster labels above points
-#' @param show.legend show legend
-#' @param alpha opacity level [0; 1]
-#' @param size point size
-#' @param title plot title
-#' @param plot.theme theme for the plot
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see colorRampPalette)
-#' @param color.range controls range, in which colors are estimated. Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
+#' @param groups vector of cluster labels, names contain cell names (default=NULL)
+#' @param colors vector of numbers, which must be shouwn with point colors, names contain cell names. (default=NULL) This argument is ignored if groups are provided.
+#' @param subgroups subset of 'groups', selecting the cells for plot. (default=NULL) Ignored if 'groups' is NULL
+#' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE) This argument is FALSE if 'subgroups' is NULL
+#' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed. (default=0) This argument is ignored if groups aren't provided
+#' @param mark.groups plot cluster labels above points (default=TRUE) 
+#' @param show.legend show legend (default=FALSE)
+#' @param alpha opacity level [0, 1] (default=0.4) 
+#' @param size point size (default=0.8) 
+#' @param title plot title (default=NULL) 
+#' @param plot.theme theme for the plot (default=NULL) 
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL) 
+#' @param color.range controls range, in which colors are estimated. (default="symmetric") Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
 #' @param font.size font size for cluster labels. It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
-#' @param show.ticks show ticks and tick labels
-#' @param legend.position vector with (x, y) positions of the legend
-#' @param legend.title legend title
-#' @param gradient.range.quantile Winsorization quantile for the numeric colors and gene gradient
-#' @param raster should layer with the points be rasterized (TRUE/ FALSE)? Setting of this argument to TRUE is useful when you need to export a plot with large number of points
-#' @param raster.width width of the plot in inches. Ignored if raster == FALSE.
-#' @param raster.height height of the plot in inches. Ignored if raster == FALSE.
-#' @param raster.dpi dpi of the rasterized plot. Ignored if raster == FALSE.
-#' @param shuffle.colors shuffle colors
-#' @param keep.limits Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=F
+#' @param show.ticks show ticks and tick labels (default=FALSE)
+#' @param legend.position vector with (x, y) positions of the legend (default=NULL)
+#' @param legend.title legend title (default=NULL)
+#' @param gradient.range.quantile Winsorization quantile for the numeric colors and gene gradient (default=1)
+#' @param raster boolean whether layer with the points be rasterized (default=FALSE) Setting of this argument to TRUE is useful when you need to export a plot with large number of points
+#' @param raster.width width of the plot in inches. (default=NULL) Ignored if raster == FALSE.
+#' @param raster.height height of the plot in inches. (default=NULL) Ignored if raster == FALSE.
+#' @param raster.dpi dpi of the rasterized plot. (default=300) Ignored if raster == FALSE.
+#' @param shuffle.colors shuffle colors (default=FALSE)
+#' @param keep.limits Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=FALSE
 #' @return ggplot2 object
 #' @export
 embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
@@ -363,8 +363,7 @@ dotPlot <- function (markers,
   }
 
   if (!is.null(gene.order)) {
-    p.df %<>% dplyr::mutate(Gene = factor(as.character(Gene),
-                                          levels = gene.order))
+    p.df %<>% dplyr::mutate(Gene = factor(as.character(Gene), levels = gene.order))
   }
 
   # Adapted from Seurat:::DotPlot

@@ -1,3 +1,12 @@
+#' Append specificity metrics to DE
+#'
+#' @description Append specificity metrics to DE
+#' @param de.df 
+#' @param clusters
+#' @param cluster.id
+#' @param p2.counts
+#' @param low.expression.threshold (default=0)
+#' @param append.auc (default=FALSE)
 #' @export
 appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts, low.expression.threshold=0, append.auc=FALSE) {
   
