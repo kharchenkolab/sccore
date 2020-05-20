@@ -4,7 +4,7 @@
 \alias{collapseGraphPaga}
 \title{Collapse Graph PAGA}
 \usage{
-collapseGraphPaga(graph, groups, linearize = T, winsorize = F)
+collapseGraphPaga(graph, groups, linearize = TRUE, winsorize = FALSE)
 }
 \arguments{
 \item{graph}{graph to be collapsed}

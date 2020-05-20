@@ -7,15 +7,15 @@
 plapply(
   ...,
   n.cores = 1,
-  progress = F,
+  progress = FALSE,
   mc.preschedule = TRUE,
   mc.allow.recursive = TRUE
 )
 }
 \arguments{
-\item{n.cores}{Sumber of cores to use (default=1)}
+\item{n.cores}{Number of cores to use (default=1)}
 
-\item{progress}{Show progress bar (default=F)}
+\item{progress}{Show progress bar (default=FALSE)}
 }
 \description{
 Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.

@@ -8,7 +8,7 @@ NULL
 #' @param linearize should normally be always `TRUE`
 #' @param winsorize winsorize final connectivity statistics value. Original PAGA has it always `TRUE`,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups
-collapseGraphPaga <- function(graph, groups, linearize=T, winsorize=F) {
+collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
   if ((!(is(graph, "Matrix") || is(graph, "matrix")) || ncol(graph) != nrow(graph)) && !igraph::is.igraph(graph)) {
     stop("Unknown graph format. Only adjacency matrix or igraph are supported")
   }
@@ -45,7 +45,7 @@ collapseGraphPaga <- function(graph, groups, linearize=T, winsorize=F) {
     igraph::induced_subgraph(graph, s, impl = 'copy_and_delete') %>% igraph::gsize() %>% `*`(2))
 
   inter.es <- igraph::contract(graph, vc$membership) %>%
-    igraph::simplify(remove.multiple=F, remove.loops=T, edge.attr.comb=igraph::igraph_opt("weight")) %>%
+    igraph::simplify(remove.multiple=FALSE, remove.loops=TRUE, edge.attr.comb=igraph::igraph_opt("weight")) %>%
     igraph::as_adj(attr="weight") %>% as('dgTMatrix')
 
   es <- es.inner.cluster + Matrix::rowSums(inter.es)

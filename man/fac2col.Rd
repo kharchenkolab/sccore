@@ -10,7 +10,7 @@ fac2col(
   v = 1,
   shuffle = FALSE,
   min.group.size = 1,
-  return.details = F,
+  return.details = FALSE,
   unclassified.cell.color = "gray50",
   level.colors = NULL
 )

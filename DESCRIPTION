@@ -3,8 +3,8 @@ Title: Core utilities for single-cell RNA-seq
 Version: 0.1
 Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = c("aut", "cre")),
              person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"))
-Description: Core utilities for single-cell RNA-seq
-License: GPL-3.0
+Description: Core utilities for single-cell RNA-seq data analysis. Contains functions for manipulating and plotting data.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -12,13 +12,13 @@ Imports:
     magrittr,
     igraph,
     tibble,
-    dplyr
+    dplyr, 
+    pROC
 RoxygenNote: 7.1.0
 Depends: 
     Matrix
 Suggests: 
     ggrastr (>= 0.1.7),
-    pROC,
     pbapply,
     parallel
 Remotes: 

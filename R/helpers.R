@@ -2,7 +2,6 @@
 NULL
 
 #' Parallel lapply
-#'
 #' @description Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 #' @param n.cores Number of cores to use (default=1)
 #' @param progress Show progress bar (default=FALSE)
@@ -21,7 +20,6 @@ plapply <- function(..., n.cores=1, progress=FALSE, mc.preschedule=TRUE, mc.allo
 
 
 #' Set range for values in object
-#'
 #' @description Changes values outside of range to min or max. Adapted from Seurat::MinMax
 #' @param obj Object to manipulate
 #' @param min Minimum value
