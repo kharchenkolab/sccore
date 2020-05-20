@@ -2,45 +2,58 @@
 NULL
 
 #' Factor to Color
+#'
 #' @description a utility function to translate factor into colors
 #' @export
-fac2col <- function(x,s=1,v=1,shuffle=FALSE,min.group.size=1,return.details=F,unclassified.cell.color='gray50',level.colors=NULL) {
-  nx <- names(x);
-  x <- as.factor(x);
-  if(min.group.size>1) {
-    x <- factor(x,exclude=levels(x)[unlist(tapply(rep(1,length(x)),x,length))<min.group.size])
+fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
+                      return.details=FALSE, unclassified.cell.color='gray50', level.colors=NULL) {
+  nx <- names(x)
+  x <- as.factor(x)
+
+  if (min.group.size>1) {
+    x <- factor(x, exclude=levels(x)[unlist(tapply(rep(1,length(x)), x, length)) < min.group.size])
     x <- droplevels(x)
   }
-  if(is.null(level.colors)) {
-    col <- rainbow(length(levels(x)),s=s,v=v);
+
+  if (is.null(level.colors)) {
+    col <- rainbow(length(levels(x)), s=s, v=v)
   } else {
-    col <- level.colors[1:length(levels(x))];
+    col <- level.colors[1:length(levels(x))]
   }
-  names(col) <- levels(x);
 
-  if(shuffle) col <- sample(col);
+  names(col) <- levels(x)
 
-  y <- col[as.integer(x)]; names(y) <- names(x);
-  y[is.na(y)] <- unclassified.cell.color;
-  names(y) <- nx;
-  if(return.details) {
-    return(list(colors=y,palette=col))
+  if (shuffle){
+    col <- sample(col)
+  }
+
+  y <- col[as.integer(x)]
+  names(y) <- names(x)
+  y[is.na(y)] <- unclassified.cell.color
+  names(y) <- nx
+
+  if (return.details) {
+    return(list(colors=y, palette=col))
   } else {
-    return(y);
+    return(y)
   }
 }
 
-# encodes logic of how to handle named-vector and functional palettes
-fac2palette <- function(groups,palette,unclassified.cell.color='gray50') {
-  groups <- as.factor(groups);
-  if(class(palette)=='function') {
+#' Encodes logic of how to handle named-vector and functional palettes
+fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
+  groups <- as.factor(groups)
+
+  if (class(palette)=='function') {
     return(palette(length(levels(groups))))
   }
-  if(is.list(palette)) { palette <- setNames(unlist(palette),names(palette)) }
-  if(is.vector(palette)) {
-    if(any(levels(groups) %in% names(palette))) {
-      cols <- setNames(palette[match(levels(groups),names(palette))],levels(groups));
-      cols[is.na(cols)] <- unclassified.cell.color;
+
+  if (is.list(palette)) { 
+    palette <- setNames(unlist(palette),names(palette)) 
+  }
+  if (is.vector(palette)) {
+    if (any(levels(groups) %in% names(palette))) {
+      cols <- setNames(palette[match(levels(groups), names(palette))], levels(groups));
+      cols[is.na(cols)] <- unclassified.cell.color
       return(cols)
     } else {
       # just take first n?
@@ -51,6 +64,7 @@ fac2palette <- function(groups,palette,unclassified.cell.color='gray50') {
 }
 
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
+  
   groups <- as.factor(groups)
 
   plot.df$Group <- factor(NA, levels=levels(groups))
@@ -164,6 +178,7 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
+
 
 styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=NULL, show.legend=TRUE, show.ticks=TRUE, show.labels=TRUE, relabel.axis=TRUE) {
   if (relabel.axis) {

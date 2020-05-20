@@ -4,8 +4,16 @@
 \alias{getClusterGraph}
 \title{Get Cluster Graph}
 \usage{
-getClusterGraph(graph, groups, method = "sum", plot = FALSE,
-  node.scale = 50, edge.scale = 50, edge.alpha = 0.3, ...)
+getClusterGraph(
+  graph,
+  groups,
+  method = "sum",
+  plot = FALSE,
+  node.scale = 50,
+  edge.scale = 50,
+  edge.alpha = 0.3,
+  ...
+)
 }
 \arguments{
 \item{graph}{graph to be collapsed}

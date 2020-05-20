@@ -13,7 +13,7 @@ Imports:
     igraph,
     tibble,
     dplyr
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Depends: 
     Matrix
 Suggests: 

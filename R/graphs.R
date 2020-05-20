@@ -9,8 +9,9 @@ NULL
 #' @param winsorize winsorize final connectivity statistics value. Original PAGA has it always `TRUE`,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups
 collapseGraphPaga <- function(graph, groups, linearize=T, winsorize=F) {
-  if ((!(is(graph, "Matrix") || is(graph, "matrix")) || ncol(graph) != nrow(graph)) && !igraph::is.igraph(graph))
+  if ((!(is(graph, "Matrix") || is(graph, "matrix")) || ncol(graph) != nrow(graph)) && !igraph::is.igraph(graph)) {
     stop("Unknown graph format. Only adjacency matrix or igraph are supported")
+  }
 
   if (!igraph::is.igraph(graph)) {
     ones <- graph %>% as('dgTMatrix') %>% as('symmetricMatrix')
@@ -27,14 +28,15 @@ collapseGraphPaga <- function(graph, groups, linearize=T, winsorize=F) {
   }
 
   groups %<>% .[!is.na(.)] %>% as.factor() %>% droplevels()
-  if (length(groups) != length(igraph::V(graph)))
-    stop("groups must be provided for all graph vertices")
+  if (length(groups) != length(igraph::V(graph))){
+    stop("Groups must be provided for all graph vertices")
+  }
 
   cluster.names <- levels(groups)
   groups %<>% as.integer()
 
   vc <- igraph::make_clusters(graph, membership = groups, algorithm = 'conos',
-                              merges = NULL, modularity = F)
+                              merges = NULL, modularity = FALSE)
   ns <- igraph::sizes(vc)
   n <- sum(ns)
 
@@ -67,6 +69,7 @@ collapseGraphPaga <- function(graph, groups, linearize=T, winsorize=F) {
 }
 
 #' Collapse Graph By Sum
+#'
 #' @param normalize whether recalculate edge weight as observed/oexpected
 #' @inheritParams collapseGraphPaga
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
@@ -91,6 +94,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 }
 
 #' Get Cluster Graph
+#'
 #' @description Collapse vertices belonging to each cluster in a graph
 #'
 #' @param plot whether to show collapsed graph plot

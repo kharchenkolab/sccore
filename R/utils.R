@@ -1,3 +1,6 @@
+#' @description Wrapper function around setNames 
+#' @param x an object for which names attribute will be meaningful 
+#' @return An object with names assigned equal to values
 #' @export
 sn <- function(x) {setNames(x, x)}
 
@@ -10,16 +13,16 @@ extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
   ext.mtx <- matrix(0, nrow=nrow(mtx), ncol=length(new.names))
   colnames(ext.mtx) <- new.names
-  return(cbind(mtx, ext.mtx)[,col.names])
+  return(cbind(mtx, ext.mtx)[, col.names])
 }
 
 #' @description Merge count matrices
 #' @param cms List of count matrices
-#' @param transposed Indicate whether cms are transposed, e.g., cells in rows and genes in columns (default=F)
+#' @param transposed Indicate whether cms are transposed, e.g. cells in rows and genes in columns (default=FALSE)
 #' @param ... Parameters for 'plapply' function
 #' @return A matrix
 #' @export
-mergeCountMatrices <- function(cms, transposed=F, ...) {
+mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   if (!transposed) {
     cms %<>% plapply(Matrix::t, ...)
   }

@@ -4,9 +4,16 @@
 \alias{fac2col}
 \title{Factor to Color}
 \usage{
-fac2col(x, s = 1, v = 1, shuffle = FALSE, min.group.size = 1,
-  return.details = F, unclassified.cell.color = "gray50",
-  level.colors = NULL)
+fac2col(
+  x,
+  s = 1,
+  v = 1,
+  shuffle = FALSE,
+  min.group.size = 1,
+  return.details = F,
+  unclassified.cell.color = "gray50",
+  level.colors = NULL
+)
 }
 \description{
 a utility function to translate factor into colors
