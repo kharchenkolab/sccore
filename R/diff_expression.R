@@ -5,11 +5,10 @@
 #' @param de.df 
 #' @param clusters
 #' @param cluster.id
-#' @param p2.counts
 #' @param low.expression.threshold (default=0)
 #' @param append.auc (default=FALSE)
 #' @export
-appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts, low.expression.threshold=0, append.auc=FALSE) {
+appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, low.expression.threshold=0, append.auc=FALSE) {
   
   if (length(de.df) == 0 || nrow(de.df) == 0) {
     return(de.df)

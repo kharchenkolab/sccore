@@ -33,7 +33,6 @@ plapply <- function(..., n.cores=1, progress=FALSE, mc.preschedule=TRUE, mc.allo
 #' @param max Maximum value
 #' @return An object with the same dimensions as input but with altered range in values
 #' @examples
-#' 
 #' example_matrix =  matrix(rep(c(1:5), 3), 5)
 #' setMinMax(example_matrix, 2, 4)
 #'
