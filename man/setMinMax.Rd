@@ -19,3 +19,9 @@ An object with the same dimensions as input but with altered range in values
 \description{
 Changes values outside of range to min or max. Adapted from Seurat::MinMax
 }
+\examples{
+
+example_matrix =  matrix(rep(c(1:5), 3), 5)
+setMinMax(example_matrix, 2, 4)
+
+}

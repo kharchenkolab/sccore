@@ -37,53 +37,53 @@ embeddingPlot(
 \arguments{
 \item{embedding}{two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors}
 
-\item{groups}{vector of cluster labels, names contain cell names}
+\item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
-\item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names. This argument is ignored if groups are provided.}
+\item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names. (default=NULL) This argument is ignored if groups are provided.}
 
-\item{subgroups}{subset of 'groups', selecting the cells for plot. Ignored if 'groups' is NULL}
+\item{subgroups}{subset of 'groups', selecting the cells for plot. (default=NULL) Ignored if 'groups' is NULL}
 
-\item{plot.na}{plot points, for which groups / colors are missed (TRUE / FALSE)}
+\item{plot.na}{boolean whether to plot points, for which groups / colors are missed (default=FALSE) This argument is FALSE if 'subgroups' is NULL}
 
-\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed. This argument is ignored if groups aren't provided}
+\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed. (default=0) This argument is ignored if groups aren't provided}
 
-\item{mark.groups}{plot cluster labels above points}
+\item{mark.groups}{plot cluster labels above points (default=TRUE)}
 
-\item{show.legend}{show legend}
+\item{show.legend}{show legend (default=FALSE)}
 
-\item{alpha}{opacity level [0; 1]}
+\item{alpha}{opacity level [0, 1] (default=0.4)}
 
-\item{size}{point size}
+\item{size}{point size (default=0.8)}
 
-\item{title}{plot title}
+\item{title}{plot title (default=NULL)}
 
-\item{plot.theme}{theme for the plot}
+\item{plot.theme}{theme for the plot (default=NULL)}
 
-\item{palette}{function, which accepts number of colors and return list of colors (i.e. see colorRampPalette)}
+\item{palette}{function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL)}
 
-\item{color.range}{controls range, in which colors are estimated. Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
+\item{color.range}{controls range, in which colors are estimated. (default="symmetric") Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
 
 \item{font.size}{font size for cluster labels. It can either be single number for constant font size or pair (min, max) for font size depending on cluster size}
 
-\item{show.ticks}{show ticks and tick labels}
+\item{show.ticks}{show ticks and tick labels (default=FALSE)}
 
-\item{legend.position}{vector with (x, y) positions of the legend}
+\item{legend.position}{vector with (x, y) positions of the legend (default=NULL)}
 
-\item{legend.title}{legend title}
+\item{legend.title}{legend title (default=NULL)}
 
-\item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient}
+\item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
 
-\item{raster}{should layer with the points be rasterized (TRUE/ FALSE)? Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
+\item{raster}{boolean whether layer with the points be rasterized (default=FALSE) Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
 
-\item{raster.width}{width of the plot in inches. Ignored if raster == FALSE.}
+\item{raster.width}{width of the plot in inches. (default=NULL) Ignored if raster == FALSE.}
 
-\item{raster.height}{height of the plot in inches. Ignored if raster == FALSE.}
+\item{raster.height}{height of the plot in inches. (default=NULL) Ignored if raster == FALSE.}
 
-\item{raster.dpi}{dpi of the rasterized plot. Ignored if raster == FALSE.}
+\item{raster.dpi}{dpi of the rasterized plot. (default=300) Ignored if raster == FALSE.}
 
-\item{shuffle.colors}{shuffle colors}
+\item{shuffle.colors}{shuffle colors (default=FALSE)}
 
-\item{keep.limits}{Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=F}
+\item{keep.limits}{Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=FALSE}
 
 \item{...}{
   Arguments passed on to \code{\link[ggrepel:geom_label_repel]{ggrepel::geom_label_repel}}

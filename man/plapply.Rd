@@ -20,3 +20,9 @@ plapply(
 \description{
 Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 }
+\examples{
+
+square = function(x){ x**2 }
+plapply(1:10, square, n.cores=1, progress=TRUE)
+
+}

@@ -6,6 +6,11 @@ NULL
 #' @description Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 #' @param n.cores Number of cores to use (default=1)
 #' @param progress Show progress bar (default=FALSE)
+#' @examples
+#' 
+#' square = function(x){ x**2 }
+#' plapply(1:10, square, n.cores=1, progress=TRUE)
+#'
 #' @export
 plapply <- function(..., n.cores=1, progress=FALSE, mc.preschedule=TRUE, mc.allow.recursive=TRUE) {
   if (progress && requireNamespace("pbapply", quietly=TRUE)) {
@@ -27,6 +32,11 @@ plapply <- function(..., n.cores=1, progress=FALSE, mc.preschedule=TRUE, mc.allo
 #' @param min Minimum value
 #' @param max Maximum value
 #' @return An object with the same dimensions as input but with altered range in values
+#' @examples
+#' 
+#' example_matrix =  matrix(rep(c(1:5), 3), 5)
+#' setMinMax(example_matrix, 2, 4)
+#'
 #' @export
 setMinMax <- function(obj, min, max) {
   obj[obj<min] <- min
