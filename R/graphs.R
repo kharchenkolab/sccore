@@ -9,6 +9,7 @@ NULL
 #' @param linearize should normally be always `TRUE` (default=TRUE)
 #' @param winsorize winsorize final connectivity statistics value. (default=FALSE) Note: Original PAGA has it always `TRUE`,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
+#' @export
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
   if ((!(is(graph, "Matrix") || is(graph, "matrix")) || ncol(graph) != nrow(graph)) && !igraph::is.igraph(graph)) {
@@ -74,6 +75,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 #'
 #' @param normalize boolean whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @inheritParams collapseGraphPaga
+#' @export
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 
   gcon <- contract.vertices(graph, groups, vertex.attr.comb=list('num'='sum',"ignore")) %>%

@@ -3,7 +3,19 @@ NULL
 
 #' Factor to Color
 #'
-#' @description a utility function to translate factor into colors
+#' @description a utility function to translate a factor into colors
+#' @param x
+#' @param s (default=1)
+#' @param v (default=1)
+#' @param shuffle (default=FALSE)
+#' @param min.group.size (default=1)
+#' @param return.details (default=FALSE)
+#' @param unclassified.cell.color (default='gray50')
+#' @param level.colors (default=NULL)
+#' @examples
+#' genes = factor(c("BRAF", "NPC1", "PAX3", "BRCA2", "FMR1"))
+#' fac2col(genes)
+#'
 #' @export
 fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
                       return.details=FALSE, unclassified.cell.color='gray50', level.colors=NULL) {
@@ -39,7 +51,8 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
   }
 }
 
-#' Encodes logic of how to handle named-vector and functional palettes
+## used within embeddingGroupPlot()
+## Encodes logic of how to handle named-vector and functional palettes
 fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   groups <- as.factor(groups)
 
@@ -63,6 +76,7 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   }
 }
 
+## used within embeddingPlot()
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
   
   groups <- as.factor(groups)
@@ -104,7 +118,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
     palette <- rainbow
   }
 
-  color.vals <- fac2palette(groups,palette);
+  color.vals <- fac2palette(groups, palette)
 
 
   if (shuffle.colors) {
@@ -116,6 +130,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
 
+## used within embeddingPlot()
 embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.range.quantile, color.range, legend.title, palette) {
   if(is.numeric(colors) && gradient.range.quantile < 1) {
     x <- colors;
@@ -179,7 +194,7 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
 
-
+## used within embeddingPlot()
 styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=NULL, show.legend=TRUE, show.ticks=TRUE, show.labels=TRUE, relabel.axis=TRUE) {
   if (relabel.axis) {
     gg <- gg + ggplot2::labs(x='Component 1', y='Component 2')

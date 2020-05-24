@@ -1,6 +1,6 @@
 #' setNames wrapper function
 #'
-#' @description Wrapper function around setNames 
+#' @description Set names equal to values
 #' @param x an object for which names attribute will be meaningful 
 #' @return An object with names assigned equal to values
 #' @examples
@@ -9,6 +9,7 @@
 #'
 #' @export
 sn <- function(x) {setNames(x, x)}
+
 
 #' Include new columns in matrix
 #'
@@ -23,6 +24,7 @@ extendMatrix <- function(mtx, col.names) {
   colnames(ext.mtx) <- new.names
   return(cbind(mtx, ext.mtx)[, col.names])
 }
+
 
 #' Merge list of count matrices
 #'
