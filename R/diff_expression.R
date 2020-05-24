@@ -5,6 +5,7 @@
 #' @param de.df 
 #' @param clusters
 #' @param cluster.id
+#' @param p2.counts
 #' @param low.expression.threshold (default=0)
 #' @param append.auc (default=FALSE)
 #' @export
