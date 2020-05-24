@@ -3,6 +3,10 @@
 #' @description Wrapper function around setNames 
 #' @param x an object for which names attribute will be meaningful 
 #' @return An object with names assigned equal to values
+#' @examples
+#' vec = c(1, 2, 3, 4)
+#' sn(vec)
+#'
 #' @export
 sn <- function(x) {setNames(x, x)}
 

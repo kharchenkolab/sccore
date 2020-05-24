@@ -7,7 +7,6 @@ NULL
 #' @param n.cores Number of cores to use (default=1)
 #' @param progress Show progress bar (default=FALSE)
 #' @examples
-#' 
 #' square = function(x){ x**2 }
 #' plapply(1:10, square, n.cores=1, progress=TRUE)
 #'

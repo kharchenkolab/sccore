@@ -308,10 +308,10 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param markers Vector of gene markers to plot
 #' @param count.matrix Merged count matrix, e.g., through conos.obj$getJointCountMatrix()
 #' @param cell.groups Named factor containing cell groups (clusters) and cell names
-#' @param marker.colour Character or numeric vector
-#' @param cluster.colour Character or numeric vector
-#' @param xlab X axis title
-#' @param ylab Y axis title
+#' @param marker.colour Character or numeric vector (default="black")
+#' @param cluster.colour Character or numeric vector (default="black")
+#' @param xlab X axis title (default="Marker")
+#' @param ylab Y axis title (default="Cluster")
 #' @param ... Additional input to sccore:::plapply, see man for description.
 #' @return ggplot2 object
 #' @export
