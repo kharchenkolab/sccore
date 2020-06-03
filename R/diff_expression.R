@@ -8,6 +8,7 @@
 #' @param p2.counts
 #' @param low.expression.threshold (default=0)
 #' @param append.auc (default=FALSE)
+#' @return de.df
 #' @export
 appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, low.expression.threshold=0, append.auc=FALSE) {
   

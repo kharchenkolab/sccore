@@ -10,6 +10,7 @@ NULL
 #' square = function(x){ x**2 }
 #' plapply(1:10, square, n.cores=1, progress=TRUE)
 #'
+#' @return list, as returned by lapply
 #' @export
 plapply <- function(..., n.cores=1, progress=FALSE, mc.preschedule=TRUE, mc.allow.recursive=TRUE) {
   if (progress && requireNamespace("pbapply", quietly=TRUE)) {
