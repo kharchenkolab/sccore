@@ -21,5 +21,3 @@ Suggests:
     pROC,
     pbapply,
     parallel
-Remotes: 
-    VPetukhov/ggrastr
