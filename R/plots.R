@@ -50,6 +50,67 @@ fac2palette <- function(groups,palette,unclassified.cell.color='gray50') {
   }
 }
 
+##' Helper function to return a ggplot color gradient for a numeric vector
+##'
+##' ggplot(aes(color=x, ...), ...) + val2ggcol(x)
+##' @title val2ggcol
+##' @param values values by which the color gradient is determined
+##' @param gradient.range.quantile trimming quantile (either a single number or two numbers - for lower and upper quantile)
+##' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or "symmetric" - range will fit data, but will be symmetrized around zeros; "all" - gradient will match the span of the range of the data (after gradient.range.quantile); 
+##' @param palette an optinoal palette fucntion; Default is blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used
+##' @param midpoint optional midpoint (set for th center of the resulting range by default)
+##' @param oob function to determine what to do with the values outside of the range (default is scales::squish), see oob parameter in ggplot
+##' @param return.fill wheter to return fill gradients instead of color
+##' @param ... additional arguments are passed to ggplot2::scale_color_gradient* functions
+##' @return ggplot2::scale_colour_gradient* object
+val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric', palette=NULL, midpoint=NULL, oob=scales::squish, return.fill=FALSE,  ...) {
+  if(length(gradient.range.quantile)>1) { # min/max quantile is given
+    zlim <- as.numeric(quantile(values,p=gradient.range.quantile,na.rm=TRUE))
+  } else if(gradient.range.quantile<1) { # single value spec
+    zlim <- sort(as.numeric(quantile(values, p=c(1 - gradient.range.quantile, gradient.range.quantile), na.rm=TRUE)))
+  } else {
+    zlim <- range(na.omit(values))
+  }
+
+  # symmetrize the range if needed
+  if(length(color.range)==1 && color.range=='symmetric') {
+    if(prod(zlim)<0) {
+      zlim <- c(-1,1)*max(abs(zlim))
+    } else {
+    }
+  }
+  if(is.null(midpoint)) midpoint <- sum(zlim)/2;
+
+  # pick a palette and return
+  if(is.null(palette)) {
+    if(zlim[2]<0) { 
+      if(return.fill) {
+        ggplot2::scale_fill_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
+      } else {
+        ggplot2::scale_color_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
+      }
+    } else if(zlim[1]>0) {
+      if(return.fill) {
+        ggplot2::scale_fill_gradient(low="gray90", high="red", limits=zlim, oob=oob,  ...)
+      } else {
+        ggplot2::scale_color_gradient(low="gray90", high="red", limits=zlim, oob=oob,  ...)
+      }
+    } else {
+      if(return.fill) {
+        ggplot2::scale_fill_gradient2(low="blue",mid="gray90", high="red", limits=zlim, oob=oob, midpoint=midpoint, ...)
+      } else {
+        ggplot2::scale_color_gradient2(low="blue",mid="gray90", high="red", limits=zlim, oob=oob, midpoint=midpoint, ...)
+      }
+    }
+  } else {
+    if(return.fill) {
+      ggplot2::scale_fill_gradientn(colors=palette(100), limits=zlim, oob=oob, ...)
+    } else {
+      ggplot2::scale_colour_gradientn(colors=palette(100), limits=zlim, oob=oob, ...)
+    }
+  }
+}
+
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
   groups <- as.factor(groups)
 
@@ -102,17 +163,8 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
 
-embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.range.quantile, color.range, legend.title, palette) {
-  if(is.numeric(colors) && gradient.range.quantile < 1) {
-    x <- colors;
-    zlim <- as.numeric(quantile(x, p=c(1 - gradient.range.quantile, gradient.range.quantile), na.rm=TRUE))
-    if(diff(zlim)==0) {
-      zlim <- as.numeric(range(x))
-    }
-    x[x<zlim[1]] <- zlim[1]; x[x>zlim[2]] <- zlim[2];
-    colors <- x;
-  }
 
+embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[CellName])
   if(!is.null(groups)) {
     plot.df$Color[!plot.df$CellName %in% names(groups)] <- NA
@@ -124,38 +176,7 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
   if(is.character(colors)) {
     gg <- gg + geom_point_w(color=plot.df$Color)
   } else {
-    gg <- gg + geom_point_w(ggplot2::aes(col=Color))
-
-    if (length(color.range) == 1) {
-      if (color.range == "all") {
-        color.range <- range(na.omit(colors))
-      } else if (color.range == "data") {
-        color.range <- NULL
-      } else if (color.range == "symmetric") {
-        if(is.numeric(colors)) {
-          if(all(sign(na.omit(colors))>=0)) {
-            color.range <- range(na.omit(colors))
-          } else {
-            color.range <- c(-1,1)*max(abs(colors))
-          }
-        } else {
-          color.range <- NULL
-        }
-      } else {
-        stop("Unknown color.range: ", color.range)
-      }
-    }
-
-    if (!is.null(palette)) {
-      gg <- gg + ggplot2::scale_colour_gradientn(colors=palette(100), limits=color.range)
-    } else {
-      c.range <- if (is.null(color.range)) range(colors, na.rm=T) else color.range
-      if (prod(c.range) < 0) {
-        gg <- gg + ggplot2::scale_color_gradient2(low="#0000ff",mid="#d8d0d0", high="#ff0000", limits=color.range)
-      } else {
-        gg <- gg + ggplot2::scale_color_gradient(low="#d8d0d0", high="#ff0000", limits=color.range)
-      }
-    }
+    gg <- gg + geom_point_w(ggplot2::aes(col=Color)) + val2ggcol(plot.df$Color, gradient.range.quantile=gradient.range.quantile, palette=palette, color.range=color.range)
   }
 
   if (!is.null(legend.title)) {
@@ -164,6 +185,8 @@ embeddingColorsPlot <- function(plot.df, colors, groups, geom_point_w, gradient.
 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
+
+
 
 styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=NULL, show.legend=TRUE, show.ticks=TRUE, show.labels=TRUE, relabel.axis=TRUE) {
   if (relabel.axis) {
