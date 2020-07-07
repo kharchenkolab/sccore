@@ -83,7 +83,10 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 
   # pick a palette and return
   if(is.null(palette)) {
-    if(zlim[2]<0) { 
+    if (prod(zlim)==0) {
+      ## if gene counts all 0, then simply plot all cells as "gray90"
+      ggplot2::scale_color_gradient(low="gray90", high="gray90", limits=zlim, ...)
+    } else if(zlim[2]<0) { 
       if(return.fill) {
         ggplot2::scale_fill_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
       } else {
