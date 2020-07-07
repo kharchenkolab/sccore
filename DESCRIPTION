@@ -28,3 +28,4 @@ BugReports: https://github.com/hms-dbmi/sccore/issues
 NeedsCompilation: no
 Author: Peter Kharchenko [aut, cre], Viktor Petukhov [aut], Evan Biederstedt [aut]
 Maintainer: Evan Biederstedt <evan.biederstedt@gmail.com>
+

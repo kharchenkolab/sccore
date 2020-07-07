@@ -22,9 +22,11 @@ appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, low.expres
     stop("Cluster ", cluster.id, " not presented in the data")
   }
 
-  counts.bin <- (p2.counts[names(cluster.mask), de.df$Gene, drop=FALSE] > low.expression.threshold)
+  counts <- p2.counts[names(cluster.mask), de.df$Gene, drop=FALSE]
+  counts.bin <- counts
+  counts.bin@x <- as.numeric(counts.bin@x > low.expression.threshold)
   counts.bin.sums <- Matrix::colSums(counts.bin)
-  counts.bin.clust.sums <- Matrix::colSums(counts.bin & cluster.mask)
+  counts.bin.clust.sums <- Matrix::colSums(counts.bin * cluster.mask)
 
   if (append.auc) {
     de.df$AUC <- apply(counts.bin, 2, function(col) pROC::auc(as.integer(cluster.mask), as.integer(col), quiet=TRUE))
