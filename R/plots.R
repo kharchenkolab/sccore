@@ -77,8 +77,11 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
   if(length(color.range)==1 && color.range=='symmetric') {
     if(prod(zlim)<0) {
       zlim <- c(-1,1)*max(abs(zlim))
+    }
   }
-  if(is.null(midpoint)) midpoint <- sum(zlim)/2;
+  if(is.null(midpoint)){
+    midpoint <- sum(zlim)/2
+  }
 
   # pick a palette and return
   if(is.null(palette)) {
