@@ -72,12 +72,11 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
     zlim <- range(na.omit(values))
   }
 
-  # symmetrize the range if needed
+  ## Symmetrize the range for vectors that span 0.
+  ## Vectors that are squarely in the positive or negative territory are not symmetrized.
   if(length(color.range)==1 && color.range=='symmetric') {
     if(prod(zlim)<0) {
       zlim <- c(-1,1)*max(abs(zlim))
-    } else {
-    }
   }
   if(is.null(midpoint)) midpoint <- sum(zlim)/2;
 
