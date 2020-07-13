@@ -4,17 +4,17 @@
 \alias{collapseGraphPaga}
 \title{Collapse Graph PAGA}
 \usage{
-collapseGraphPaga(graph, groups, linearize = T, winsorize = F)
+collapseGraphPaga(graph, groups, linearize = TRUE, winsorize = FALSE)
 }
 \arguments{
 \item{graph}{graph to be collapsed}
 
-\item{groups}{factor on vertives describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
+\item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{linearize}{should normally be always `TRUE`}
+\item{linearize}{should normally be always `TRUE` (default=TRUE)}
 
-\item{winsorize}{winsorize final connectivity statistics value. Original PAGA has it always `TRUE`,
-but in this case there is no way to distinguish level of connectivity for highly connected groups}
+\item{winsorize}{winsorize final connectivity statistics value. (default=FALSE) Note: Original PAGA has it always `TRUE`,
+but in this case there is no way to distinguish level of connectivity for highly connected groups.}
 }
 \description{
 Collapse graph using PAGA 1.2 algorithm

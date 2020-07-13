@@ -4,15 +4,23 @@
 \alias{getClusterGraph}
 \title{Get Cluster Graph}
 \usage{
-getClusterGraph(graph, groups, method = "sum", plot = FALSE,
-  node.scale = 50, edge.scale = 50, edge.alpha = 0.3, ...)
+getClusterGraph(
+  graph,
+  groups,
+  method = "sum",
+  plot = FALSE,
+  node.scale = 50,
+  edge.scale = 50,
+  edge.alpha = 0.3,
+  ...
+)
 }
 \arguments{
 \item{graph}{graph to be collapsed}
 
-\item{groups}{factor on vertives describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
+\item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{method}{either "sum" or "paga"}
+\item{method}{either "sum" or "paga" (default="sum")}
 
 \item{plot}{whether to show collapsed graph plot}
 }

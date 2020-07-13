@@ -9,9 +9,9 @@ collapseGraphSum(graph, groups, normalize = TRUE)
 \arguments{
 \item{graph}{graph to be collapsed}
 
-\item{groups}{factor on vertives describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
+\item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{normalize}{whether recalculate edge weight as observed/oexpected}
+\item{normalize}{boolean whether to recalculate edge weight as observed/expected (default=TRUE)}
 }
 \description{
 Collapse Graph By Sum

@@ -2,45 +2,71 @@
 NULL
 
 #' Factor to Color
-#' @description a utility function to translate factor into colors
+#'
+#' @description a utility function to translate a factor into colors
+#' @param x
+#' @param s (default=1)
+#' @param v (default=1)
+#' @param shuffle (default=FALSE)
+#' @param min.group.size (default=1)
+#' @param return.details (default=FALSE)
+#' @param unclassified.cell.color (default='gray50')
+#' @param level.colors (default=NULL)
+#' @examples
+#' genes = factor(c("BRAF", "NPC1", "PAX3", "BRCA2", "FMR1"))
+#' fac2col(genes)
+#'
 #' @export
-fac2col <- function(x,s=1,v=1,shuffle=FALSE,min.group.size=1,return.details=F,unclassified.cell.color='gray50',level.colors=NULL) {
-  nx <- names(x);
-  x <- as.factor(x);
-  if(min.group.size>1) {
-    x <- factor(x,exclude=levels(x)[unlist(tapply(rep(1,length(x)),x,length))<min.group.size])
+fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
+                      return.details=FALSE, unclassified.cell.color='gray50', level.colors=NULL) {
+  nx <- names(x)
+  x <- as.factor(x)
+
+  if (min.group.size>1) {
+    x <- factor(x, exclude=levels(x)[unlist(tapply(rep(1,length(x)), x, length)) < min.group.size])
     x <- droplevels(x)
   }
-  if(is.null(level.colors)) {
-    col <- rainbow(length(levels(x)),s=s,v=v);
+
+  if (is.null(level.colors)) {
+    col <- rainbow(length(levels(x)), s=s, v=v)
   } else {
-    col <- level.colors[1:length(levels(x))];
+    col <- level.colors[1:length(levels(x))]
   }
-  names(col) <- levels(x);
 
-  if(shuffle) col <- sample(col);
+  names(col) <- levels(x)
 
-  y <- col[as.integer(x)]; names(y) <- names(x);
-  y[is.na(y)] <- unclassified.cell.color;
-  names(y) <- nx;
-  if(return.details) {
-    return(list(colors=y,palette=col))
+  if (shuffle){
+    col <- sample(col)
+  }
+
+  y <- col[as.integer(x)]
+  names(y) <- names(x)
+  y[is.na(y)] <- unclassified.cell.color
+  names(y) <- nx
+
+  if (return.details) {
+    return(list(colors=y, palette=col))
   } else {
-    return(y);
+    return(y)
   }
 }
 
-# encodes logic of how to handle named-vector and functional palettes
-fac2palette <- function(groups,palette,unclassified.cell.color='gray50') {
-  groups <- as.factor(groups);
-  if(class(palette)=='function') {
+## used within embeddingGroupPlot()
+## Encodes logic of how to handle named-vector and functional palettes
+fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
+  groups <- as.factor(groups)
+
+  if (class(palette)=='function') {
     return(palette(length(levels(groups))))
   }
-  if(is.list(palette)) { palette <- setNames(unlist(palette),names(palette)) }
-  if(is.vector(palette)) {
-    if(any(levels(groups) %in% names(palette))) {
-      cols <- setNames(palette[match(levels(groups),names(palette))],levels(groups));
-      cols[is.na(cols)] <- unclassified.cell.color;
+
+  if (is.list(palette)) { 
+    palette <- setNames(unlist(palette),names(palette)) 
+  }
+  if (is.vector(palette)) {
+    if (any(levels(groups) %in% names(palette))) {
+      cols <- setNames(palette[match(levels(groups), names(palette))], levels(groups));
+      cols[is.na(cols)] <- unclassified.cell.color
       return(cols)
     } else {
       # just take first n?
@@ -111,7 +137,9 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
   }
 }
 
+
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
+  
   groups <- as.factor(groups)
 
   plot.df$Group <- factor(NA, levels=levels(groups))
@@ -151,7 +179,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
     palette <- rainbow
   }
 
-  color.vals <- fac2palette(groups,palette);
+  color.vals <- fac2palette(groups, palette)
 
 
   if (shuffle.colors) {
@@ -162,7 +190,6 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
-
 
 embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[CellName])
@@ -226,30 +253,30 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #'
 #' @inheritDotParams ggrepel::geom_label_repel
 #' @param embedding two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors
-#' @param groups vector of cluster labels, names contain cell names
-#' @param colors vector of numbers, which must be shouwn with point colors, names contain cell names. This argument is ignored if groups are provided.
-#' @param subgroups subset of 'groups', selecting the cells for plot. Ignored if 'groups' is NULL
-#' @param plot.na plot points, for which groups / colors are missed (TRUE / FALSE)
-#' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed. This argument is ignored if groups aren't provided
-#' @param mark.groups plot cluster labels above points
-#' @param show.legend show legend
-#' @param alpha opacity level [0; 1]
-#' @param size point size
-#' @param title plot title
-#' @param plot.theme theme for the plot
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see colorRampPalette)
-#' @param color.range controls range, in which colors are estimated. Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
+#' @param groups vector of cluster labels, names contain cell names (default=NULL)
+#' @param colors vector of numbers, which must be shouwn with point colors, names contain cell names. (default=NULL) This argument is ignored if groups are provided.
+#' @param subgroups subset of 'groups', selecting the cells for plot. (default=NULL) Ignored if 'groups' is NULL
+#' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE) This argument is FALSE if 'subgroups' is NULL
+#' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed. (default=0) This argument is ignored if groups aren't provided
+#' @param mark.groups plot cluster labels above points (default=TRUE) 
+#' @param show.legend show legend (default=FALSE)
+#' @param alpha opacity level [0, 1] (default=0.4) 
+#' @param size point size (default=0.8) 
+#' @param title plot title (default=NULL) 
+#' @param plot.theme theme for the plot (default=NULL) 
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL) 
+#' @param color.range controls range, in which colors are estimated. (default="symmetric") Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
 #' @param font.size font size for cluster labels. It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
-#' @param show.ticks show ticks and tick labels
-#' @param legend.position vector with (x, y) positions of the legend
-#' @param legend.title legend title
-#' @param gradient.range.quantile Winsorization quantile for the numeric colors and gene gradient
-#' @param raster should layer with the points be rasterized (TRUE/ FALSE)? Setting of this argument to TRUE is useful when you need to export a plot with large number of points
-#' @param raster.width width of the plot in inches. Ignored if raster == FALSE.
-#' @param raster.height height of the plot in inches. Ignored if raster == FALSE.
-#' @param raster.dpi dpi of the rasterized plot. Ignored if raster == FALSE.
-#' @param shuffle.colors shuffle colors
-#' @param keep.limits Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=F
+#' @param show.ticks show ticks and tick labels (default=FALSE)
+#' @param legend.position vector with (x, y) positions of the legend (default=NULL)
+#' @param legend.title legend title (default=NULL)
+#' @param gradient.range.quantile Winsorization quantile for the numeric colors and gene gradient (default=1)
+#' @param raster boolean whether layer with the points be rasterized (default=FALSE) Setting of this argument to TRUE is useful when you need to export a plot with large number of points
+#' @param raster.width width of the plot in inches. (default=NULL) Ignored if raster == FALSE.
+#' @param raster.height height of the plot in inches. (default=NULL) Ignored if raster == FALSE.
+#' @param raster.dpi dpi of the rasterized plot. (default=300) Ignored if raster == FALSE.
+#' @param shuffle.colors shuffle colors (default=FALSE)
+#' @param keep.limits Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=FALSE
 #' @return ggplot2 object
 #' @export
 embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
@@ -278,7 +305,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 
   geom_point_w <- function(...) geom_point_w0(..., size=size, alpha=alpha)
 
-  if(!is.null(subgroups) && !is.null(groups)) {
+  if (!is.null(subgroups) && !is.null(groups)) {
     groups %<>% .[. %in% subgroups]
     if(length(groups)==0) {
       stop("'groups' is empty after filtering by 'subgroups'.")
@@ -301,7 +328,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     gg <- gg + geom_point_w(data=plot.info$na.plot.df, color='black', shape=4)
   }
 
-  if(keep.limits) {
+  if (keep.limits) {
     gg <- gg + ggplot2::lims(x=range(embedding[,1]), y=range(embedding[,2]))
   }
 
@@ -314,19 +341,19 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #'
 #' @description Dot plot adapted from Seurat:::DotPlot, see man for description.
 #' @param markers Vector of gene markers to plot
-#' @param count.matrix Merged count matrix, e.g., through con.obj$getJointCountMatrix(raw=F)
+#' @param count.matrix Merged count matrix, e.g., through conos.obj$getJointCountMatrix()
 #' @param cell.groups Named factor containing cell groups (clusters) and cell names
-#' @param marker.colour Character or numeric vector
-#' @param cluster.colour Character or numeric vector
-#' @param xlab X axis title
-#' @param ylab Y axis title
+#' @param marker.colour Character or numeric vector (default="black")
+#' @param cluster.colour Character or numeric vector (default="black")
+#' @param xlab X axis title (default="Marker")
+#' @param ylab Y axis title (default="Cluster")
 #' @param ... Additional input to sccore:::plapply, see man for description.
 #' @return ggplot2 object
 #' @export
 dotPlot <- function (markers,
                      count.matrix,
                      cell.groups,
-                     verbose=T,
+                     verbose=TRUE,
                      n.cores=1,
                      marker.colour="black",
                      cluster.colour="black",
@@ -343,19 +370,25 @@ dotPlot <- function (markers,
                      xlab = "Marker",
                      ylab = "Cluster",
                      ...) {
+  
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
-  if(!is.character(markers)) stop("'markers' must be a character vector.")
+  if (!is.character(markers)) {
+    stop("'markers' must be a character vector.")
+  }
 
   missing.markers <- setdiff(markers, colnames(count.matrix))
-  if(length(missing.markers)>0) {
+  if (length(missing.markers)>0) {
     cat("Not all markers are in 'count.matrix'. The following are missing:\n",paste(missing.markers, collapse=" "),"\n")
     stop("Please update 'markers'.")
   }
 
   marker.table <- table(markers)
-  if(sum(marker.table>1)!=0) cat("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.\n")
-
-  if(verbose) cat("Extracting gene expression...\n")
+  if (sum(marker.table>1)!=0) {
+    cat("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.\n")
+  }
+  if (verbose) {
+    cat("Extracting gene expression...\n")
+  }
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
   p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
   if (is.logical(gene.order) && gene.order) {
@@ -365,12 +398,13 @@ dotPlot <- function (markers,
   }
 
   if (!is.null(gene.order)) {
-    p.df %<>% dplyr::mutate(Gene = factor(as.character(Gene),
-                                          levels = gene.order))
+    p.df %<>% dplyr::mutate(Gene = factor(as.character(Gene), levels = gene.order))
   }
 
   # Adapted from Seurat:::DotPlot
-  if(verbose) cat("Calculating expression distributions...\n")
+  if (verbose) { 
+    cat("Calculating expression distributions...\n")
+  }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {
     markers %>% lapply(function(g) {
       df <- p.df %>% filter(Type==t, Gene==g)
@@ -410,5 +444,6 @@ dotPlot <- function (markers,
     guides(size = guide_legend(title = 'Percent expressed'), color = guide_colorbar(title = 'Average expression')) +
     labs(x = xlab, y = ylab) +
     scale_color_gradient(low = cols[1], high = cols[2])
+
   return(plot)
 }

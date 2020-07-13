@@ -4,136 +4,154 @@
 \alias{embeddingPlot}
 \title{Plot embedding with provided labels / colors using ggplot2}
 \usage{
-embeddingPlot(embedding, groups = NULL, colors = NULL,
-  subgroups = NULL, plot.na = is.null(subgroups),
-  min.cluster.size = 0, mark.groups = TRUE, show.legend = FALSE,
-  alpha = 0.4, size = 0.8, title = NULL, plot.theme = NULL,
-  palette = NULL, color.range = "all", font.size = c(3, 7),
-  show.ticks = FALSE, show.labels = FALSE, legend.position = NULL,
-  legend.title = NULL, gradient.range.quantile = 1, raster = FALSE,
-  raster.width = NULL, raster.height = NULL, raster.dpi = 300,
-  shuffle.colors = FALSE, keep.limits = !is.null(subgroups), ...)
+embeddingPlot(
+  embedding,
+  groups = NULL,
+  colors = NULL,
+  subgroups = NULL,
+  plot.na = is.null(subgroups),
+  min.cluster.size = 0,
+  mark.groups = TRUE,
+  show.legend = FALSE,
+  alpha = 0.4,
+  size = 0.8,
+  title = NULL,
+  plot.theme = NULL,
+  palette = NULL,
+  color.range = "symmetric",
+  font.size = c(3, 7),
+  show.ticks = FALSE,
+  show.labels = FALSE,
+  legend.position = NULL,
+  legend.title = NULL,
+  gradient.range.quantile = 1,
+  raster = FALSE,
+  raster.width = NULL,
+  raster.height = NULL,
+  raster.dpi = 300,
+  shuffle.colors = FALSE,
+  keep.limits = !is.null(subgroups),
+  ...
+)
 }
 \arguments{
 \item{embedding}{two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors}
 
-\item{groups}{vector of cluster labels, names contain cell names}
+\item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
-\item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names. This argument is ignored if groups are provided.}
+\item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names. (default=NULL) This argument is ignored if groups are provided.}
 
-\item{subgroups}{subset of 'groups', selecting the cells for plot. Ignored if 'groups' is NULL}
+\item{subgroups}{subset of 'groups', selecting the cells for plot. (default=NULL) Ignored if 'groups' is NULL}
 
-\item{plot.na}{plot points, for which groups / colors are missed (TRUE / FALSE)}
+\item{plot.na}{boolean whether to plot points, for which groups / colors are missed (default=FALSE) This argument is FALSE if 'subgroups' is NULL}
 
-\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed. This argument is ignored if groups aren't provided}
+\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed. (default=0) This argument is ignored if groups aren't provided}
 
-\item{mark.groups}{plot cluster labels above points}
+\item{mark.groups}{plot cluster labels above points (default=TRUE)}
 
-\item{show.legend}{show legend}
+\item{show.legend}{show legend (default=FALSE)}
 
-\item{alpha}{opacity level [0; 1]}
+\item{alpha}{opacity level [0, 1] (default=0.4)}
 
-\item{size}{point size}
+\item{size}{point size (default=0.8)}
 
-\item{title}{plot title}
+\item{title}{plot title (default=NULL)}
 
-\item{plot.theme}{theme for the plot}
+\item{plot.theme}{theme for the plot (default=NULL)}
 
-\item{palette}{function, which accepts number of colors and return list of colors (i.e. see colorRampPalette)}
+\item{palette}{function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL)}
 
-\item{color.range}{controls range, in which colors are estimated. Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
+\item{color.range}{controls range, in which colors are estimated. (default="symmetric") Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
 
 \item{font.size}{font size for cluster labels. It can either be single number for constant font size or pair (min, max) for font size depending on cluster size}
 
-\item{show.ticks}{show ticks and tick labels}
+\item{show.ticks}{show ticks and tick labels (default=FALSE)}
 
-\item{legend.position}{vector with (x, y) positions of the legend}
+\item{legend.position}{vector with (x, y) positions of the legend (default=NULL)}
 
-\item{legend.title}{legend title}
+\item{legend.title}{legend title (default=NULL)}
 
-\item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient}
+\item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
 
-\item{raster}{should layer with the points be rasterized (TRUE/ FALSE)? Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
+\item{raster}{boolean whether layer with the points be rasterized (default=FALSE) Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
 
-\item{raster.width}{width of the plot in inches. Ignored if raster == FALSE.}
+\item{raster.width}{width of the plot in inches. (default=NULL) Ignored if raster == FALSE.}
 
-\item{raster.height}{height of the plot in inches. Ignored if raster == FALSE.}
+\item{raster.height}{height of the plot in inches. (default=NULL) Ignored if raster == FALSE.}
 
-\item{raster.dpi}{dpi of the rasterized plot. Ignored if raster == FALSE.}
+\item{raster.dpi}{dpi of the rasterized plot. (default=300) Ignored if raster == FALSE.}
 
-\item{shuffle.colors}{shuffle colors}
+\item{shuffle.colors}{shuffle colors (default=FALSE)}
 
-\item{keep.limits}{Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=F}
+\item{keep.limits}{Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=FALSE}
 
-\item{...}{Arguments passed on to \code{ggrepel::geom_label_repel}
-\describe{
-  \item{mapping}{Set of aesthetic mappings created by \code{\link[ggplot2]{aes}} or
+\item{...}{
+  Arguments passed on to \code{\link[ggrepel:geom_label_repel]{ggrepel::geom_label_repel}}
+  \describe{
+    \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2]{aes}} or
 \code{\link[ggplot2]{aes_}}. If specified and \code{inherit.aes = TRUE} (the
 default), is combined with the default mapping at the top level of the
 plot. You only need to supply \code{mapping} if there isn't a mapping
 defined for the plot.}
-  \item{data}{A data frame. If specified, overrides the default data frame
+    \item{\code{data}}{A data frame. If specified, overrides the default data frame
 defined at the top level of the plot.}
-  \item{stat}{The statistical transformation to use on the data for this
+    \item{\code{stat}}{The statistical transformation to use on the data for this
 layer, as a string.}
-  \item{position}{Position adjustment, either as a string, or the result of
+    \item{\code{position}}{Position adjustment, either as a string, or the result of
 a call to a position adjustment function.}
-  \item{parse}{If TRUE, the labels will be parsed into expressions and
+    \item{\code{parse}}{If TRUE, the labels will be parsed into expressions and
 displayed as described in ?plotmath}
-  \item{box.padding}{Amount of padding around bounding box, as unit or number.
+    \item{\code{box.padding}}{Amount of padding around bounding box, as unit or number.
 Defaults to 0.25. (Default unit is lines, but other units can be specified
 by passing \code{unit(x, "units")}).}
-  \item{label.padding}{Amount of padding around label, as unit or number.
+    \item{\code{label.padding}}{Amount of padding around label, as unit or number.
 Defaults to 0.25. (Default unit is lines, but other units can be specified
 by passing \code{unit(x, "units")}).}
-  \item{point.padding}{Amount of padding around labeled point, as unit or
+    \item{\code{point.padding}}{Amount of padding around labeled point, as unit or
 number. Defaults to 0. (Default unit is lines, but other units can be
 specified by passing \code{unit(x, "units")}).}
-  \item{label.r}{Radius of rounded corners, as unit or number. Defaults
+    \item{\code{label.r}}{Radius of rounded corners, as unit or number. Defaults
 to 0.15. (Default unit is lines, but other units can be specified by
 passing \code{unit(x, "units")}).}
-  \item{label.size}{Size of label border, in mm.}
-  \item{segment.colour}{Colour of the line segment. Defaults to the same colour
+    \item{\code{label.size}}{Size of label border, in mm.}
+    \item{\code{segment.colour}}{Colour of the line segment. Defaults to the same colour
 as the text. In the unlikely event you specify both US and UK spellings of colour, the
 US spelling will take precedence.}
-  \item{segment.color}{Colour of the line segment. Defaults to the same colour
+    \item{\code{segment.color}}{Colour of the line segment. Defaults to the same colour
 as the text. In the unlikely event you specify both US and UK spellings of colour, the
 US spelling will take precedence.}
-  \item{segment.size}{Width of line segment connecting the data point to
+    \item{\code{segment.size}}{Width of line segment connecting the data point to
 the text label, in mm.}
-  \item{segment.alpha}{Transparency of the line segment. Defaults to the same
+    \item{\code{segment.alpha}}{Transparency of the line segment. Defaults to the same
 transparency as the text.}
-  \item{min.segment.length}{Skip drawing segments shorter than this, as unit or
+    \item{\code{min.segment.length}}{Skip drawing segments shorter than this, as unit or
 number. Defaults to 0.5. (Default unit is lines, but other units can be
 specified by passing \code{unit(x, "units")}).}
-  \item{arrow}{specification for arrow heads, as created by \code{\link[grid]{arrow}}}
-  \item{force}{Force of repulsion between overlapping text labels. Defaults
+    \item{\code{arrow}}{specification for arrow heads, as created by \code{\link[grid]{arrow}}}
+    \item{\code{force}}{Force of repulsion between overlapping text labels. Defaults
 to 1.}
-  \item{max.iter}{Maximum number of iterations to try to resolve overlaps.
+    \item{\code{max.iter}}{Maximum number of iterations to try to resolve overlaps.
 Defaults to 2000.}
-  \item{nudge_x}{Horizontal and vertical adjustments to nudge the
+    \item{\code{nudge_x}}{Horizontal and vertical adjustments to nudge the
 starting position of each text label.}
-  \item{nudge_y}{Horizontal and vertical adjustments to nudge the
+    \item{\code{nudge_y}}{Horizontal and vertical adjustments to nudge the
 starting position of each text label.}
-  \item{xlim}{Limits for the x and y axes. Text labels will be constrained
+    \item{\code{xlim}}{Limits for the x and y axes. Text labels will be constrained
 to these limits. By default, text labels are constrained to the entire plot
 area.}
-  \item{ylim}{Limits for the x and y axes. Text labels will be constrained
+    \item{\code{ylim}}{Limits for the x and y axes. Text labels will be constrained
 to these limits. By default, text labels are constrained to the entire plot
 area.}
-  \item{na.rm}{If \code{FALSE} (the default), removes missing values with
+    \item{\code{na.rm}}{If \code{FALSE} (the default), removes missing values with
 a warning.  If \code{TRUE} silently removes missing values.}
-  \item{show.legend}{logical. Should this layer be included in the legends?
-\code{NA}, the default, includes if any aesthetics are mapped.
-\code{FALSE} never includes, and \code{TRUE} always includes.}
-  \item{direction}{"both", "x", or "y" -- direction in which to adjust position of labels}
-  \item{seed}{Random seed passed to \code{\link[base]{set.seed}}. Defaults to
+    \item{\code{direction}}{"both", "x", or "y" -- direction in which to adjust position of labels}
+    \item{\code{seed}}{Random seed passed to \code{\link[base]{set.seed}}. Defaults to
 \code{NA}, which means that \code{set.seed} will not be called.}
-  \item{inherit.aes}{If \code{FALSE}, overrides the default aesthetics,
+    \item{\code{inherit.aes}}{If \code{FALSE}, overrides the default aesthetics,
 rather than combining with them. This is most useful for helper functions
 that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2]{borders}}.}
-}}
+  }}
 }
 \value{
 ggplot2 object
