@@ -14,14 +14,19 @@ NULL
 #' @export
 plapply <- function(..., n.cores=1, progress=FALSE, mc.preschedule=TRUE, mc.allow.recursive=TRUE) {
   if (progress && requireNamespace("pbapply", quietly=TRUE)) {
-    return(pbapply::pblapply(..., cl=n.cores))
+    res <- pbapply::pblapply(..., cl=n.cores)
+  } else if ((n.cores == 1) || !requireNamespace("parallel", quietly=TRUE)) {
+  	res <- lapply(...)
+  } else {
+    res <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
   }
 
-  if ((n.cores == 1) || !requireNamespace("parallel", quietly=TRUE)) {
-  	return(lapply(...))
+  is.error <- sapply(res, function(x) "try-error" %in% class(x))
+  if (any(is.error)) {
+    stop(paste("Errors in papply:", result[is.error]))
   }
 
-  return(parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive))
+  return(res)
 }
 
 
