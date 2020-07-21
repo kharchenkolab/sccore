@@ -98,18 +98,23 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
     zlim <- range(na.omit(values))
   }
 
-  # symmetrize the range if needed
+  ## Symmetrize the range for vectors that span 0.
+  ## Vectors that are squarely in the positive or negative territory are not symmetrized.
   if(length(color.range)==1 && color.range=='symmetric') {
     if(prod(zlim)<0) {
       zlim <- c(-1,1)*max(abs(zlim))
-    } else {
     }
   }
-  if(is.null(midpoint)) midpoint <- sum(zlim)/2;
+  if(is.null(midpoint)){
+    midpoint <- sum(zlim)/2
+  }
 
   # pick a palette and return
   if(is.null(palette)) {
-    if(zlim[2]<0) { 
+    if (max(abs(zlim))==0) {
+      ## if gene counts all 0, then simply plot all cells as "gray90"
+      ggplot2::scale_color_gradient(low="gray90", high="gray90", limits=zlim, ...)
+    } else if(zlim[2]<0) { 
       if(return.fill) {
         ggplot2::scale_fill_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
       } else {
