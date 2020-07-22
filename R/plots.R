@@ -120,7 +120,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
       } else {
         ggplot2::scale_color_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
       }
-    } else if(zlim[1]>0) {
+    } else if(zlim[1]>=0) {
       if(return.fill) {
         ggplot2::scale_fill_gradient(low="gray90", high="red", limits=zlim, oob=oob,  ...)
       } else {
