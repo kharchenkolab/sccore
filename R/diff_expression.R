@@ -10,7 +10,7 @@
 #' @param append.auc (default=FALSE)
 #' @return de.df
 #' @export
-appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, low.expression.threshold=0, append.auc=FALSE) {
+appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts, low.expression.threshold=0, append.auc=FALSE) {
   
   if (length(de.df) == 0 || nrow(de.df) == 0) {
     return(de.df)
