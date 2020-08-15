@@ -14,7 +14,7 @@ NULL
 #'
 #' @return list, as returned by lapply
 #' @export
-papply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE) {
+plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE) {
   if (progress && requireNamespace("pbapply", quietly=TRUE)) {
     result <- pbapply::pblapply(..., cl=n.cores)
   } else if(n.cores>1) {
@@ -26,7 +26,7 @@ papply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.pres
 
   is.error <- (sapply(result, class) == "try-error")
   if (any(is.error)) {
-    stop(paste("Errors in papply:", result[is.error]))
+    stop(paste("Errors in plapply:", result[is.error]))
   }
 
   return(result)
