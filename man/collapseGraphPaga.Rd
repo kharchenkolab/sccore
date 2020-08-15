@@ -16,6 +16,9 @@ collapseGraphPaga(graph, groups, linearize = TRUE, winsorize = FALSE)
 \item{winsorize}{winsorize final connectivity statistics value. (default=FALSE) Note: Original PAGA has it always `TRUE`,
 but in this case there is no way to distinguish level of connectivity for highly connected groups.}
 }
+\value{
+collapsed graph
+}
 \description{
 Collapse graph using PAGA 1.2 algorithm
 }

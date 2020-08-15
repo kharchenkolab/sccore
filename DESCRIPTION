@@ -13,19 +13,18 @@ Imports:
     igraph,
     tibble,
     dplyr, 
-    pROC
-RoxygenNote: 7.1.0
+    pROC, 
+    parallel
+RoxygenNote: 7.1.1
 Depends: 
     Matrix
 Suggests: 
     ggrastr (>= 0.1.7),
-    pbapply,
-    parallel
+    pbapply
 Remotes: 
     VPetukhov/ggrastr
-URL: https://github.com/hms-dbmi/sccore
-BugReports: https://github.com/hms-dbmi/sccore/issues
+URL: https://github.com/kharchenkolab/sccore
+BugReports: https://github.com/kharchenkolab/sccore
 NeedsCompilation: no
 Author: Peter Kharchenko [aut, cre], Viktor Petukhov [aut], Evan Biederstedt [aut]
 Maintainer: Evan Biederstedt <evan.biederstedt@gmail.com>
-

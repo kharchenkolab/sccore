@@ -20,6 +20,9 @@ appendSpecificityMetricsToDE(
 
 \item{append.auc}{(default=FALSE)}
 }
+\value{
+de.df
+}
 \description{
 Append specificity metrics to DE
 }
