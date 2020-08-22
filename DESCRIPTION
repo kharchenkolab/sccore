@@ -1,12 +1,12 @@
 Package: sccore
 Title: Core utilities for single-cell RNA-seq
 Version: 0.1
-Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = c("aut", "cre")),
-             person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"))
-Description: Core utilities for single-cell RNA-seq data analysis. Contains functions for manipulating and plotting data via ggplot2, 
+Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = "aut"), person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"), person("Evan","Biederstedt", email="evan.biederstedt@gmail.com", role=c("cre", "aut")))
+Description: Core utilities for single-cell RNA-seq data analysis. Contains functions for manipulating and plotting data via ggplot2.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
+Depends: 
+    Matrix
 Imports:
     ggplot2,
     magrittr,
@@ -14,18 +14,18 @@ Imports:
     tibble,
     dplyr, 
     pROC
-RoxygenNote: 7.1.0
-Depends: 
-    Matrix
 Suggests: 
     ggrastr (>= 0.1.7),
     pbapply,
     parallel
 Remotes: 
     VPetukhov/ggrastr
-URL: https://github.com/hms-dbmi/sccore
-BugReports: https://github.com/hms-dbmi/sccore/issues
-NeedsCompilation: no
-Author: Peter Kharchenko [aut, cre], Viktor Petukhov [aut], Evan Biederstedt [aut]
+VignetteBuilder: knitr
+LazyData: true
+RoxygenNote: 7.1.1
+LinkingTo: Rcpp, RcppProgress, igraph
+NeedsCompilation: yes
+URL: https://github.com/kharchenkolab/sccore
+BugReports: https://github.com/kharchenkolab/sccore/issues
+Author: Peter Kharchenko [aut], Viktor Petukhov [aut], Evan Biederstedt [aut, cre]
 Maintainer: Evan Biederstedt <evan.biederstedt@gmail.com>
-
