@@ -22,7 +22,6 @@ Suggests:
     parallel
 Remotes: 
     VPetukhov/ggrastr
-VignetteBuilder: knitr
 LazyData: true
 RoxygenNote: 7.1.1
 LinkingTo: Rcpp, RcppProgress, igraph
