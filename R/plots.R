@@ -60,8 +60,8 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
     return(palette(length(levels(groups))))
   }
 
-  if (is.list(palette)) { 
-    palette <- setNames(unlist(palette),names(palette)) 
+  if (is.list(palette)) {
+    palette <- setNames(unlist(palette),names(palette))
   }
   if (is.vector(palette)) {
     if (any(levels(groups) %in% names(palette))) {
@@ -82,7 +82,7 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
 ##' @title val2ggcol
 ##' @param values values by which the color gradient is determined
 ##' @param gradient.range.quantile trimming quantile (either a single number or two numbers - for lower and upper quantile)
-##' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or "symmetric" - range will fit data, but will be symmetrized around zeros; "all" - gradient will match the span of the range of the data (after gradient.range.quantile); 
+##' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or "symmetric" - range will fit data, but will be symmetrized around zeros; "all" - gradient will match the span of the range of the data (after gradient.range.quantile);
 ##' @param palette an optinoal palette fucntion; Default is blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used
 ##' @param midpoint optional midpoint (set for th center of the resulting range by default)
 ##' @param oob function to determine what to do with the values outside of the range (default is scales::squish), see oob parameter in ggplot
@@ -100,11 +100,16 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 
   ## Symmetrize the range for vectors that span 0.
   ## Vectors that are squarely in the positive or negative territory are not symmetrized.
-  if(length(color.range)==1 && color.range=='symmetric') {
+  if(length(color.range)==1) {
+    if (color.range != 'symmetric')
+      stop("Can't parse color.range: ", color.range)
     if(prod(zlim)<0) {
       zlim <- c(-1,1)*max(abs(zlim))
     }
+  } else if (!is.null(color.range)) {
+    zlim <- color.range
   }
+
   if(is.null(midpoint)){
     midpoint <- sum(zlim)/2
   }
@@ -114,7 +119,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
     if (max(abs(zlim))==0) {
       ## if gene counts all 0, then simply plot all cells as "gray90"
       ggplot2::scale_color_gradient(low="gray90", high="gray90", limits=zlim, ...)
-    } else if(zlim[2]<0) { 
+    } else if(zlim[2]<0) {
       if(return.fill) {
         ggplot2::scale_fill_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
       } else {
@@ -144,7 +149,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 
 
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
-  
+
   groups <- as.factor(groups)
 
   plot.df$Group <- factor(NA, levels=levels(groups))
@@ -263,13 +268,13 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param subgroups subset of 'groups', selecting the cells for plot. (default=NULL) Ignored if 'groups' is NULL
 #' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE) This argument is FALSE if 'subgroups' is NULL
 #' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed. (default=0) This argument is ignored if groups aren't provided
-#' @param mark.groups plot cluster labels above points (default=TRUE) 
+#' @param mark.groups plot cluster labels above points (default=TRUE)
 #' @param show.legend show legend (default=FALSE)
-#' @param alpha opacity level [0, 1] (default=0.4) 
-#' @param size point size (default=0.8) 
-#' @param title plot title (default=NULL) 
-#' @param plot.theme theme for the plot (default=NULL) 
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL) 
+#' @param alpha opacity level [0, 1] (default=0.4)
+#' @param size point size (default=0.8)
+#' @param title plot title (default=NULL)
+#' @param plot.theme theme for the plot (default=NULL)
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL)
 #' @param color.range controls range, in which colors are estimated. (default="symmetric") Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
 #' @param font.size font size for cluster labels. It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
 #' @param show.ticks show ticks and tick labels (default=FALSE)
@@ -375,7 +380,7 @@ dotPlot <- function (markers,
                      xlab = "Marker",
                      ylab = "Cluster",
                      ...) {
-  
+
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
   if (!is.character(markers)) {
     stop("'markers' must be a character vector.")
@@ -407,7 +412,7 @@ dotPlot <- function (markers,
   }
 
   # Adapted from Seurat:::DotPlot
-  if (verbose) { 
+  if (verbose) {
     cat("Calculating expression distributions...\n")
   }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {
