@@ -14,15 +14,16 @@ Imports:
     tibble,
     dplyr, 
     pROC, 
+    parallel
+RoxygenNote: 7.1.1
+Depends: 
+    Matrix
     Rcpp, 
     RcppProgress, 
     RcppEigen
 Suggests: 
     ggrastr (>= 0.1.7),
-    pbapply,
-    parallel
-Remotes: 
-    VPetukhov/ggrastr
+    pbapply
 LazyData: true
 RoxygenNote: 7.1.1
 LinkingTo: Rcpp, RcppProgress, RcppEigen, igraph

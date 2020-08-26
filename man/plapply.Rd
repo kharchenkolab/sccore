@@ -6,16 +6,20 @@
 \usage{
 plapply(
   ...,
-  n.cores = 1,
   progress = FALSE,
-  mc.preschedule = TRUE,
-  mc.allow.recursive = TRUE
+  n.cores = parallel::detectCores(),
+  mc.preschedule = FALSE
 )
 }
 \arguments{
+\item{progress}{Show progress bar via pbapply (default=FALSE)}
+
 \item{n.cores}{Number of cores to use (default=1)}
 
-\item{progress}{Show progress bar (default=FALSE)}
+\item{mc.preschedule}{See ?parllel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.}
+}
+\value{
+list, as returned by lapply
 }
 \value{
 list, as returned by lapply
