@@ -21,6 +21,9 @@ plapply(
 \value{
 list, as returned by lapply
 }
+\value{
+list, as returned by lapply
+}
 \description{
 Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 }
