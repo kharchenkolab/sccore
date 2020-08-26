@@ -106,7 +106,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #'
 #' @description Collapse vertices belonging to each cluster in a graph
 #'
-#' @param graph igraph graph object Graph to be collapsed
+#' @param graph igraph graph object Graph input
 #' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
 #' @param method string Method to be used, either "sum" or "paga" (default="sum")
 #' @param plot boolean Whether to show collapsed graph plot (default=FALSE)
@@ -147,7 +147,7 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
     if(is.factor(groups)) {
       groups <- groups[V(g)$name]
     } else {
-      groups <- as.factor(setNames(as.character(groups[V(g)$name]),V(g)$name))
+      groups <- as.factor(stats::setNames(as.character(groups[V(g)$name]),V(g)$name))
     }
   }
 
@@ -189,7 +189,7 @@ propagateLabels=function(labels, method="diffusion", ...) {
   labels <- colnames(label.dist)[apply(label.dist, 1, which.max)] %>%
     stats::setNames(rownames(label.dist))
 
-  confidence <- apply(label.dist, 1, max) %>% setNames(rownames(label.dist))
+  confidence <- apply(label.dist, 1, max) %>% stats::setNames(rownames(label.dist))
 
   return(list(labels=labels, uncertainty=(1 - confidence), label.distribution=label.dist))
 }
@@ -200,8 +200,9 @@ propagateLabels=function(labels, method="diffusion", ...) {
 
 #' Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
 #' 
-#' @param graph igraph object Input graph 
+#' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
+#' @param solver (default="mumps")
 propagateLabelsSolver <- function(graph, labels, solver="mumps") {
   if (!solver %in% c("mumps", "Matrix"))
     stop("Unknown solver: ", solver, ". Only 'mumps' and 'Matrix' are currently supported")
@@ -241,15 +242,16 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
     
 #' Estimate labeling distribution for each vertex, based on provided labels using Random Walk
 #'
-#' @param graph igraph object Input graph 
+#' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
 #' @param max.iters integer Maximal number of iterations. (default=100)
 #' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
 #' @param verbose boolean Verbose mode. (default=TRUE)
-#' @param fixed.initial.labels: prohibit changes of initial labels during diffusion. Default: TRUE.
+#' @param fixed.initial.labels: prohibit changes of initial labels during diffusion. (default=TRUE)
+#' @return matrix
 propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fading=10.0, diffusion.fading.const=0.1, tol=0.025, fixed.initial.labels=TRUE, verbose=TRUE) {
   if (is.factor(labels)) {
-    labels <- as.character(labels) %>% setNames(names(labels))
+    labels <- as.character(labels) %>% stats::setNames(names(labels))
   }
 
   edges <- igraph::as_edgelist(graph)
