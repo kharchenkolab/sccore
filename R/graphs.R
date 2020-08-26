@@ -165,3 +165,28 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
   return(invisible(gcon))
 
 }
+
+#' @description  Estimate labeling distribution for each vertex, based on provided labels.
+#'
+#' @param method type of propagation. Either 'diffusion' or 'solver'. 'solver' gives better result
+#'  but has bad asymptotics, so is inappropriate for datasets > 20k cells. Default: 'diffusion.'
+#' @param ... additional arguments for conos:::propagateLabels* functions
+#' @return matrix with distribution of label probabilities for each vertex by rows.
+propagateLabels=function(labels, method="diffusion", ...) {
+  if (method == "solver") {
+    label.dist <- propagateLabelsSolver(self$graph, labels, ...)
+  } else if (method == "diffusion") {
+    label.dist <- propagateLabelsDiffusion(self$graph, labels, ...)
+  } else {
+    stop("Unknown method: ", method, ". Only 'solver' and 'diffusion' are supported.")
+  }
+
+  labels <- colnames(label.dist)[apply(label.dist, 1, which.max)] %>%
+    setNames(rownames(label.dist))
+
+  confidence <- apply(label.dist, 1, max) %>% setNames(rownames(label.dist))
+
+  return(list(labels=labels, uncertainty=(1 - confidence), label.distribution=label.dist))
+}
+
+    

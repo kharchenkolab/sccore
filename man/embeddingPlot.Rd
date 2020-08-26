@@ -86,7 +86,7 @@ embeddingPlot(
 \item{keep.limits}{Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=FALSE}
 
 \item{...}{
-  Arguments passed on to \code{\link[ggrepel:geom_label_repel]{ggrepel::geom_label_repel}}
+  Arguments passed on to \code{\link[ggrepel:geom_text_repel]{ggrepel::geom_label_repel}}
   \describe{
     \item{\code{mapping}}{Set of aesthetic mappings created by \code{\link[ggplot2]{aes}} or
 \code{\link[ggplot2]{aes_}}. If specified and \code{inherit.aes = TRUE} (the

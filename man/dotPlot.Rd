@@ -34,13 +34,13 @@ dotPlot(
 
 \item{cell.groups}{Named factor containing cell groups (clusters) and cell names}
 
-\item{marker.colour}{Character or numeric vector}
+\item{marker.colour}{Character or numeric vector (default="black")}
 
-\item{cluster.colour}{Character or numeric vector}
+\item{cluster.colour}{Character or numeric vector (default="black")}
 
-\item{xlab}{X axis title}
+\item{xlab}{X axis title (default="Marker")}
 
-\item{ylab}{Y axis title}
+\item{ylab}{Y axis title (default="Cluster")}
 
 \item{...}{Additional input to sccore:::plapply, see man for description.}
 }
