@@ -21,7 +21,8 @@ Depends:
     RcppEigen
 Suggests: 
     ggrastr (>= 0.1.7),
-    pbapply
+    pbapply, 
+    rmumps
 RoxygenNote: 7.1.1
 LinkingTo: Rcpp, RcppProgress, RcppEigen, igraph
 NeedsCompilation: yes

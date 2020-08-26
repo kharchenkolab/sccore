@@ -16,7 +16,7 @@ appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts,
     return(de.df)
   }
 
-  cluster.mask <- setNames(clusters == cluster.id, names(clusters))
+  cluster.mask <- stats::setNames(clusters == cluster.id, names(clusters))
 
   if (!any(cluster.mask)) {
     stop("Cluster ", cluster.id, " not presented in the data")

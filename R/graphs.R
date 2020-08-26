@@ -3,8 +3,8 @@ NULL
 
 #' Collapse Graph PAGA
 #' 
-#' @description Collapse graph using PAGA 1.2 algorithm
-#' @param graph graph to be collapsed
+#' @description Collapse graph using PAGA 1.2 algorithm, Wolf et al 2019, Genome Biology (2019) <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x>
+#' @param graph igraph graph object Graph to be collapsed
 #' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
 #' @param linearize should normally be always `TRUE` (default=TRUE)
 #' @param winsorize winsorize final connectivity statistics value. (default=FALSE) Note: Original PAGA has it always `TRUE`,
@@ -74,6 +74,8 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
 #' Collapse Graph By Sum
 #'
+#' @param graph igraph graph object Graph to be collapsed
+#' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
 #' @param normalize boolean whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @inheritParams collapseGraphPaga
 #' @return collapsed graph
@@ -104,8 +106,10 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #'
 #' @description Collapse vertices belonging to each cluster in a graph
 #'
-#' @param plot whether to show collapsed graph plot
-#' @param method either "sum" or "paga" (default="sum")
+#' @param graph igraph graph object Graph to be collapsed
+#' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
+#' @param method string Method to be used, either "sum" or "paga" (default="sum")
+#' @param plot boolean Whether to show collapsed graph plot (default=FALSE)
 #' @inheritParams collapseGraphPaga
 #' @return collapsed graph
 #' @export
@@ -168,9 +172,10 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
 
 #' @description  Estimate labeling distribution for each vertex, based on provided labels.
 #'
-#' @param method type of propagation. Either 'diffusion' or 'solver'. 'solver' gives better result
-#'  but has bad asymptotics, so is inappropriate for datasets > 20k cells. Default: 'diffusion.'
-#' @param ... additional arguments for conos:::propagateLabels* functions
+#' @param labels vector of factor or character labels, named by cell names, used in propagateLabelsSolver() and propagateLabelsDiffusion()
+#' @param method string Type of propagation. Either 'diffusion' or 'solver'. (default='diffusion') 'solver' gives better result
+#'  but has bad asymptotics, so it is inappropriate for datasets > 20k cells. 
+#' @param ... additional arguments for propagateLabelsSolver() and propagateLabelsDiffusion()
 #' @return matrix with distribution of label probabilities for each vertex by rows.
 propagateLabels=function(labels, method="diffusion", ...) {
   if (method == "solver") {
@@ -182,11 +187,77 @@ propagateLabels=function(labels, method="diffusion", ...) {
   }
 
   labels <- colnames(label.dist)[apply(label.dist, 1, which.max)] %>%
-    setNames(rownames(label.dist))
+    stats::setNames(rownames(label.dist))
 
   confidence <- apply(label.dist, 1, max) %>% setNames(rownames(label.dist))
 
   return(list(labels=labels, uncertainty=(1 - confidence), label.distribution=label.dist))
 }
 
+
+
+
+
+#' Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
+#' 
+#' @param graph igraph object Input graph 
+#' @param labels vector of factor or character labels, named by cell names
+propagateLabelsSolver <- function(graph, labels, solver="mumps") {
+  if (!solver %in% c("mumps", "Matrix"))
+    stop("Unknown solver: ", solver, ". Only 'mumps' and 'Matrix' are currently supported")
+
+  if (!requireNamespace("rmumps", quietly=T)) {
+    warning("Package 'rmumps' is required to use 'mumps' solver. Fall back to 'Matrix'")
+    solver <- "Matrix"
+  }
+
+  adj.mat <- igraph::as_adjacency_matrix(graph, attr="weight")
+  labeled.cbs <- intersect(colnames(adj.mat), names(labels))
+  unlabeled.cbs <- setdiff(colnames(adj.mat), names(labels))
+
+  labels <- as.factor(labels[labeled.cbs])
+
+  weight.sum.mat <- Matrix::Diagonal(x=Matrix::colSums(adj.mat)) %>%
+    `dimnames<-`(dimnames(adj.mat))
+
+  laplasian.uu <- (weight.sum.mat[unlabeled.cbs, unlabeled.cbs] - adj.mat[unlabeled.cbs, unlabeled.cbs])
+
+  type.scores <- Matrix::sparseMatrix(i=1:length(labels), j=as.integer(labels), x=1.0) %>%
+    `colnames<-`(levels(labels)) %>% `rownames<-`(labeled.cbs)
+
+  right.side <- Matrix::drop0(adj.mat[unlabeled.cbs, labeled.cbs] %*% type.scores)
+
+  if (solver == "Matrix") {
+    res <- Matrix::solve(laplasian.uu, right.side)
+  } else {
+    res <- rmumps::Rmumps$new(laplasian.uu, copy=FALSE)$solve(right.side)
+  }
+
+  colnames(res) <- levels(labels)
+  rownames(res) <- unlabeled.cbs
+  return(rbind(res, type.scores))
+}
+
     
+#' Estimate labeling distribution for each vertex, based on provided labels using Random Walk
+#'
+#' @param graph igraph object Input graph 
+#' @param labels vector of factor or character labels, named by cell names
+#' @param max.iters integer Maximal number of iterations. (default=100)
+#' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
+#' @param verbose boolean Verbose mode. (default=TRUE)
+#' @param fixed.initial.labels: prohibit changes of initial labels during diffusion. Default: TRUE.
+propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fading=10.0, diffusion.fading.const=0.1, tol=0.025, fixed.initial.labels=TRUE, verbose=TRUE) {
+  if (is.factor(labels)) {
+    labels <- as.character(labels) %>% setNames(names(labels))
+  }
+
+  edges <- igraph::as_edgelist(graph)
+  edge.weights <- igraph::edge.attributes(graph)$weight
+  labels <- labels[intersect(names(labels), igraph::vertex.attributes(graph)$name)]
+  label.distribution <- propagate_labels(edges, edge.weights, vert_labels=labels, max_n_iters=max.iters, verbose=verbose,
+                                         diffusion_fading=diffusion.fading, diffusion_fading_const=diffusion.fading.const,
+                                         tol=tol, fixed_initial_labels=fixed.initial.labels)
+  return(label.distribution)
+}
+
