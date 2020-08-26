@@ -1,6 +1,5 @@
 #' Append specificity metrics to DE
 #'
-#' @description Append specificity metrics to DE
 #' @param de.df 
 #' @param clusters
 #' @param cluster.id

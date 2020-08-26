@@ -76,19 +76,18 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   }
 }
 
-##' Helper function to return a ggplot color gradient for a numeric vector
-##'
-##' ggplot(aes(color=x, ...), ...) + val2ggcol(x)
-##' @title val2ggcol
-##' @param values values by which the color gradient is determined
-##' @param gradient.range.quantile trimming quantile (either a single number or two numbers - for lower and upper quantile)
-##' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or "symmetric" - range will fit data, but will be symmetrized around zeros; "all" - gradient will match the span of the range of the data (after gradient.range.quantile); 
-##' @param palette an optinoal palette fucntion; Default is blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used
-##' @param midpoint optional midpoint (set for th center of the resulting range by default)
-##' @param oob function to determine what to do with the values outside of the range (default is scales::squish), see oob parameter in ggplot
-##' @param return.fill wheter to return fill gradients instead of color
-##' @param ... additional arguments are passed to ggplot2::scale_color_gradient* functions
-##' @return ggplot2::scale_colour_gradient* object
+#' Helper function to return a ggplot color gradient for a numeric vector
+#' ggplot(aes(color=x, ...), ...) + val2ggcol(x)
+#'
+#' @param values values by which the color gradient is determined
+#' @param gradient.range.quantile numeric Trimming quantile (default=1) Either a single number or two numbers - for lower and upper quantile.
+#' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or string "symmetric" or "all" (default="symmetric") "symmetric": range will fit data, but will be symmetrized around zeros, "all": gradient will match the span of the range of the data (after gradient.range.quantile)
+#' @param palette an optional palette fucntion (default=NULL). The default becomes blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used
+#' @param midpoint optional midpoint (default=NULL) Set for the center of the resulting range by default
+#' @param oob function to determine what to do with the values outside of the range (default =scales::squish). Refer to 'oob' parameter in ggplot
+#' @param return.fill boolean Whether to return fill gradients instead of color (default=FALSE)
+#' @param ... additional arguments are passed to ggplot2::scale_color_gradient* functions, i.e. scale_color_gradient(), scale_color_gradient2(), scale_color_gradientn()
+#' @return ggplot2::scale_colour_gradient* object
 val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric', palette=NULL, midpoint=NULL, oob=scales::squish, return.fill=FALSE,  ...) {
   if(length(gradient.range.quantile)>1) { # min/max quantile is given
     zlim <- as.numeric(quantile(values,p=gradient.range.quantile,na.rm=TRUE))
@@ -190,7 +189,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   if (shuffle.colors) {
     color.vals <- sample(color.vals)
   }
-  gg <- gg + ggplot2::scale_color_manual(name=legend.title, values=color.vals, labels=levels(groups), drop=F) +
+  gg <- gg + ggplot2::scale_color_manual(name=legend.title, values=color.vals, labels=levels(groups), drop=FALSE) +
     ggplot2::guides(color=ggplot2::guide_legend(override.aes=list(alpha=1.0)))
 
   return(list(gg=gg, na.plot.df=na.plot.df))
@@ -342,9 +341,9 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
   return(gg)
 }
 
-#' Dot plot for group markers
+
+#' Dot plot adapted from Seurat:::DotPlot, see man for description.
 #'
-#' @description Dot plot adapted from Seurat:::DotPlot, see man for description.
 #' @param markers Vector of gene markers to plot
 #' @param count.matrix Merged count matrix, e.g., through conos.obj$getJointCountMatrix()
 #' @param cell.groups Named factor containing cell groups (clusters) and cell names

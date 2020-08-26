@@ -1,10 +1,10 @@
 #' @importFrom magrittr %>% %<>% %$%
+#' @import igraph
 NULL
 
 
-#' Parallel lapply
+#' Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 #'
-#' @description Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 #' @param progress Show progress bar via pbapply (default=FALSE)
 #' @param n.cores Number of cores to use (default=1)
 #' @param mc.preschedule See ?parllel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.
@@ -33,9 +33,8 @@ plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.pre
 }
 
 
-#' Set range for values in object
+#' Set range for values in object. Changes values outside of range to min or max. Adapted from Seurat::MinMax
 #'
-#' @description Changes values outside of range to min or max. Adapted from Seurat::MinMax
 #' @param obj Object to manipulate
 #' @param min Minimum value
 #' @param max Maximum value
@@ -52,7 +51,14 @@ setMinMax <- function(obj, min, max) {
 }
 
 
-# translate multilevel segmentation into a dendrogram, with the lowest level of the dendrogram listing the cells
+#' Translate multilevel segmentation into a dendrogram, with the lowest level of the dendrogram listing the cells
+#'
+#' @param cl
+#' @param counts
+#' @param deep (default=FALSE)
+#' @param dist (default='cor')
+#' @return result
+#' @export
 multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
   if(deep) {
     clf <- as.integer(cl$memberships[1,]); # take the lowest level
@@ -91,12 +97,12 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
 #'
 #' @param con conos object
 #' @param target.clusters clusters for which the resolution should be increased
-#' @param clustering name of clustering in the conos object to use. Either 'clustering' or 'groups' must be provided. Default: NULL
-#' @param groups set of clusters to use. Ignored if 'clustering' is not NULL. Default: NULL
-#' @param method function, used to find communities. Default: leiden.community
+#' @param clustering name of clustering in the conos object to use (default=NULL) Either 'clustering' or 'groups' must be provided.
+#' @param groups set of clusters to use (default=NULL) Ignored if 'clustering' is not NULL.
+#' @param method function, used to find communities (default=igraph::cluster_louvain)
 #' @param ... additional params passed to the community function
 #' @export
-findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NULL, method=leiden.community, ...) {
+findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NULL, method=igraph::cluster_louvain, ...) {
   groups <- parseCellGroups(con, clustering, groups)
 
   groups.raw <- as.character(groups) %>% setNames(names(groups))
@@ -124,7 +130,12 @@ findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NUL
 }
 
 
-##' Merge into a common matrix, entering 0s for the missing ones
+#' Merge into a common matrix, entering 0s for the missing entries
+#'
+#' @param cms List of count matrices
+#' @param transposed boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)
+#' @return A merged extended matrix, with 0s for missing entries
+#' @export 
 mergeCountMatrices <- function(cms, transposed=FALSE) {
   extendMatrix <- function(mtx, col.names) {
     new.names <- setdiff(col.names, colnames(mtx))

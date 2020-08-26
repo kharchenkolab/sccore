@@ -1,6 +1,5 @@
-#' setNames wrapper function
+#' Set names equal to values, a stats::setNames wrapper function
 #'
-#' @description Set names equal to values
 #' @param x an object for which names attribute will be meaningful 
 #' @return An object with names assigned equal to values
 #' @examples
@@ -11,9 +10,8 @@
 sn <- function(x) {stats::setNames(x, x)}
 
 
-#' Include new columns in matrix
+#' Extend matrix to include new columns in matrix
 #'
-#' @description Extend matrix
 #' @param mtx Matrix
 #' @param col.names Columns that should be included in matrix
 #' @return A matrix
@@ -28,11 +26,10 @@ extendMatrix <- function(mtx, col.names) {
 
 #' Merge list of count matrices
 #'
-#' @description Merge count matrices
 #' @param cms List of count matrices
 #' @param transposed boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)
 #' @param ... Parameters for 'plapply' function
-#' @return A matrix
+#' @return A merged matrix
 #' @export
 mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   if (!transposed) {

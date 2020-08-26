@@ -1,13 +1,12 @@
 #' @import igraph
 NULL
 
-#' Collapse Graph PAGA
+#' Collapse graph using PAGA 1.2 algorithm, Wolf et al 2019, Genome Biology (2019) <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x>
 #' 
-#' @description Collapse graph using PAGA 1.2 algorithm, Wolf et al 2019, Genome Biology (2019) <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x>
 #' @param graph igraph graph object Graph to be collapsed
 #' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
 #' @param linearize should normally be always `TRUE` (default=TRUE)
-#' @param winsorize winsorize final connectivity statistics value. (default=FALSE) Note: Original PAGA has it always `TRUE`,
+#' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always `TRUE`,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
 #' @return collapsed graph
 #' @export
@@ -74,10 +73,8 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
 #' Collapse Graph By Sum
 #'
-#' @param graph igraph graph object Graph to be collapsed
-#' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
-#' @param normalize boolean whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @inheritParams collapseGraphPaga
+#' @param normalize boolean whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @return collapsed graph
 #' @export
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
@@ -102,15 +99,16 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
   return(gcon)
 }
 
-#' Get Cluster Graph
+
+#' Collapse vertices belonging to each cluster in a graph
 #'
-#' @description Collapse vertices belonging to each cluster in a graph
-#'
-#' @param graph igraph graph object Graph input
-#' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
+#' @inheritParams collapseGraphPaga
 #' @param method string Method to be used, either "sum" or "paga" (default="sum")
 #' @param plot boolean Whether to show collapsed graph plot (default=FALSE)
-#' @inheritParams collapseGraphPaga
+#' @param node.scale (default=50)
+#' @param edge.scale (default=50)
+#' @param edge.alpha (default=0.3) 
+#' @param ... arguments passed to collapseGraphSum()
 #' @return collapsed graph
 #' @export
 getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=50, edge.scale=50, edge.alpha=0.3, ...) {
@@ -170,13 +168,14 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
 
 }
 
-#' @description  Estimate labeling distribution for each vertex, based on provided labels.
+#' Estimate labeling distribution for each vertex, based on provided labels.
 #'
 #' @param labels vector of factor or character labels, named by cell names, used in propagateLabelsSolver() and propagateLabelsDiffusion()
 #' @param method string Type of propagation. Either 'diffusion' or 'solver'. (default='diffusion') 'solver' gives better result
 #'  but has bad asymptotics, so it is inappropriate for datasets > 20k cells. 
-#' @param ... additional arguments for propagateLabelsSolver() and propagateLabelsDiffusion()
+#' @param ... additional arguments passed to either propagateLabelsSolver() or propagateLabelsDiffusion()
 #' @return matrix with distribution of label probabilities for each vertex by rows.
+#' @export
 propagateLabels=function(labels, method="diffusion", ...) {
   if (method == "solver") {
     label.dist <- propagateLabelsSolver(self$graph, labels, ...)
@@ -203,11 +202,13 @@ propagateLabels=function(labels, method="diffusion", ...) {
 #' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
 #' @param solver (default="mumps")
+#' @return 
+#' @export
 propagateLabelsSolver <- function(graph, labels, solver="mumps") {
   if (!solver %in% c("mumps", "Matrix"))
     stop("Unknown solver: ", solver, ". Only 'mumps' and 'Matrix' are currently supported")
 
-  if (!requireNamespace("rmumps", quietly=T)) {
+  if (!requireNamespace("rmumps", quietly=TRUE)) {
     warning("Package 'rmumps' is required to use 'mumps' solver. Fall back to 'Matrix'")
     solver <- "Matrix"
   }
@@ -245,10 +246,13 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 #' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
 #' @param max.iters integer Maximal number of iterations. (default=100)
+#' @param diffusion.fading  (default=10.0)
+#' @param diffusion.fading.const (default=0.1)
 #' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
-#' @param verbose boolean Verbose mode. (default=TRUE)
 #' @param fixed.initial.labels: prohibit changes of initial labels during diffusion. (default=TRUE)
+#' @param verbose boolean Verbose mode. (default=TRUE)
 #' @return matrix
+#' @export
 propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fading=10.0, diffusion.fading.const=0.1, tol=0.025, fixed.initial.labels=TRUE, verbose=TRUE) {
   if (is.factor(labels)) {
     labels <- as.character(labels) %>% stats::setNames(names(labels))

@@ -7,13 +7,14 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    ggplot2,
-    magrittr,
-    igraph,
-    tibble,
     dplyr, 
+    ggplot2,
+    igraph,
+    magrittr,
     pROC, 
     parallel
+    scales,
+    tibble
 Depends: 
     Matrix,
     Rcpp, 

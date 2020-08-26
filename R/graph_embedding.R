@@ -1,4 +1,5 @@
-#' @description splitVectorByNodes
+#' splitVectorByNodes
+#' 
 #' @param vec
 #' @param nodes
 #' @param n.nodes
@@ -11,7 +12,8 @@ splitVectorByNodes <- function(vec, nodes, n.nodes) {
   return(res)
 }
 
-#' @description graphToAdjList
+#' graphToAdjList
+#' 
 #' @param graph
 #' @return result
 #' @export
@@ -35,7 +37,8 @@ graphToAdjList <- function(graph) {
   return(list(idx=adj.list, probabilities=probs, names=edge.list.fact$levels))
 }
 
-#' @description embedKnnGraph
+#' embedKnnGraph
+#' 
 #' @param commute.times
 #' @param n.neighbors
 #' @param names (default=NULL)
@@ -63,7 +66,8 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, target.dims=2,
   return(umap)
 }
 
-#' @description embedGraphUmap
+#' embedGraphUmap
+#' 
 #' @param graph
 #' @param min.prob (default=1e-3)
 #' @param min.visited.verts (default=1000)
