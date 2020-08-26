@@ -5,8 +5,12 @@ Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard
 Description: Core utilities for single-cell RNA-seq data analysis. Contains functions for manipulating and plotting data via ggplot2.
 License: GPL-3
 Encoding: UTF-8
+LazyData: true
 Depends: 
     Matrix
+    Rcpp, 
+    RcppProgress, 
+    RcppEigen
 Imports:
     ggplot2,
     magrittr,
@@ -15,16 +19,9 @@ Imports:
     dplyr, 
     pROC, 
     parallel
-RoxygenNote: 7.1.1
-Depends: 
-    Matrix
-    Rcpp, 
-    RcppProgress, 
-    RcppEigen
 Suggests: 
     ggrastr (>= 0.1.7),
     pbapply
-LazyData: true
 RoxygenNote: 7.1.1
 LinkingTo: Rcpp, RcppProgress, RcppEigen, igraph
 NeedsCompilation: yes
