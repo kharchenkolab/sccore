@@ -12,7 +12,7 @@ Imports:
     igraph,
     magrittr,
     pROC, 
-    parallel
+    parallel,
     scales,
     tibble
 Depends: 
