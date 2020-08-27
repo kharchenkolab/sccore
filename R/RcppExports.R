@@ -18,6 +18,15 @@ get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_ve
     .Call('_sccore_get_nearest_neighbors', PACKAGE = 'sccore', adjacency_list, transition_probabilities, n_verts, n_cores, min_prob, min_visited_verts, min_prob_lower, max_hitting_nn_num, max_commute_nn_num, verbose)
 }
 
+#' Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m
+#'
+#' @param m Input matrix
+#' @param ncore integer Number of cores (default=1)
+#' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
+jsDist <- function(m, ncores = 1L) {
+    .Call('_sccore_jsDist', PACKAGE = 'sccore', m, ncores)
+}
+
 propagate_labels <- function(edge_verts, edge_weights, vert_labels, max_n_iters = 10L, verbose = TRUE, diffusion_fading = 10, diffusion_fading_const = 0.5, tol = 5e-3, fixed_initial_labels = FALSE) {
     .Call('_sccore_propagate_labels', PACKAGE = 'sccore', edge_verts, edge_weights, vert_labels, max_n_iters, verbose, diffusion_fading, diffusion_fading_const, tol, fixed_initial_labels)
 }

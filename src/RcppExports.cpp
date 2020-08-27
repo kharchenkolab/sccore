@@ -50,6 +50,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// jsDist
+arma::mat jsDist(const arma::mat& m, int ncores);
+RcppExport SEXP _sccore_jsDist(SEXP mSEXP, SEXP ncoresSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type m(mSEXP);
+    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
+    rcpp_result_gen = Rcpp::wrap(jsDist(m, ncores));
+    return rcpp_result_gen;
+END_RCPP
+}
 // propagate_labels
 Rcpp::NumericMatrix propagate_labels(const Rcpp::StringMatrix& edge_verts, const std::vector<double>& edge_weights, const Rcpp::StringVector& vert_labels, int max_n_iters, bool verbose, double diffusion_fading, double diffusion_fading_const, double tol, bool fixed_initial_labels);
 RcppExport SEXP _sccore_propagate_labels(SEXP edge_vertsSEXP, SEXP edge_weightsSEXP, SEXP vert_labelsSEXP, SEXP max_n_itersSEXP, SEXP verboseSEXP, SEXP diffusion_fadingSEXP, SEXP diffusion_fading_constSEXP, SEXP tolSEXP, SEXP fixed_initial_labelsSEXP) {
@@ -117,6 +129,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sccore_colSumByFac", (DL_FUNC) &_sccore_colSumByFac, 2},
     {"_sccore_as_factor", (DL_FUNC) &_sccore_as_factor, 1},
     {"_sccore_get_nearest_neighbors", (DL_FUNC) &_sccore_get_nearest_neighbors, 10},
+    {"_sccore_jsDist", (DL_FUNC) &_sccore_jsDist, 2},
     {"_sccore_propagate_labels", (DL_FUNC) &_sccore_propagate_labels, 9},
     {"_sccore_smooth_count_matrix", (DL_FUNC) &_sccore_smooth_count_matrix, 10},
     {"_sccore_adjacent_vertices", (DL_FUNC) &_sccore_adjacent_vertices, 1},
