@@ -303,6 +303,19 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
                             Rcpp::_["dist"]=Rcpp::wrap(commute_times));
 }
 
+//' Get nearest neighbors method on graph
+//'
+//' @param adjacency_list igraph adjacency list
+//' @param transition_probabilities vector of transition probabilites
+//' @param n_verts numeric Number of vertices (default=0)
+//' @param n_cores numeric Number of cores to use (default=1)
+//' @param min_prob numeric Minimum probability for proximity when calculating hitting time per neighbors (default=1e-3)
+//' @param min_visited_verts numeric Minimum number of vertices visted when calculating hitting time per neighbors (default=1000)
+//' @param min_prob_lower numeric Probability threshold to continue iteration in depth first search hitting time, dfs_hitting_time() (default=1e-5)
+//' @param max_hitting_nn_num numeric Maximum adjacencies for calculating hitting time per neighbor, hitting_time_per_neighbors() (default=0)
+//' @param max_commute_nn_num numeric Maximum adjacencies for calculating commute time per neighbor, commute_time_per_node() (default=0)
+//' @param verbose boolean Verbose output
+//' @return list of commute times based on adjacencies
 // [[Rcpp::export]]
 Rcpp::List get_nearest_neighbors(const std::vector<std::vector<int>> &adjacency_list,
                                  const std::vector<std::vector<double>> &transition_probabilities,
