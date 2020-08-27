@@ -16,11 +16,13 @@ embeddingColorsPlot(
 )
 }
 \arguments{
+\item{plot.df}{data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().}
+
 \item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
 
 \item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
-\item{geom_point_w}{(default=ggplot2::geom_point)}
+\item{geom_point_w}{function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)}
 
 \item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
 

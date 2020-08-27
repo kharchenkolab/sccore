@@ -6,8 +6,15 @@
 \usage{
 splitVectorByNodes(vec, nodes, n.nodes)
 }
+\arguments{
+\item{vec}{input vector to be divided}
+
+\item{nodes}{nodes used to divide the vector 'vec' via split()}
+
+\item{n.nodes}{numeric The number of nodes for splitting}
+}
 \value{
-result
+list from vec with names given by the nodes
 }
 \description{
 splitVectorByNodes

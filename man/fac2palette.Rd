@@ -14,7 +14,7 @@ fac2palette(groups, palette, unclassified.cell.color = "gray50")
 \item{unclassified.cell.color}{Color for unclassified cells (default='gray50')}
 }
 \value{
-
+vector or palette
 }
 \description{
 Encodes logic of how to handle named-vector and functional palettes. Used primarily within embeddingGroupPlot()

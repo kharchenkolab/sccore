@@ -2,13 +2,16 @@
 % Please edit documentation in R/graph_embedding.R
 \name{graphToAdjList}
 \alias{graphToAdjList}
-\title{graphToAdjList}
+\title{Convert igraph graph into an adjacency list}
 \usage{
 graphToAdjList(graph)
 }
+\arguments{
+\item{graph}{input igraph object}
+}
 \value{
-result
+adjacency list, defined by list(idx=adj.list, probabilities=probs, names=edge.list.fact$levels
 }
 \description{
-graphToAdjList
+Convert igraph graph into an adjacency list
 }

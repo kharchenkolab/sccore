@@ -32,6 +32,9 @@ fac2col(
 
 \item{level.colors}{(default=NULL)}
 }
+\value{
+vector or list of colors
+}
 \description{
 Utility function to translate a factor into colors
 }

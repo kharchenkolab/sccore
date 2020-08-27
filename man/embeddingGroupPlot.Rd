@@ -18,9 +18,11 @@ embeddingGroupPlot(
 )
 }
 \arguments{
+\item{plot.df}{data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().}
+
 \item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
-\item{geom_point_w}{(default=ggplot2::geom_point)}
+\item{geom_point_w}{function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)}
 
 \item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided}
 
@@ -34,11 +36,9 @@ embeddingGroupPlot(
 
 \item{palette}{function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
 
-\item{...}{}
+\item{...}{Additional arguments passed to ggplot2::geom_label_repel()}
 }
 \value{
-ggplot2 object
-
 ggplot2 object
 }
 \description{
