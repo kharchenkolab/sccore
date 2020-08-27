@@ -73,7 +73,7 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
   if(dist=='JS') {
     lvec.dist <- jsDist(t(lvec/pmax(1,Matrix::rowSums(lvec))));
   } else { # use correlation distance in log10 space
-    lvec.dist <- 1-cor(t(log10(lvec/pmax(1,Matrix::rowSums(lvec))+1)))
+    lvec.dist <- 1-stats::cor(t(log10(lvec/pmax(1,Matrix::rowSums(lvec))+1)))
   }
   d <- as.dendrogram(hclust(as.dist(lvec.dist),method='ward.D'))
   # add cell info to the laves
@@ -95,7 +95,7 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
 
 #' Increase resolution for a specific set of clusters
 #'
-#' @param con conos object. Refer to <https://github.com/kharchenkolab/conos>, "Joint analysis of heterogeneous single-cell RNA-seq dataset collections", DOI: 10.1038/s41592-019-0466-z
+#' @param con conos object, from <https://github.com/kharchenkolab/conos>, "Joint analysis of heterogeneous single-cell RNA-seq dataset collections", DOI: 10.1038/s41592-019-0466-z
 #' @param target.clusters Clusters for which the resolution should be increased
 #' @param clustering Name of clustering in the conos object to use (default=NULL). Either 'clustering' or 'groups' must be provided.
 #' @param groups Set of clusters to use (default=NULL). Ignored if 'clustering' is not NULL.

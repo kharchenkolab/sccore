@@ -1,15 +1,16 @@
 #' @import ggplot2
+#' @importFrom grDevices adjustcolor rainbow
+#' @importFrom graphics par
 NULL
 
-#' Convert factor to Color
+#' Utility function to translate a factor into colors
 #'
-#' @description a utility function to translate a factor into colors
-#' @param x
-#' @param s (default=1)
-#' @param v (default=1)
-#' @param shuffle boolean (default=FALSE)
-#' @param min.group.size (default=1)
-#' @param return.details (default=FALSE)
+#' @param x input factor
+#' @param s numeric The "saturation" to be used to complete the HSV color descriptions (default=1) See ?rainbow in Palettes, grDevices
+#' @param v numeric The "value" to be used to complete the HSV color descriptions (default=1) See ?rainbow in Palettes, grDevices
+#' @param shuffle boolean If TRUE, shuffles columns with shuffle(columns) (default=FALSE)
+#' @param min.group.size integer Exclude groups of size less than the min.group.size (default=1)
+#' @param return.details boolean If TRUE, returns a list list(colors=y, palette=col). Otherwise, just returns the factor (default=FALSE)
 #' @param unclassified.cell.color Color for unclassified cells (default='gray50')
 #' @param level.colors (default=NULL)
 #' @examples
@@ -22,7 +23,7 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
   nx <- names(x)
   x <- as.factor(x)
 
-  if (min.group.size>1) {
+  if (min.group.size > 1) {
     x <- factor(x, exclude=levels(x)[unlist(tapply(rep(1,length(x)), x, length)) < min.group.size])
     x <- droplevels(x)
   }
@@ -146,8 +147,15 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 }
 
 
+#' Plotting function for cluster labels, names contain cell names. Used primarily in embeddingPlot().
+#' 
+#' @inheritParams embeddingPlot
+#' @param plot.df
+#' @param geom_point_w (default=ggplot2::geom_point)
+#' @param ... 
 #' @return ggplot2 object
-embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
+#' @return ggplot2 object
+embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point, min.cluster.size=0, mark.groups=FALSE, font.size=c(3, 7), legend.title=NULL, shuffle.colors=FALSE, palette=NULL, ...) {
   
   groups <- as.factor(groups)
 
@@ -204,10 +212,9 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 #' 
 #' @inheritParams embeddingPlot
 #' @param plot.df
-#' @param colors
-#' @param geom_point_w 
+#' @param geom_point_w (default=ggplot2::geom_point)
 #' @return ggplot2 object
-embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
+embeddingColorsPlot <- function(plot.df, colors=NULL, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[CellName])
   if(!is.null(groups)) {
     plot.df$Color[!plot.df$CellName %in% names(groups)] <- NA
@@ -315,7 +322,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
   colnames(plot.df)[2:3] <- c("x", "y")
 
   if (raster && requireNamespace("ggrastr", quietly = TRUE)) {
-    if (packageVersion("ggrastr") <= "0.1.6") {
+    if (utils::packageVersion("ggrastr") <= "0.1.6") {
       geom_point_w0 <- function(...)
         ggrastr::geom_point_rast(..., width=raster.width, height=raster.height, dpi=raster.dpi)
     } else {

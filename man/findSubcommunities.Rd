@@ -14,7 +14,7 @@ findSubcommunities(
 )
 }
 \arguments{
-\item{con}{conos object. Refer to <https://github.com/kharchenkolab/conos>, "Joint analysis of heterogeneous single-cell RNA-seq dataset collections", DOI: 10.1038/s41592-019-0466-z}
+\item{con}{conos object, from <https://github.com/kharchenkolab/conos>, "Joint analysis of heterogeneous single-cell RNA-seq dataset collections", DOI: 10.1038/s41592-019-0466-z}
 
 \item{target.clusters}{Clusters for which the resolution should be increased}
 

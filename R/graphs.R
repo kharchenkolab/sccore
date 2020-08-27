@@ -1,12 +1,13 @@
 #' @import igraph
+#' @importFrom methods as is
 NULL
 
 #' Collapse graph using PAGA 1.2 algorithm, Wolf et al 2019, Genome Biology (2019) <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x>
 #' 
 #' @param graph igraph graph object Graph to be collapsed
 #' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
-#' @param linearize should normally be always `TRUE` (default=TRUE)
-#' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always `TRUE`,
+#' @param linearize should normally be always TRUE (default=TRUE)
+#' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
 #' @return collapsed graph
 #' @export
@@ -201,7 +202,7 @@ propagateLabels=function(labels, method="diffusion", ...) {
 #' 
 #' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
-#' @param solver (default="mumps")
+#' @param solver Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")
 #' @return 
 #' @export
 propagateLabelsSolver <- function(graph, labels, solver="mumps") {

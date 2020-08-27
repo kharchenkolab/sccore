@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{fac2col}
 \alias{fac2col}
-\title{Convert factor to Color}
+\title{Utility function to translate a factor into colors}
 \usage{
 fac2col(
   x,
@@ -16,22 +16,24 @@ fac2col(
 )
 }
 \arguments{
-\item{s}{(default=1)}
+\item{x}{input factor}
 
-\item{v}{(default=1)}
+\item{s}{numeric The "saturation" to be used to complete the HSV color descriptions (default=1) See ?rainbow in Palettes, grDevices}
 
-\item{shuffle}{boolean (default=FALSE)}
+\item{v}{numeric The "value" to be used to complete the HSV color descriptions (default=1) See ?rainbow in Palettes, grDevices}
 
-\item{min.group.size}{(default=1)}
+\item{shuffle}{boolean If TRUE, shuffles columns with shuffle(columns) (default=FALSE)}
 
-\item{return.details}{(default=FALSE)}
+\item{min.group.size}{integer Exclude groups of size less than the min.group.size (default=1)}
+
+\item{return.details}{boolean If TRUE, returns a list list(colors=y, palette=col). Otherwise, just returns the factor (default=FALSE)}
 
 \item{unclassified.cell.color}{Color for unclassified cells (default='gray50')}
 
 \item{level.colors}{(default=NULL)}
 }
 \description{
-a utility function to translate a factor into colors
+Utility function to translate a factor into colors
 }
 \examples{
 genes = factor(c("BRAF", "NPC1", "PAX3", "BRCA2", "FMR1"))

@@ -11,9 +11,9 @@ collapseGraphPaga(graph, groups, linearize = TRUE, winsorize = FALSE)
 
 \item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{linearize}{should normally be always `TRUE` (default=TRUE)}
+\item{linearize}{should normally be always TRUE (default=TRUE)}
 
-\item{winsorize}{winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always `TRUE`,
+\item{winsorize}{winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
 but in this case there is no way to distinguish level of connectivity for highly connected groups.}
 }
 \value{

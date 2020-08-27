@@ -11,7 +11,7 @@ propagateLabelsSolver(graph, labels, solver = "mumps")
 
 \item{labels}{vector of factor or character labels, named by cell names}
 
-\item{solver}{(default="mumps")}
+\item{solver}{Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")}
 }
 \value{
 

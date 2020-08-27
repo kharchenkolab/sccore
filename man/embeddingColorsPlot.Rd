@@ -6,7 +6,7 @@
 \usage{
 embeddingColorsPlot(
   plot.df,
-  colors,
+  colors = NULL,
   groups = NULL,
   geom_point_w = ggplot2::geom_point,
   gradient.range.quantile = 1,
@@ -20,7 +20,7 @@ embeddingColorsPlot(
 
 \item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
-\item{geom_point_w}{}
+\item{geom_point_w}{(default=ggplot2::geom_point)}
 
 \item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
 
