@@ -7,14 +7,16 @@
 #' sn(vec)
 #'
 #' @export
-sn <- function(x) {stats::setNames(x, x)}
+sn <- function(x) {
+  stats::setNames(x, x)
+}
 
 
 #' Extend matrix to include new columns in matrix
 #'
 #' @param mtx Matrix
 #' @param col.names Columns that should be included in matrix
-#' @return A matrix
+#' @return Matrix with new columns
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
@@ -29,7 +31,7 @@ extendMatrix <- function(mtx, col.names) {
 #' @param cms List of count matrices
 #' @param transposed boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)
 #' @param ... Parameters for 'plapply' function
-#' @return A merged matrix
+#' @return Mrged matrix
 #' @export
 mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   if (!transposed) {

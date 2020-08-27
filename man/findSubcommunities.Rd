@@ -9,22 +9,22 @@ findSubcommunities(
   target.clusters,
   clustering = NULL,
   groups = NULL,
-  method = leiden.community,
+  method = igraph::cluster_louvain,
   ...
 )
 }
 \arguments{
-\item{con}{conos object}
+\item{con}{conos object. Refer to <https://github.com/kharchenkolab/conos>, "Joint analysis of heterogeneous single-cell RNA-seq dataset collections", DOI: 10.1038/s41592-019-0466-z}
 
-\item{target.clusters}{clusters for which the resolution should be increased}
+\item{target.clusters}{Clusters for which the resolution should be increased}
 
-\item{clustering}{name of clustering in the conos object to use. Either 'clustering' or 'groups' must be provided. Default: NULL}
+\item{clustering}{Name of clustering in the conos object to use (default=NULL). Either 'clustering' or 'groups' must be provided.}
 
-\item{groups}{set of clusters to use. Ignored if 'clustering' is not NULL. Default: NULL}
+\item{groups}{Set of clusters to use (default=NULL). Ignored if 'clustering' is not NULL.}
 
-\item{method}{function, used to find communities. Default: leiden.community}
+\item{method}{Function, used to find communities (default=igraph::cluster_louvain)}
 
-\item{...}{additional params passed to the community function}
+\item{...}{Additional params passed to the community function}
 }
 \description{
 Increase resolution for a specific set of clusters

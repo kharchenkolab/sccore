@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphs.R
 \name{getClusterGraph}
 \alias{getClusterGraph}
-\title{Get Cluster Graph}
+\title{Collapse vertices belonging to each cluster in a graph}
 \usage{
 getClusterGraph(
   graph,
@@ -16,13 +16,21 @@ getClusterGraph(
 )
 }
 \arguments{
-\item{graph}{graph to be collapsed}
+\item{graph}{igraph graph object Graph to be collapsed}
 
 \item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{method}{either "sum" or "paga" (default="sum")}
+\item{method}{string Method to be used, either "sum" or "paga" (default="sum")}
 
-\item{plot}{whether to show collapsed graph plot}
+\item{plot}{boolean Whether to show collapsed graph plot (default=FALSE)}
+
+\item{node.scale}{(default=50)}
+
+\item{edge.scale}{(default=50)}
+
+\item{edge.alpha}{(default=0.3)}
+
+\item{...}{arguments passed to collapseGraphSum()}
 }
 \value{
 collapsed graph

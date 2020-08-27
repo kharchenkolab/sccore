@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{setMinMax}
 \alias{setMinMax}
-\title{Set range for values in object}
+\title{Set range for values in object. Changes values outside of range to min or max. Adapted from Seurat::MinMax}
 \usage{
 setMinMax(obj, min, max)
 }
@@ -17,7 +17,7 @@ setMinMax(obj, min, max)
 An object with the same dimensions as input but with altered range in values
 }
 \description{
-Changes values outside of range to min or max. Adapted from Seurat::MinMax
+Set range for values in object. Changes values outside of range to min or max. Adapted from Seurat::MinMax
 }
 \examples{
 example_matrix =  matrix(rep(c(1:5), 3), 5)

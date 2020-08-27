@@ -42,9 +42,9 @@ graphToAdjList <- function(graph) {
 #' @param commute.times
 #' @param n.neighbors
 #' @param names (default=NULL)
-#' @param target.dims (default=TRUE)
+#' @param target.dims (default=2)
 #' @param verbose (default=TRUE)
-#' @param ... (default=TRUE)
+#' @param ... arguments passed to uwot::umap()
 #' @return result
 #' @export
 embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, target.dims=2, verbose=TRUE, ...) {
@@ -72,15 +72,15 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, target.dims=2,
 #' @param min.prob (default=1e-3)
 #' @param min.visited.verts (default=1000)
 #' @param n.cores (default=1)
-#' @param max.hitting.nn.num
-#' @param max.commute.nn.num
-#' @param min.prob.lower
-#' @param n.neighbors
-#' @param n.epochs
-#' @param spread
-#' @param min.dist
-#' @param return.all
-#' @param n.sgd.cores
+#' @param max.hitting.nn.num (default=0)
+#' @param max.commute.nn.num (default=0)
+#' @param min.prob.lower (default=1e-7)
+#' @param n.neighbors (default=40)
+#' @param n.epochs (default=1000)
+#' @param spread (default=15)
+#' @param min.dist (default=0.001)
+#' @param return.all (default=FALSE)
+#' @param n.sgd.cores  (default=n.cores)
 #' @param verbose (default=TRUE)
 #' @param ... 
 #' @return result

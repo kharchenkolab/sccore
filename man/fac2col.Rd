@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots.R
 \name{fac2col}
 \alias{fac2col}
-\title{Factor to Color}
+\title{Convert factor to Color}
 \usage{
 fac2col(
   x,
@@ -20,13 +20,13 @@ fac2col(
 
 \item{v}{(default=1)}
 
-\item{shuffle}{(default=FALSE)}
+\item{shuffle}{boolean (default=FALSE)}
 
 \item{min.group.size}{(default=1)}
 
 \item{return.details}{(default=FALSE)}
 
-\item{unclassified.cell.color}{(default='gray50')}
+\item{unclassified.cell.color}{Color for unclassified cells (default='gray50')}
 
 \item{level.colors}{(default=NULL)}
 }

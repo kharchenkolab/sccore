@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R, R/utils.R
 \name{mergeCountMatrices}
 \alias{mergeCountMatrices}
-\title{Merge into a common matrix, entering 0s for the missing ones}
+\title{Merge into a common matrix, entering 0s for the missing entries}
 \usage{
 mergeCountMatrices(cms, transposed = FALSE, ...)
 
@@ -11,13 +11,17 @@ mergeCountMatrices(cms, transposed = FALSE, ...)
 \arguments{
 \item{cms}{List of count matrices}
 
-\item{transposed}{Indicate whether cms are transposed, e.g. cells in rows and genes in columns (default=FALSE)}
+\item{transposed}{boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)}
 
 \item{...}{Parameters for 'plapply' function}
 }
 \value{
-A matrix
+A merged extended matrix, with 0s for missing entries
+
+Mrged matrix
 }
 \description{
-Merge count matrices
+Merge into a common matrix, entering 0s for the missing entries
+
+Merge list of count matrices
 }

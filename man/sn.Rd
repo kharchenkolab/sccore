@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{sn}
 \alias{sn}
-\title{setNames wrapper function}
+\title{Set names equal to values, a stats::setNames wrapper function}
 \usage{
 sn(x)
 }
@@ -13,7 +13,7 @@ sn(x)
 An object with names assigned equal to values
 }
 \description{
-Set names equal to values
+Set names equal to values, a stats::setNames wrapper function
 }
 \examples{
 vec = c(1, 2, 3, 4)

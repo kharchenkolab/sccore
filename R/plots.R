@@ -1,16 +1,16 @@
 #' @import ggplot2
 NULL
 
-#' Factor to Color
+#' Convert factor to Color
 #'
 #' @description a utility function to translate a factor into colors
 #' @param x
 #' @param s (default=1)
 #' @param v (default=1)
-#' @param shuffle (default=FALSE)
+#' @param shuffle boolean (default=FALSE)
 #' @param min.group.size (default=1)
 #' @param return.details (default=FALSE)
-#' @param unclassified.cell.color (default='gray50')
+#' @param unclassified.cell.color Color for unclassified cells (default='gray50')
 #' @param level.colors (default=NULL)
 #' @examples
 #' genes = factor(c("BRAF", "NPC1", "PAX3", "BRCA2", "FMR1"))
@@ -51,8 +51,12 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
   }
 }
 
-## used within embeddingGroupPlot()
-## Encodes logic of how to handle named-vector and functional palettes
+#' Encodes logic of how to handle named-vector and functional palettes. Used primarily within embeddingGroupPlot()
+#' 
+#' @param groups vector of cluster labels, names contain cell names 
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') 
+#' @param unclassified.cell.color Color for unclassified cells (default='gray50')
+#' @return 
 fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   groups <- as.factor(groups)
 
@@ -80,10 +84,10 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
 #' ggplot(aes(color=x, ...), ...) + val2ggcol(x)
 #'
 #' @param values values by which the color gradient is determined
-#' @param gradient.range.quantile numeric Trimming quantile (default=1) Either a single number or two numbers - for lower and upper quantile.
-#' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or string "symmetric" or "all" (default="symmetric") "symmetric": range will fit data, but will be symmetrized around zeros, "all": gradient will match the span of the range of the data (after gradient.range.quantile)
+#' @param gradient.range.quantile numeric Trimming quantile (default=1). Either a single number or two numbers - for lower and upper quantile.
+#' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or string "symmetric" or "all" (default="symmetric"). "symmetric": range will fit data, but will be symmetrized around zeros, "all": gradient will match the span of the range of the data (after gradient.range.quantile)
 #' @param palette an optional palette fucntion (default=NULL). The default becomes blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used
-#' @param midpoint optional midpoint (default=NULL) Set for the center of the resulting range by default
+#' @param midpoint optional midpoint (default=NULL). Set for the center of the resulting range by default
 #' @param oob function to determine what to do with the values outside of the range (default =scales::squish). Refer to 'oob' parameter in ggplot
 #' @param return.fill boolean Whether to return fill gradients instead of color (default=FALSE)
 #' @param ... additional arguments are passed to ggplot2::scale_color_gradient* functions, i.e. scale_color_gradient(), scale_color_gradient2(), scale_color_gradientn()
@@ -142,6 +146,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 }
 
 
+#' @return ggplot2 object
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
   
   groups <- as.factor(groups)
@@ -195,6 +200,13 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
 
+#' Set colors for embedding plot. Used primarily in embeddingPlot().
+#' 
+#' @inheritParams embeddingPlot
+#' @param plot.df
+#' @param colors
+#' @param geom_point_w 
+#' @return ggplot2 object
 embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[CellName])
   if(!is.null(groups)) {
@@ -217,8 +229,17 @@ embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplo
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
 
-
-
+#' Set plot.theme, legend, ticks for embedding plot. Used primarily in embeddingPlot().
+#'
+#' @param gg ggplot2 object to plot
+#' @param plot.theme theme for the plot (default=NULL)
+#' @param title plot title (default=NULL)
+#' @param legend.position vector with (x, y) positions of the legend (default=NULL)
+#' @param show.legend show legend (default=TRUE)
+#' @param show.ticks show ticks and tick labels (default=TRUE)
+#' @param show.labels show labels (default=TRUE)
+#' @param relabel.axis boolean If TRUE, relabel axes with ggplot2::labs(x='Component 1', y='Component 2') (default=TRUE)
+#' @return ggplot2 object
 styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=NULL, show.legend=TRUE, show.ticks=TRUE, show.labels=TRUE, relabel.axis=TRUE) {
   if (relabel.axis) {
     gg <- gg + ggplot2::labs(x='Component 1', y='Component 2')
@@ -258,29 +279,30 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @inheritDotParams ggrepel::geom_label_repel
 #' @param embedding two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors
 #' @param groups vector of cluster labels, names contain cell names (default=NULL)
-#' @param colors vector of numbers, which must be shouwn with point colors, names contain cell names. (default=NULL) This argument is ignored if groups are provided.
-#' @param subgroups subset of 'groups', selecting the cells for plot. (default=NULL) Ignored if 'groups' is NULL
-#' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE) This argument is FALSE if 'subgroups' is NULL
-#' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed. (default=0) This argument is ignored if groups aren't provided
+#' @param colors vector of numbers, which must be shouwn with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.
+#' @param subgroups subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL
+#' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE). This argument is FALSE if 'subgroups' is NULL
+#' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided
 #' @param mark.groups plot cluster labels above points (default=TRUE) 
 #' @param show.legend show legend (default=FALSE)
 #' @param alpha opacity level [0, 1] (default=0.4) 
 #' @param size point size (default=0.8) 
 #' @param title plot title (default=NULL) 
 #' @param plot.theme theme for the plot (default=NULL) 
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL) 
-#' @param color.range controls range, in which colors are estimated. (default="symmetric") Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
-#' @param font.size font size for cluster labels. It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL) 
+#' @param color.range controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
+#' @param font.size font size for cluster labels (default=c(3, 7)). It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
 #' @param show.ticks show ticks and tick labels (default=FALSE)
+#' @param show.labels show labels (default=FALSE)
 #' @param legend.position vector with (x, y) positions of the legend (default=NULL)
 #' @param legend.title legend title (default=NULL)
 #' @param gradient.range.quantile Winsorization quantile for the numeric colors and gene gradient (default=1)
-#' @param raster boolean whether layer with the points be rasterized (default=FALSE) Setting of this argument to TRUE is useful when you need to export a plot with large number of points
-#' @param raster.width width of the plot in inches. (default=NULL) Ignored if raster == FALSE.
-#' @param raster.height height of the plot in inches. (default=NULL) Ignored if raster == FALSE.
-#' @param raster.dpi dpi of the rasterized plot. (default=300) Ignored if raster == FALSE.
+#' @param raster boolean whether layer with the points be rasterized (default=FALSE). Setting of this argument to TRUE is useful when you need to export a plot with large number of points
+#' @param raster.width width of the plot in inches. (default=NULL). Ignored if raster == FALSE.
+#' @param raster.height height of the plot in inches. (default=NULL). Ignored if raster == FALSE.
+#' @param raster.dpi dpi of the rasterized plot. (default=300). Ignored if raster == FALSE.
 #' @param shuffle.colors shuffle colors (default=FALSE)
-#' @param keep.limits Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=FALSE
+#' @param keep.limits Keep axis limits from original plot (default=!is.null(subgroups)). Useful when plotting subgroups, only meaningful it plot.na=FALSE
 #' @return ggplot2 object
 #' @export
 embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
@@ -307,7 +329,9 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     geom_point_w0 <- ggplot2::geom_point
   }
 
-  geom_point_w <- function(...) geom_point_w0(..., size=size, alpha=alpha)
+  geom_point_w <- function(...) {
+    geom_point_w0(..., size=size, alpha=alpha)
+  }
 
   if (!is.null(subgroups) && !is.null(groups)) {
     groups %<>% .[. %in% subgroups]
@@ -342,25 +366,38 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 }
 
 
-#' Dot plot adapted from Seurat:::DotPlot, see man for description.
+#' Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 #'
 #' @param markers Vector of gene markers to plot
-#' @param count.matrix Merged count matrix, e.g., through conos.obj$getJointCountMatrix()
+#' @param count.matrix Merged count matrix
 #' @param cell.groups Named factor containing cell groups (clusters) and cell names
 #' @param marker.colour Character or numeric vector (default="black")
 #' @param cluster.colour Character or numeric vector (default="black")
-#' @param xlab X axis title (default="Marker")
-#' @param ylab Y axis title (default="Cluster")
-#' @param ... Additional input to sccore:::plapply, see man for description.
+#' @param xlab string X-axis title (default="Marker")
+#' @param ylab string Y-axis title (default="Cluster")
+#' @param n.cores integer Number of cores (default=1)
+#' @param text.angle numeric Angle of text displayed (default=45)
+#' @param gene.order Either factor of genes passed to dplyr::mutate(levels=gene.order), or a boolean. (default=NULL) If TRUE, gene.order is set to the unique markers. If FALSE, gene.order is set to NULL. If NULL, the argument is ignored.
+#' @param cols Colors to plot (default=c("blue", "red")). The name of a palette from 'RColorBrewer::brewer.pal.info', a pair of colors defining a gradient, or 3+ colors defining multiple gradients (if 'split.by' is set).
+#' @param col.min numeric Minimum scaled average expression threshold (default=-2.5). Everything smaller will be set to this.
+#' @param col.max numeric Maximum scaled average expression threshold (default=2.5). Everything larger will be set to this.
+#' @param dot.min numeric The fraction of cells at which to draw the smallest dot (default=0). All cell groups with less than this expressing the given gene will have no dot drawn.
+#' @param dot.scale numeric Scale the size of the points, similar to cex (default=6)
+#' @param scale.by  string Scale the size of the points by 'size' or by 'radius' (default="radius")
+#' @param scale.min numeric Set lower limit for scaling, use NA for default (default=NA)
+#' @param scale.max numeric Set upper limit for scaling, use NA for default (default=NA)
+#' @param verbose boolean Verbose output (default=TRUE)
+#' @param ... Additional inputs passed to sccore:::plapply(), see man for description.
 #' @return ggplot2 object
 #' @export
 dotPlot <- function (markers,
                      count.matrix,
                      cell.groups,
-                     verbose=TRUE,
-                     n.cores=1,
                      marker.colour="black",
                      cluster.colour="black",
+                     xlab = "Marker",
+                     ylab = "Cluster",
+                     n.cores = 1,
                      text.angle = 45,
                      gene.order = NULL,
                      cols = c("blue", "red"),
@@ -371,8 +408,7 @@ dotPlot <- function (markers,
                      scale.by = "radius",
                      scale.min = NA,
                      scale.max = NA,
-                     xlab = "Marker",
-                     ylab = "Cluster",
+                     verbose=TRUE,
                      ...) {
   
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))

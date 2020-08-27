@@ -13,7 +13,7 @@ NULL
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
   if ((!(is(graph, "Matrix") || is(graph, "matrix")) || ncol(graph) != nrow(graph)) && !igraph::is.igraph(graph)) {
-    stop("Unknown graph format. Only adjacency matrix or igraph are supported")
+    stop("Unknown graph format. Only adjacency matrix or igraph are supported.")
   }
 
   if (!igraph::is.igraph(graph)) {
@@ -32,7 +32,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
   groups %<>% .[!is.na(.)] %>% as.factor() %>% droplevels()
   if (length(groups) != length(igraph::V(graph))){
-    stop("Groups must be provided for all graph vertices")
+    stop("Groups must be provided for all graph vertices.")
   }
 
   cluster.names <- levels(groups)

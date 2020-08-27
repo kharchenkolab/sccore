@@ -7,7 +7,7 @@
 collapseGraphSum(graph, groups, normalize = TRUE)
 }
 \arguments{
-\item{graph}{graph to be collapsed}
+\item{graph}{igraph graph object Graph to be collapsed}
 
 \item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
