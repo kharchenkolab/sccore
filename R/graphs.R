@@ -1,3 +1,4 @@
+#' @importFrom magrittr %>% %<>% %$%
 #' @import igraph
 #' @importFrom methods as is
 NULL

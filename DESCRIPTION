@@ -26,7 +26,7 @@ Suggests:
     rmumps,
     testthat
 RoxygenNote: 7.1.1
-LinkingTo: Rcpp, RcppArmadillo, RcppProgress, RcppEigen, igraph
+LinkingTo: Rcpp, RcppArmadillo, RcppProgress, RcppEigen
 NeedsCompilation: yes
 URL: https://github.com/kharchenkolab/sccore
 BugReports: https://github.com/kharchenkolab/sccore/issues

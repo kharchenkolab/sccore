@@ -454,7 +454,7 @@ dotPlot <- function (markers,
   }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {
     markers %>% lapply(function(g) {
-      df <- p.df %>% filter(Type==t, Gene==g)
+      df <- p.df %>% dplyr::filter(Type==t, Gene==g)
       pct.exp <- sum(df$Expr>0)/dim(df)[1]*100
       avg.exp <- mean(df$Expr[df$Expr>0])
       res <- data.frame(gene=g,
