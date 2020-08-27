@@ -1,7 +1,7 @@
 Package: sccore
 Title: Core utilities for single-cell RNA-seq
 Version: 0.1.0
-Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = "aut"), person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"), person("Evan","Biederstedt", email="evan.biederstedt@gmail.com", role=c("cre", "aut")))
+Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = "aut"), person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"), person("Evan","Biederstedt", email="evan.biederstedt@gmail.com", role=c("aut", "cre")))
 Description: Core utilities for single-cell RNA-seq data analysis. Contains functions for manipulating and plotting data via ggplot2.
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
@@ -20,11 +20,6 @@ Imports:
     tibble,
     utils, 
     uwot
-Depends: 
-    Matrix,
-    Rcpp, 
-    RcppProgress, 
-    RcppEigen
 Suggests: 
     ggrastr (>= 0.1.7),
     pbapply, 
