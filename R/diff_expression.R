@@ -1,12 +1,12 @@
 #' Append specificity metrics to DE
 #'
-#' @param de.df 
-#' @param clusters
-#' @param cluster.id
-#' @param p2.counts
-#' @param low.expression.threshold (default=0)
-#' @param append.auc (default=FALSE)
-#' @return de.df
+#' @param de.df data.frame of differential expression values
+#' @param clusters factor of clusters
+#' @param cluster.id names of 'clusters' factor. If a cluster.id doesn't exist in cluster names, an error is thrown.
+#' @param p2.counts counts from Pagoda2, refer to <https://github.com/kharchenkolab/pagoda2>
+#' @param low.expression.threshold numeric Threshold to remove expression values (default=0). Values under this threshold are discarded. 
+#' @param append.auc boolean If TRUE, append AUC values (default=FALSE)
+#' @return data.frame of differential expression values with metrics attached
 #' @export
 appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts, low.expression.threshold=0, append.auc=FALSE) {
   

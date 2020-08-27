@@ -13,6 +13,7 @@ NULL
 #' @param return.details boolean If TRUE, returns a list list(colors=y, palette=col). Otherwise, just returns the factor (default=FALSE)
 #' @param unclassified.cell.color Color for unclassified cells (default='gray50')
 #' @param level.colors (default=NULL)
+#' @return vector or list of colors
 #' @examples
 #' genes = factor(c("BRAF", "NPC1", "PAX3", "BRCA2", "FMR1"))
 #' fac2col(genes)
@@ -57,7 +58,7 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
 #' @param groups vector of cluster labels, names contain cell names 
 #' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') 
 #' @param unclassified.cell.color Color for unclassified cells (default='gray50')
-#' @return 
+#' @return vector or palette 
 fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   groups <- as.factor(groups)
 
@@ -153,7 +154,6 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 #' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @param ... Additional arguments passed to ggplot2::geom_label_repel()
-#' @return ggplot2 object
 #' @return ggplot2 object
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point, min.cluster.size=0, mark.groups=FALSE, font.size=c(3, 7), legend.title=NULL, shuffle.colors=FALSE, palette=NULL, ...) {
   
