@@ -9,7 +9,7 @@ jsDist(m, ncores = 1L)
 \arguments{
 \item{m}{Input matrix}
 
-\item{ncore}{integer Number of cores (default=1)}
+\item{ncores}{integer Number of cores (default=1)}
 }
 \value{
 Vectorized version of the lower triangle as an R distance object, stats::dist()

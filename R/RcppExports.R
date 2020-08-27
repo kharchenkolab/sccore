@@ -34,7 +34,7 @@ get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_ve
 #' Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m
 #'
 #' @param m Input matrix
-#' @param ncore integer Number of cores (default=1)
+#' @param ncores integer Number of cores (default=1)
 #' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
 jsDist <- function(m, ncores = 1L) {
     .Call('_sccore_jsDist', PACKAGE = 'sccore', m, ncores)

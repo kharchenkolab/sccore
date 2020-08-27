@@ -135,7 +135,7 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
     }
   } else {
     gn <- V(graph)$name
-    groups <- na.omit(groups[names(groups) %in% gn])
+    groups <- stats::na.omit(groups[names(groups) %in% gn])
     if (length(groups)<2) {
       stop('Valid names of groups elements include too few cells')
     }
@@ -204,7 +204,7 @@ propagateLabels=function(labels, method="diffusion", ...) {
 #' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
 #' @param solver Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")
-#' @return 
+#' @return result from Matrix::solve() or rmumps::Rmumps
 #' @export
 propagateLabelsSolver <- function(graph, labels, solver="mumps") {
   if (!solver %in% c("mumps", "Matrix"))
@@ -251,7 +251,7 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 #' @param diffusion.fading  (default=10.0)
 #' @param diffusion.fading.const (default=0.1)
 #' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
-#' @param fixed.initial.labels: prohibit changes of initial labels during diffusion. (default=TRUE)
+#' @param fixed.initial.labels prohibit changes of initial labels during diffusion. (default=TRUE)
 #' @param verbose boolean Verbose mode. (default=TRUE)
 #' @return matrix
 #' @export

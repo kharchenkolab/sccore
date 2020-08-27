@@ -100,7 +100,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
   } else if(gradient.range.quantile<1) { # single value spec
     zlim <- sort(as.numeric(quantile(values, p=c(1 - gradient.range.quantile, gradient.range.quantile), na.rm=TRUE)))
   } else {
-    zlim <- range(na.omit(values))
+    zlim <- range(stats::na.omit(values))
   }
 
   ## Symmetrize the range for vectors that span 0.

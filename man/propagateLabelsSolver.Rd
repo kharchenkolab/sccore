@@ -14,7 +14,7 @@ propagateLabelsSolver(graph, labels, solver = "mumps")
 \item{solver}{Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")}
 }
 \value{
-
+result from Matrix::solve() or rmumps::Rmumps
 }
 \description{
 Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
