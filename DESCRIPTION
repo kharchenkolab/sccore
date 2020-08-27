@@ -9,6 +9,7 @@ LazyData: true
 Imports:
     dplyr, 
     ggplot2,
+    ggrepel,
     graphics,
     grDevices,
     igraph,
