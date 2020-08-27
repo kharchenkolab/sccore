@@ -150,9 +150,9 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 #' Plotting function for cluster labels, names contain cell names. Used primarily in embeddingPlot().
 #' 
 #' @inheritParams embeddingPlot
-#' @param plot.df
-#' @param geom_point_w (default=ggplot2::geom_point)
-#' @param ... 
+#' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
+#' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
+#' @param ... Additional arguments passed to ggplot2::geom_label_repel()
 #' @return ggplot2 object
 #' @return ggplot2 object
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point, min.cluster.size=0, mark.groups=FALSE, font.size=c(3, 7), legend.title=NULL, shuffle.colors=FALSE, palette=NULL, ...) {
@@ -211,8 +211,8 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point
 #' Set colors for embedding plot. Used primarily in embeddingPlot().
 #' 
 #' @inheritParams embeddingPlot
-#' @param plot.df
-#' @param geom_point_w (default=ggplot2::geom_point)
+#' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
+#' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @return ggplot2 object
 embeddingColorsPlot <- function(plot.df, colors=NULL, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[CellName])

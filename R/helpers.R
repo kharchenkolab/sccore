@@ -53,10 +53,10 @@ setMinMax <- function(obj, min, max) {
 
 #' Translate multilevel segmentation into a dendrogram, with the lowest level of the dendrogram listing the cells
 #'
-#' @param cl
-#' @param counts
-#' @param deep (default=FALSE)
-#' @param dist (default='cor')
+#' @param cl igraph communities object, returned from igraph community detection functions
+#' @param counts dgCmatrix of counts
+#' @param deep boolean If TRUE, take (cl$memberships[1,]). Otherwise, uses as.integer(membership(cl)) (default=FALSE)
+#' @param dist Distance metric used (default='cor'). Eiether 'cor' for the correlation distance in log10 space, or 'JS' for the Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence)
 #' @return result
 #' @export
 multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
@@ -66,16 +66,16 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
     clf <- as.integer(membership(cl));
   }
   names(clf) <- names(membership(cl))
-  clf.size <- unlist(tapply(clf,factor(clf,levels=seq(1,max(clf))),length))
+  clf.size <- unlist(tapply(clf, factor(clf, levels=seq(1,max(clf))), length))
   rowFac <- rep(NA,nrow(counts));
   rowFac[match(names(clf),rownames(counts))] <- clf;
-  lvec <- colSumByFac(counts, rowFac)[-1,,drop=FALSE]
+  lvec <- colSumByFac(counts, rowFac)[-1,, drop=FALSE]
   if(dist=='JS') {
     lvec.dist <- jsDist(t(lvec/pmax(1,Matrix::rowSums(lvec))));
   } else { # use correlation distance in log10 space
     lvec.dist <- 1-stats::cor(t(log10(lvec/pmax(1,Matrix::rowSums(lvec))+1)))
   }
-  d <- as.dendrogram(hclust(as.dist(lvec.dist),method='ward.D'))
+  d <- as.dendrogram(stats::hclust(as.dist(lvec.dist),method='ward.D'))
   # add cell info to the laves
   addinfo <- function(l,env) {
     v <- as.integer(mget("index",envir=env,ifnotfound=0)[[1]])+1;
@@ -88,7 +88,7 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
     attr(l,'root') <- FALSE
     return(l);
   }
-  d <- dendrapply(d,addinfo,env=environment())
+  d <- stats::dendrapply(d,addinfo,env=environment())
   attr(d,'root') <- TRUE
   return(d)
 }
