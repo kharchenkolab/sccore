@@ -1,7 +1,13 @@
 #' @importFrom magrittr %>% %<>% %$%
 #' @import igraph
 #' @importFrom methods as is
+#' @importFrom rlang .data 
 NULL
+
+## for magrittr and dplyr functions below
+if(getRversion() >= "2.15.1"){
+  utils::globalVariables(c("."))
+}
 
 #' Collapse graph using PAGA 1.2 algorithm, Wolf et al 2019, Genome Biology (2019) <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x>
 #' 
@@ -172,17 +178,18 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
 
 #' Estimate labeling distribution for each vertex, based on provided labels.
 #'
+#' @param graph igraph graph object 
 #' @param labels vector of factor or character labels, named by cell names, used in propagateLabelsSolver() and propagateLabelsDiffusion()
 #' @param method string Type of propagation. Either 'diffusion' or 'solver'. (default='diffusion') 'solver' gives better result
 #'  but has bad asymptotics, so it is inappropriate for datasets > 20k cells. 
 #' @param ... additional arguments passed to either propagateLabelsSolver() or propagateLabelsDiffusion()
 #' @return matrix with distribution of label probabilities for each vertex by rows.
 #' @export
-propagateLabels=function(labels, method="diffusion", ...) {
+propagateLabels=function(graph, labels, method="diffusion", ...) {
   if (method == "solver") {
-    label.dist <- propagateLabelsSolver(self$graph, labels, ...)
+    label.dist <- propagateLabelsSolver(graph, labels, ...)
   } else if (method == "diffusion") {
-    label.dist <- propagateLabelsDiffusion(self$graph, labels, ...)
+    label.dist <- propagateLabelsDiffusion(graph, labels, ...)
   } else {
     stop("Unknown method: ", method, ". Only 'solver' and 'diffusion' are supported.")
   }

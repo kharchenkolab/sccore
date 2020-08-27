@@ -95,6 +95,7 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
   return(d)
 }
 
+
 #' Increase resolution for a specific set of clusters
 #'
 #' @param con conos object, from <https://github.com/kharchenkolab/conos>, "Joint analysis of heterogeneous single-cell RNA-seq dataset collections", DOI: 10.1038/s41592-019-0466-z
@@ -105,7 +106,31 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
 #' @param ... Additional params passed to the community function
 #' @export
 findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NULL, method=igraph::cluster_louvain, ...) {
-  groups <- parseCellGroups(con, clustering, groups)
+
+  parseCellGroups <- function(con, clustering, groups) {
+
+    if (!is.null(groups)) {
+      if (!any(names(groups) %in% names(con$getDatasetPerCell()))){
+        stop("'groups' aren't defined for any of the cells.")
+      }
+
+      return(groups)
+    }
+
+    if (is.null(clustering)) {
+      if (length(con$clusters) > 0){
+        return(con$clusters[[1]]$groups)
+      }
+
+      stop("Either 'groups' must be provided or the conos object must have some clustering estimated")
+    }
+    if(is.null(clusters[[clustering]]))
+      stop(paste("clustering",clustering,"doesn't exist, run findCommunity() first"))
+
+    return(con$clusters[[clustering]]$groups)
+  }
+
+  groups <- parseCellGroups(con=con, clustering=clustering, groups=groups)
 
   groups.raw <- as.character(groups) %>% stats::setNames(names(groups))
   groups <- groups[intersect(names(groups), V(con$graph)$name)]

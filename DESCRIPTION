@@ -18,6 +18,7 @@ Imports:
     methods,
     pROC, 
     parallel,
+    rlang,
     scales,
     tibble,
     utils, 

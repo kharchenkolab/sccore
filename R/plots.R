@@ -1,7 +1,14 @@
+#' @importFrom magrittr %>% %<>% %$%
 #' @import ggplot2
 #' @importFrom grDevices adjustcolor rainbow
 #' @importFrom graphics par
+#' @importFrom rlang .data 
 NULL
+
+## for magrittr and dplyr functions below
+if(getRversion() >= "2.15.1"){
+  utils::globalVariables(c("."))
+}
 
 #' Utility function to translate a factor into colors
 #'
@@ -163,26 +170,26 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point
   arr.ids <- match(names(groups), plot.df$CellName)
   plot.df$Group[arr.ids[!is.na(arr.ids)]] <- groups[!is.na(arr.ids)]
 
-  big.clusts <- (plot.df %>% subset(!is.na(Group)) %>% dplyr::group_by(Group) %>% dplyr::summarise(Size=dplyr::n()) %>%
-                   dplyr::filter(Size >= min.cluster.size))$Group %>% as.vector()
+  big.clusts <- (plot.df %>% subset(!is.na(.data$Group)) %>% dplyr::group_by(.data$Group) %>% dplyr::summarise(Size=dplyr::n()) %>%
+                   dplyr::filter(.data$Size >= min.cluster.size))$Group %>% as.vector()
 
   plot.df$Group[!(plot.df$Group %in% big.clusts)] <- NA
-  na.plot.df <- plot.df %>% dplyr::filter(is.na(Group))
-  plot.df <- plot.df %>% dplyr::filter(!is.na(Group))
+  na.plot.df <- plot.df %>% dplyr::filter(is.na(.data$Group))
+  plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Group))
 
-  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
-    geom_point_w(ggplot2::aes(col=Group))
+  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=.data$x, y=.data$y)) +
+    geom_point_w(ggplot2::aes(col=.data$Group))
 
   if (mark.groups) {
-    labels.data <- plot.df %>% dplyr::group_by(Group) %>%
-      dplyr::summarise(x=median(x), y=median(y), Size=dplyr::n())
+    labels.data <- plot.df %>% dplyr::group_by(.data$Group) %>%
+      dplyr::summarise(x=median(.data$x), y=median(.data$y), Size=dplyr::n())
 
     if (length(font.size) == 1) {
       font.size <- c(font.size, font.size)
     }
 
     gg <- gg + ggrepel::geom_label_repel(
-      data=labels.data, ggplot2::aes(label=Group, size=Size), color='black',
+      data=labels.data, ggplot2::aes(label=.data$Group, size=.data$Size), color='black',
       fill=ggplot2::alpha('white', 0.7), label.size = NA,
       label.padding=ggplot2::unit(1, "pt"), seed=42, ...) +
       ggplot2::scale_size_continuous(range=font.size, trans='identity', guide='none')
@@ -215,18 +222,18 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @return ggplot2 object
 embeddingColorsPlot <- function(plot.df, colors=NULL, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
-  plot.df <- plot.df %>% dplyr::mutate(Color=colors[CellName])
+  plot.df <- plot.df %>% dplyr::mutate(Color=colors[.data$CellName])
   if(!is.null(groups)) {
     plot.df$Color[!plot.df$CellName %in% names(groups)] <- NA
   }
-  na.plot.df <- plot.df %>% dplyr::filter(is.na(Color))
-  plot.df <- plot.df %>% dplyr::filter(!is.na(Color))
+  na.plot.df <- plot.df %>% dplyr::filter(is.na(.data$Color))
+  plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Color))
 
-  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
+  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=.data$x, y=.data$y))
   if(is.character(colors)) {
     gg <- gg + geom_point_w(color=plot.df$Color)
   } else {
-    gg <- gg + geom_point_w(ggplot2::aes(col=Color)) + val2ggcol(plot.df$Color, gradient.range.quantile=gradient.range.quantile, palette=palette, color.range=color.range)
+    gg <- gg + geom_point_w(ggplot2::aes(col=.data$Color)) + val2ggcol(plot.df$Color, gradient.range.quantile=gradient.range.quantile, palette=palette, color.range=color.range)
   }
 
   if (!is.null(legend.title)) {
@@ -354,7 +361,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     plot.info <- embeddingColorsPlot(plot.df, colors, groups, geom_point_w, gradient.range.quantile,
                                      color.range, legend.title, palette)
   } else {
-    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
+    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=.data$x, y=.data$y)) +
                         geom_point_w(alpha=alpha, size=size))
   }
 
@@ -445,7 +452,7 @@ dotPlot <- function (markers,
   }
 
   if (!is.null(gene.order)) {
-    p.df %<>% dplyr::mutate(Gene = factor(as.character(Gene), levels = gene.order))
+    p.df %<>% dplyr::mutate(Gene = factor(as.character(.data$Gene), levels = gene.order))
   }
 
   # Adapted from Seurat:::DotPlot
@@ -454,7 +461,7 @@ dotPlot <- function (markers,
   }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {
     markers %>% lapply(function(g) {
-      df <- p.df %>% dplyr::filter(Type==t, Gene==g)
+      df <- p.df %>% dplyr::filter(.data$Type==t, .data$Gene==g)
       pct.exp <- sum(df$Expr>0)/dim(df)[1]*100
       avg.exp <- mean(df$Expr[df$Expr>0])
       res <- data.frame(gene=g,
@@ -468,7 +475,7 @@ dotPlot <- function (markers,
 
   data.plot$cluster %<>% factor(., levels=rev(unique(.)))
 
-  data.plot %<>% dplyr::arrange(gene)
+  data.plot %<>% dplyr::arrange(.data$gene)
 
   data.plot$avg.exp.scaled <- data.plot$gene %>% unique %>% sapply(function(g) {
     data.plot %>% .[.$gene == g, 'avg.exp'] %>%

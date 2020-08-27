@@ -4,9 +4,11 @@
 \alias{propagateLabels}
 \title{Estimate labeling distribution for each vertex, based on provided labels.}
 \usage{
-propagateLabels(labels, method = "diffusion", ...)
+propagateLabels(graph, labels, method = "diffusion", ...)
 }
 \arguments{
+\item{graph}{igraph graph object}
+
 \item{labels}{vector of factor or character labels, named by cell names, used in propagateLabelsSolver() and propagateLabelsDiffusion()}
 
 \item{method}{string Type of propagation. Either 'diffusion' or 'solver'. (default='diffusion') 'solver' gives better result
