@@ -24,11 +24,11 @@ getClusterGraph(
 
 \item{plot}{boolean Whether to show collapsed graph plot (default=FALSE)}
 
-\item{node.scale}{(default=50)}
+\item{node.scale}{numeric Scaling to control value of 'vertex.size' in plot.igraph() (default=50)}
 
-\item{edge.scale}{(default=50)}
+\item{edge.scale}{numeric Scaling to control value of 'edge.width' in plot.igraph() (default=50)}
 
-\item{edge.alpha}{(default=0.3)}
+\item{edge.alpha}{numeric Scaling to control value of 'alpha.f' in adjustcolor() within plot.igraph() (default=0.3)}
 
 \item{...}{arguments passed to collapseGraphSum()}
 }

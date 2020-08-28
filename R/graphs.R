@@ -113,9 +113,9 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' @inheritParams collapseGraphPaga
 #' @param method string Method to be used, either "sum" or "paga" (default="sum")
 #' @param plot boolean Whether to show collapsed graph plot (default=FALSE)
-#' @param node.scale (default=50)
-#' @param edge.scale (default=50)
-#' @param edge.alpha (default=0.3) 
+#' @param node.scale numeric Scaling to control value of 'vertex.size' in plot.igraph() (default=50)
+#' @param edge.scale numeric Scaling to control value of 'edge.width' in plot.igraph() (default=50)
+#' @param edge.alpha numeric Scaling to control value of 'alpha.f' in adjustcolor() within plot.igraph() (default=0.3) 
 #' @param ... arguments passed to collapseGraphSum()
 #' @return collapsed graph
 #' @export
