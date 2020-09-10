@@ -2,3 +2,9 @@
 
 # sccore
 Core utilities for single-cell RNA-seq data analysis. Contains functions for manipulating and plotting data.
+ 
+## Installation
+
+```r
+devtools::install_github('kharchenkolab/sccore')
+```
