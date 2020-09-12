@@ -206,9 +206,7 @@ propagateLabels=function(graph, labels, method="diffusion", ...) {
 
 
 
-
-
-#' Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
+#' Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm, "Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions" <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
 #' 
 #' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
@@ -252,13 +250,13 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 }
 
     
-#' Estimate labeling distribution for each vertex, based on provided labels using Random Walk
+#' Estimate labeling distribution for each vertex, based on provided labels using a Random Walk on graph
 #'
 #' @param graph igraph graph object Graph input 
 #' @param labels vector of factor or character labels, named by cell names
-#' @param max.iters integer Maximal number of iterations. (default=100)
-#' @param diffusion.fading  (default=10.0)
-#' @param diffusion.fading.const (default=0.1)
+#' @param max.iters integer Maximal number of iterations (default=100)
+#' @param diffusion.fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=10.0)
+#' @param diffusion.fading.const numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.1)
 #' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
 #' @param fixed.initial.labels prohibit changes of initial labels during diffusion. (default=TRUE)
 #' @param verbose boolean Verbose mode. (default=TRUE)

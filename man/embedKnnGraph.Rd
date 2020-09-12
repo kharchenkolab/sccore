@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph_embedding.R
 \name{embedKnnGraph}
 \alias{embedKnnGraph}
-\title{Embed a k-nearest neighbor (kNN) graph witin a UMAP. Used within embedGraphUmap()}
+\title{Embed a k-nearest neighbor (kNN) graph within a UMAP. Used within embedGraphUmap(). Please see McInnes et al <doi:10.21105/joss.00861> for the UMAP description and implementation.}
 \usage{
 embedKnnGraph(
   commute.times,
@@ -45,5 +45,5 @@ embedKnnGraph(
 result
 }
 \description{
-Embed a k-nearest neighbor (kNN) graph witin a UMAP. Used within embedGraphUmap()
+Embed a k-nearest neighbor (kNN) graph within a UMAP. Used within embedGraphUmap(). Please see McInnes et al <doi:10.21105/joss.00861> for the UMAP description and implementation.
 }

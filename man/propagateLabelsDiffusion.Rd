@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphs.R
 \name{propagateLabelsDiffusion}
 \alias{propagateLabelsDiffusion}
-\title{Estimate labeling distribution for each vertex, based on provided labels using Random Walk}
+\title{Estimate labeling distribution for each vertex, based on provided labels using a Random Walk on graph}
 \usage{
 propagateLabelsDiffusion(
   graph,
@@ -20,11 +20,11 @@ propagateLabelsDiffusion(
 
 \item{labels}{vector of factor or character labels, named by cell names}
 
-\item{max.iters}{integer Maximal number of iterations. (default=100)}
+\item{max.iters}{integer Maximal number of iterations (default=100)}
 
-\item{diffusion.fading}{(default=10.0)}
+\item{diffusion.fading}{numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=10.0)}
 
-\item{diffusion.fading.const}{(default=0.1)}
+\item{diffusion.fading.const}{numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.1)}
 
 \item{tol}{numeric Absolute tolerance as a stopping criteria. (default=0.025)}
 
@@ -36,5 +36,5 @@ propagateLabelsDiffusion(
 matrix
 }
 \description{
-Estimate labeling distribution for each vertex, based on provided labels using Random Walk
+Estimate labeling distribution for each vertex, based on provided labels using a Random Walk on graph
 }

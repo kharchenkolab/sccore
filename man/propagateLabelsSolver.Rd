@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphs.R
 \name{propagateLabelsSolver}
 \alias{propagateLabelsSolver}
-\title{Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>}
+\title{Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm, "Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions" <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>}
 \usage{
 propagateLabelsSolver(graph, labels, solver = "mumps")
 }
@@ -17,5 +17,5 @@ propagateLabelsSolver(graph, labels, solver = "mumps")
 result from Matrix::solve() or rmumps::Rmumps
 }
 \description{
-Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
+Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm, "Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions" <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
 }

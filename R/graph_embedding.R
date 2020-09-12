@@ -38,7 +38,7 @@ graphToAdjList <- function(graph) {
 }
 
 
-#' Embed a k-nearest neighbor (kNN) graph witin a UMAP. Used within embedGraphUmap()
+#' Embed a k-nearest neighbor (kNN) graph within a UMAP. Used within embedGraphUmap(). Please see McInnes et al <doi:10.21105/joss.00861> for the UMAP description and implementation.
 #' 
 #' @param commute.times graph commute times from get_nearest_neighbors(). The definition of commute_time(u, v) is the expected time starting at u = to reach v and then return to u . 
 #' @param n.neighbors numeric Number of neighbors
@@ -74,7 +74,7 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.e
 
 
 
-#' Embed a graph into a UMAP, Uniform Manifold Approximation and Projection for Dimension Reduction, <https://github.com/lmcinnes/umap>
+#' Embed a graph into a UMAP, Uniform Manifold Approximation and Projection for Dimension Reduction, <https://github.com/lmcinnes/umap>, <doi:10.21105/joss.00861>
 #' 
 #' @param graph input igraph object
 #' @param min.prob numeric Minimum probability for proximity when calculating hitting time per neighbors (default=1e-3)

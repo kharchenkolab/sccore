@@ -2,7 +2,7 @@
 % Please edit documentation in R/graph_embedding.R
 \name{embedGraphUmap}
 \alias{embedGraphUmap}
-\title{Embed a graph into a UMAP, Uniform Manifold Approximation and Projection for Dimension Reduction, <https://github.com/lmcinnes/umap>}
+\title{Embed a graph into a UMAP, Uniform Manifold Approximation and Projection for Dimension Reduction, <https://github.com/lmcinnes/umap>, <doi:10.21105/joss.00861>}
 \usage{
 embedGraphUmap(
   graph,
@@ -57,5 +57,5 @@ embedGraphUmap(
 result
 }
 \description{
-Embed a graph into a UMAP, Uniform Manifold Approximation and Projection for Dimension Reduction, <https://github.com/lmcinnes/umap>
+Embed a graph into a UMAP, Uniform Manifold Approximation and Projection for Dimension Reduction, <https://github.com/lmcinnes/umap>, <doi:10.21105/joss.00861>
 }
