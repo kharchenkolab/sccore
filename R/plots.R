@@ -403,6 +403,8 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... Additional inputs passed to sccore:::plapply(), see man for description.
 #' @return ggplot2 object
+#' @examples
+#'
 #' @export
 dotPlot <- function (markers,
                      count.matrix,
