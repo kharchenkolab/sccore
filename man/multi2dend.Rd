@@ -16,7 +16,7 @@ multi2dend(cl, counts, deep = FALSE, dist = "cor")
 \item{dist}{Distance metric used (default='cor'). Eiether 'cor' for the correlation distance in log10 space, or 'JS' for the Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence)}
 }
 \value{
-result
+resulting dendrogram
 }
 \description{
 Translate multilevel segmentation into a dendrogram, with the lowest level of the dendrogram listing the cells

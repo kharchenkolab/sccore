@@ -59,7 +59,7 @@ setMinMax <- function(obj, min, max) {
 #' @param counts dgCmatrix of counts
 #' @param deep boolean If TRUE, take (cl$memberships[1,]). Otherwise, uses as.integer(membership(cl)) (default=FALSE)
 #' @param dist Distance metric used (default='cor'). Eiether 'cor' for the correlation distance in log10 space, or 'JS' for the Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence)
-#' @return result
+#' @return resulting dendrogram
 #' @export
 multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
   if(deep) {
@@ -104,6 +104,7 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
 #' @param groups Set of clusters to use (default=NULL). Ignored if 'clustering' is not NULL.
 #' @param method Function, used to find communities (default=igraph::cluster_louvain)
 #' @param ... Additional params passed to the community function
+#' @return The input conos object "subset" with the input target.clusters, thereby resulting in a magnified view of these clusters
 #' @export
 findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NULL, method=igraph::cluster_louvain, ...) {
 
@@ -124,8 +125,9 @@ findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NUL
 
       stop("Either 'groups' must be provided or the conos object must have some clustering estimated")
     }
-    if(is.null(clusters[[clustering]]))
+    if(is.null(clusters[[clustering]])){
       stop(paste("clustering",clustering,"doesn't exist, run findCommunity() first"))
+    }
 
     return(con$clusters[[clustering]]$groups)
   }
@@ -135,19 +137,20 @@ findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NUL
   groups.raw <- as.character(groups) %>% stats::setNames(names(groups))
   groups <- groups[intersect(names(groups), V(con$graph)$name)]
 
-  if(length(groups) == 0) {
+  if (length(groups) == 0) {
     stop("'groups' not defined for graph object.")
   }
 
   groups <- droplevels(as.factor(groups)[groups %in% target.clusters])
-  if(length(groups) == 0) {
+  if (length(groups) == 0) {
     stop("None of 'target.clusters' can be found in 'groups'.")
   }
 
   subgroups <- split(names(groups), groups)
   for (n in names(subgroups)) {
-    if (length(subgroups[[n]]) < 2)
+    if (length(subgroups[[n]]) < 2){
       next
+    }
 
     new.clusts <- method(induced_subgraph(con$graph, subgroups[[n]]), ...)
     groups.raw[new.clusts$names] <- paste0(n, "_", new.clusts$membership)

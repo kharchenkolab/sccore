@@ -57,7 +57,7 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.e
   min.n.neighbors <- sapply(commute.times$idx, length) %>% min()
   if (min.n.neighbors < n.neighbors) {
     n.neighbors <- min.n.neighbors
-    warning("Maximal number of estimated neighbors is ", min.n.neighbors, ". Consider increasing min.visited.verts, min.prob or min.prob.lower.\n")
+    warning("Maximal number of estimated neighbors is ", min.n.neighbors, ". Consider increasing min.visited.verts, min.prob or min.prob.lower.")
   }
 
   ct.top <- sapply(commute.times$dist, `[`, 1:n.neighbors) %>% t() + 1
@@ -100,27 +100,27 @@ embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores
   conn.comps <- igraph::components(graph)
   if (conn.comps$no > 1) {
     warning("Conos graph is not connected. Embedding may behave unexpectedly. ",
-            "Please, consider increasing 'k' and/or 'k.self' parameters of 'buildGraph'\n")
+            "Please, consider increasing 'k' and/or 'k.self' parameters of 'buildGraph'")
   }
   min.visited.verts = min(min.visited.verts, min(conn.comps$csize) - 1)
   if (max.hitting.nn.num == 0) {
     max.hitting.nn.num <- length(igraph::V(graph)) - 1
   }
 
-  if (verbose) message("Convert graph to adjacency list...\n")
+  if (verbose) message("Convert graph to adjacency list...")
   adj.info <- graphToAdjList(graph);
-  if (verbose) message("Done\n")
+  if (verbose) message("Done")
 
-  if (verbose) message("Estimate nearest neighbors and commute times...\n")
+  if (verbose) message("Estimate nearest neighbors and commute times...")
   commute.times <- get_nearest_neighbors(adj.info$idx, adj.info$probabilities, min_prob=min.prob,
                                          min_visited_verts=min.visited.verts, n_cores=n.cores, max_hitting_nn_num=max.hitting.nn.num,
                                          max_commute_nn_num=max.commute.nn.num, min_prob_lower=min.prob.lower, verbose=verbose)
-  if (verbose) message("Done\n")
+  if (verbose) message("Done")
 
-  if (verbose) message("Estimate UMAP embedding...\n")
+  if (verbose) message("Estimate UMAP embedding...")
   umap <- embedKnnGraph(commute.times, n.neighbors=n.neighbors, names=adj.info$names, n_threads=n.cores,
                         n_epochs=n.epochs, spread=spread, min_dist=min.dist, verbose=verbose, n_sgd_threads=n.sgd.cores, ...)
-  if (verbose) message("Done\n")
+  if (verbose) message("Done")
 
   if (return.all){
     return(list(adj.info=adj.info, commute.times=commute.times, umap=umap))

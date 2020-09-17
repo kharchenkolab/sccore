@@ -214,8 +214,9 @@ propagateLabels=function(graph, labels, method="diffusion", ...) {
 #' @return result from Matrix::solve() or rmumps::Rmumps
 #' @export
 propagateLabelsSolver <- function(graph, labels, solver="mumps") {
-  if (!solver %in% c("mumps", "Matrix"))
+  if (!solver %in% c("mumps", "Matrix")){
     stop("Unknown solver: ", solver, ". Only 'mumps' and 'Matrix' are currently supported")
+  }
 
   if (!requireNamespace("rmumps", quietly=TRUE)) {
     warning("Package 'rmumps' is required to use 'mumps' solver. Fall back to 'Matrix'")

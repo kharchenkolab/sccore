@@ -432,16 +432,16 @@ dotPlot <- function (markers,
 
   missing.markers <- setdiff(markers, colnames(count.matrix))
   if (length(missing.markers)>0) {
-    message("Not all markers are in 'count.matrix'. The following are missing:\n",paste(missing.markers, collapse=" "),"\n")
+    message("Not all markers are in 'count.matrix'. The following are missing: ",paste(missing.markers, collapse=" "))
     stop("Please update 'markers'.")
   }
 
   marker.table <- table(markers)
   if (sum(marker.table>1)!=0) {
-    message("The following genes are present more than once in 'markers':\n", paste(names(marker.table[marker.table>1]), collapse = " "), "\nThese genes will only be plotted at first instace. Consider revising.\n")
+    message("The following genes are present more than once in 'markers': ", paste(names(marker.table[marker.table>1]), collapse = " "), " These genes will only be plotted at first instace. Consider revising. ")
   }
   if (verbose) {
-    message("Extracting gene expression...\n")
+    message("Extracting gene expression... ")
   }
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
   p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
@@ -457,7 +457,7 @@ dotPlot <- function (markers,
 
   # Adapted from Seurat:::DotPlot
   if (verbose) { 
-    message("Calculating expression distributions...\n")
+    message("Calculating expression distributions... ")
   }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {
     markers %>% lapply(function(g) {

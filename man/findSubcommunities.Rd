@@ -26,6 +26,9 @@ findSubcommunities(
 
 \item{...}{Additional params passed to the community function}
 }
+\value{
+The input conos object "subset" with the input target.clusters, thereby resulting in a magnified view of these clusters
+}
 \description{
 Increase resolution for a specific set of clusters
 }
