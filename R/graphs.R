@@ -82,7 +82,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 #' Collapse Graph By Sum
 #'
 #' @inheritParams collapseGraphPaga
-#' @param normalize boolean whether to recalculate edge weight as observed/expected (default=TRUE)
+#' @param normalize boolean Whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @return collapsed graph
 #' @export
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
@@ -259,7 +259,7 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 #' @param diffusion.fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=10.0)
 #' @param diffusion.fading.const numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.1)
 #' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
-#' @param fixed.initial.labels prohibit changes of initial labels during diffusion. (default=TRUE)
+#' @param fixed.initial.labels boolean Prohibit changes of initial labels during diffusion. (default=TRUE)
 #' @param verbose boolean Verbose mode. (default=TRUE)
 #' @return matrix
 #' @export

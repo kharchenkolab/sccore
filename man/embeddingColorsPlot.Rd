@@ -6,7 +6,7 @@
 \usage{
 embeddingColorsPlot(
   plot.df,
-  colors = NULL,
+  colors,
   groups = NULL,
   geom_point_w = ggplot2::geom_point,
   gradient.range.quantile = 1,
@@ -18,7 +18,7 @@ embeddingColorsPlot(
 \arguments{
 \item{plot.df}{data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().}
 
-\item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
+\item{colors}{vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
 
 \item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 

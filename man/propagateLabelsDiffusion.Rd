@@ -28,7 +28,7 @@ propagateLabelsDiffusion(
 
 \item{tol}{numeric Absolute tolerance as a stopping criteria. (default=0.025)}
 
-\item{fixed.initial.labels}{prohibit changes of initial labels during diffusion. (default=TRUE)}
+\item{fixed.initial.labels}{boolean Prohibit changes of initial labels during diffusion. (default=TRUE)}
 
 \item{verbose}{boolean Verbose mode. (default=TRUE)}
 }

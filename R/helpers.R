@@ -73,7 +73,7 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
   rowFac[match(names(clf),rownames(counts))] <- clf;
   lvec <- colSumByFac(counts, rowFac)[-1,, drop=FALSE]
   if(dist=='JS') {
-    lvec.dist <- jsDist(t(lvec/pmax(1,Matrix::rowSums(lvec))));
+    lvec.dist <- jsDist(t(lvec/pmax(1, Matrix::rowSums(lvec))));
   } else { # use correlation distance in log10 space
     lvec.dist <- 1-stats::cor(t(log10(lvec/pmax(1,Matrix::rowSums(lvec))+1)))
   }

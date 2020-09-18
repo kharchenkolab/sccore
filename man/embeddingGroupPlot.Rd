@@ -7,13 +7,13 @@
 embeddingGroupPlot(
   plot.df,
   groups,
-  geom_point_w = ggplot2::geom_point,
-  min.cluster.size = 0,
-  mark.groups = FALSE,
-  font.size = c(3, 7),
-  legend.title = NULL,
-  shuffle.colors = FALSE,
-  palette = NULL,
+  geom_point_w,
+  min.cluster.size,
+  mark.groups,
+  font.size,
+  legend.title,
+  shuffle.colors,
+  palette,
   ...
 )
 }

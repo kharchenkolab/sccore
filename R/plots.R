@@ -3,6 +3,7 @@
 #' @importFrom grDevices adjustcolor rainbow
 #' @importFrom graphics par
 #' @importFrom rlang .data 
+#' @import rlang
 NULL
 
 ## for magrittr and dplyr functions below
@@ -101,9 +102,9 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
 #' @param return.fill boolean Whether to return fill gradients instead of color (default=FALSE)
 #' @param ... additional arguments are passed to ggplot2::scale_color_gradient* functions, i.e. scale_color_gradient(), scale_color_gradient2(), scale_color_gradientn()
 #' @return ggplot2::scale_colour_gradient* object
-val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric', palette=NULL, midpoint=NULL, oob=scales::squish, return.fill=FALSE,  ...) {
+val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric', palette=NULL, midpoint=NULL, oob=scales::squish, return.fill=FALSE, ...) {
   if(length(gradient.range.quantile)>1) { # min/max quantile is given
-    zlim <- as.numeric(quantile(values,p=gradient.range.quantile,na.rm=TRUE))
+    zlim <- as.numeric(quantile(values, p=gradient.range.quantile, na.rm=TRUE))
   } else if(gradient.range.quantile<1) { # single value spec
     zlim <- sort(as.numeric(quantile(values, p=c(1 - gradient.range.quantile, gradient.range.quantile), na.rm=TRUE)))
   } else {
@@ -122,7 +123,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
   }
 
   # pick a palette and return
-  if(is.null(palette)) {
+  if (is.null(palette)) {
     if (max(abs(zlim))==0) {
       ## if gene counts all 0, then simply plot all cells as "gray90"
       ggplot2::scale_color_gradient(low="gray90", high="gray90", limits=zlim, ...)
@@ -162,7 +163,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @param ... Additional arguments passed to ggplot2::geom_label_repel()
 #' @return ggplot2 object
-embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point, min.cluster.size=0, mark.groups=FALSE, font.size=c(3, 7), legend.title=NULL, shuffle.colors=FALSE, palette=NULL, ...) {
+embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
   
   groups <- as.factor(groups)
 
@@ -170,26 +171,26 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point
   arr.ids <- match(names(groups), plot.df$CellName)
   plot.df$Group[arr.ids[!is.na(arr.ids)]] <- groups[!is.na(arr.ids)]
 
-  big.clusts <- (plot.df %>% subset(!is.na(.data$Group)) %>% dplyr::group_by(.data$Group) %>% dplyr::summarise(Size=dplyr::n()) %>%
-                   dplyr::filter(.data$Size >= min.cluster.size))$Group %>% as.vector()
+  big.clusts <- (plot.df %>% subset(!is.na(Group)) %>% dplyr::group_by(Group) %>% dplyr::summarise(Size=n()) %>%
+                   dplyr::filter(Size >= min.cluster.size))$Group %>% as.vector()
 
   plot.df$Group[!(plot.df$Group %in% big.clusts)] <- NA
-  na.plot.df <- plot.df %>% dplyr::filter(is.na(.data$Group))
-  plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Group))
+  na.plot.df <- plot.df %>% dplyr::filter(is.na(Group))
+  plot.df <- plot.df %>% dplyr::filter(!is.na(Group))
 
-  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=.data$x, y=.data$y)) +
-    geom_point_w(ggplot2::aes(col=.data$Group))
+  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
+    geom_point_w(ggplot2::aes(col=Group))
 
   if (mark.groups) {
-    labels.data <- plot.df %>% dplyr::group_by(.data$Group) %>%
-      dplyr::summarise(x=median(.data$x), y=median(.data$y), Size=dplyr::n())
+    labels.data <- plot.df %>% dplyr::group_by(Group) %>%
+      dplyr::summarise(x=median(x), y=median(y), Size=n())
 
     if (length(font.size) == 1) {
       font.size <- c(font.size, font.size)
     }
 
     gg <- gg + ggrepel::geom_label_repel(
-      data=labels.data, ggplot2::aes(label=.data$Group, size=.data$Size), color='black',
+      data=labels.data, ggplot2::aes(label=Group, size=Size), color='black',
       fill=ggplot2::alpha('white', 0.7), label.size = NA,
       label.padding=ggplot2::unit(1, "pt"), seed=42, ...) +
       ggplot2::scale_size_continuous(range=font.size, trans='identity', guide='none')
@@ -203,7 +204,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point
     palette <- rainbow
   }
 
-  color.vals <- fac2palette(groups, palette)
+  color.vals <- fac2palette(groups,palette);
 
 
   if (shuffle.colors) {
@@ -214,14 +215,13 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w=ggplot2::geom_point
 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
-
 #' Set colors for embedding plot. Used primarily in embeddingPlot().
 #' 
 #' @inheritParams embeddingPlot
 #' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @return ggplot2 object
-embeddingColorsPlot <- function(plot.df, colors=NULL, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
+embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[.data$CellName])
   if(!is.null(groups)) {
     plot.df$Color[!plot.df$CellName %in% names(groups)] <- NA
@@ -229,7 +229,7 @@ embeddingColorsPlot <- function(plot.df, colors=NULL, groups=NULL, geom_point_w=
   na.plot.df <- plot.df %>% dplyr::filter(is.na(.data$Color))
   plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Color))
 
-  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=.data$x, y=.data$y))
+  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
   if(is.character(colors)) {
     gg <- gg + geom_point_w(color=plot.df$Color)
   } else {
@@ -293,7 +293,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @inheritDotParams ggrepel::geom_label_repel
 #' @param embedding two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors
 #' @param groups vector of cluster labels, names contain cell names (default=NULL)
-#' @param colors vector of numbers, which must be shouwn with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.
+#' @param colors vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.
 #' @param subgroups subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL
 #' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE). This argument is FALSE if 'subgroups' is NULL
 #' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided
@@ -343,11 +343,9 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     geom_point_w0 <- ggplot2::geom_point
   }
 
-  geom_point_w <- function(...) {
-    geom_point_w0(..., size=size, alpha=alpha)
-  }
+  geom_point_w <- function(...) geom_point_w0(..., size=size, alpha=alpha)
 
-  if (!is.null(subgroups) && !is.null(groups)) {
+  if(!is.null(subgroups) && !is.null(groups)) {
     groups %<>% .[. %in% subgroups]
     if(length(groups)==0) {
       stop("'groups' is empty after filtering by 'subgroups'.")
@@ -361,7 +359,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     plot.info <- embeddingColorsPlot(plot.df, colors, groups, geom_point_w, gradient.range.quantile,
                                      color.range, legend.title, palette)
   } else {
-    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=.data$x, y=.data$y)) +
+    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
                         geom_point_w(alpha=alpha, size=size))
   }
 
@@ -370,7 +368,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     gg <- gg + geom_point_w(data=plot.info$na.plot.df, color='black', shape=4)
   }
 
-  if (keep.limits) {
+  if(keep.limits) {
     gg <- gg + ggplot2::lims(x=range(embedding[,1]), y=range(embedding[,2]))
   }
 

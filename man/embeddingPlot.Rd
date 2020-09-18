@@ -39,7 +39,7 @@ embeddingPlot(
 
 \item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
-\item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
+\item{colors}{vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
 
 \item{subgroups}{subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL}
 
