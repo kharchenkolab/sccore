@@ -171,18 +171,18 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   arr.ids <- match(names(groups), plot.df$CellName)
   plot.df$Group[arr.ids[!is.na(arr.ids)]] <- groups[!is.na(arr.ids)]
 
-  big.clusts <- (plot.df %>% subset(!is.na(Group)) %>% dplyr::group_by(Group) %>% dplyr::summarise(Size=n()) %>%
-                   dplyr::filter(Size >= min.cluster.size))$Group %>% as.vector()
+  big.clusts <- (plot.df %>% subset(!is.na(.data$Group)) %>% dplyr::group_by(.data$Group) %>% dplyr::summarise(Size=n()) %>%
+                   dplyr::filter(.data$Size >= min.cluster.size))$Group %>% as.vector()
 
   plot.df$Group[!(plot.df$Group %in% big.clusts)] <- NA
-  na.plot.df <- plot.df %>% dplyr::filter(is.na(Group))
-  plot.df <- plot.df %>% dplyr::filter(!is.na(Group))
+  na.plot.df <- plot.df %>% dplyr::filter(is.na(.data$Group))
+  plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Group))
 
   gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
-    geom_point_w(ggplot2::aes(col=Group))
+    geom_point_w(ggplot2::aes(col=.data$Group))
 
   if (mark.groups) {
-    labels.data <- plot.df %>% dplyr::group_by(Group) %>%
+    labels.data <- plot.df %>% dplyr::group_by(.data$Group) %>%
       dplyr::summarise(x=median(x), y=median(y), Size=n())
 
     if (length(font.size) == 1) {
@@ -190,7 +190,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
     }
 
     gg <- gg + ggrepel::geom_label_repel(
-      data=labels.data, ggplot2::aes(label=Group, size=Size), color='black',
+      data=labels.data, ggplot2::aes(label=.data$Group, size=.data$Size), color='black',
       fill=ggplot2::alpha('white', 0.7), label.size = NA,
       label.padding=ggplot2::unit(1, "pt"), seed=42, ...) +
       ggplot2::scale_size_continuous(range=font.size, trans='identity', guide='none')
