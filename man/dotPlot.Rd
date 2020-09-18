@@ -74,3 +74,6 @@ ggplot2 object
 \description{
 Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 }
+\examples{
+
+}

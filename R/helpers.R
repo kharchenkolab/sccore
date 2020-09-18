@@ -114,7 +114,7 @@ findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NUL
       if (!any(names(groups) %in% names(con$getDatasetPerCell()))){
         stop("'groups' aren't defined for any of the cells.")
       }
-
+      
       return(groups)
     }
 
@@ -188,12 +188,12 @@ extendMatrix <- function(mtx, col.names) {
 }
 
 
-#' Merge list of count matrices
+#' Merge list of count matrices into a common matrix, entering 0s for the missing entries
 #'
 #' @param cms List of count matrices
 #' @param transposed boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)
 #' @param ... Parameters for 'plapply' function
-#' @return Merged matrix
+#' @return A merged extended matrix, with 0s for missing entries
 #' @export
 mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   if (!transposed) {
@@ -209,32 +209,4 @@ mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   return(res)
 }
 
-
-#' Merge into a common matrix, entering 0s for the missing entries
-#'
-#' @param cms List of count matrices
-#' @param transposed boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)
-#' @return A merged extended matrix, with 0s for missing entries
-#' @export 
-mergeCountMatrices <- function(cms, transposed=FALSE) {
-  extendMatrix <- function(mtx, col.names) {
-    new.names <- setdiff(col.names, colnames(mtx))
-    ext.mtx <- Matrix::Matrix(0, nrow=nrow(mtx), ncol=length(new.names), sparse=TRUE) %>%
-      as(class(mtx)) %>% `colnames<-`(new.names)
-    return(cbind(mtx, ext.mtx)[,col.names])
-  }
-
-  if (!transposed) {
-    cms %<>% lapply(Matrix::t)
-  }
-
-  gene.union <- lapply(cms, colnames) %>% Reduce(union, .)
-  res <- lapply(cms, extendMatrix, gene.union) %>% Reduce(rbind, .)
-
-  if (!transposed) {
-    res %<>% Matrix::t()
-  }
-
-  return(res)
-}
 
