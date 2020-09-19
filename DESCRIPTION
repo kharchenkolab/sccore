@@ -36,5 +36,5 @@ LinkingTo: Rcpp, RcppArmadillo, RcppProgress, RcppEigen
 NeedsCompilation: yes
 URL: https://github.com/kharchenkolab/sccore
 BugReports: https://github.com/kharchenkolab/sccore/issues
-Author: Peter Kharchenko [aut], Viktor Petukhov [aut], Evan Biederstedt [aut, cre]
+Author: Peter Kharchenko [aut], Viktor Petukhov [aut], Ramus Rydbirk [aut], Evan Biederstedt [aut, cre]
 Maintainer: Evan Biederstedt <evan.biederstedt@gmail.com>

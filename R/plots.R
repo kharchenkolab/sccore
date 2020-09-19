@@ -3,7 +3,6 @@
 #' @importFrom grDevices adjustcolor rainbow
 #' @importFrom graphics par
 #' @importFrom rlang .data 
-#' @import rlang
 NULL
 
 ## for magrittr and dplyr functions below
