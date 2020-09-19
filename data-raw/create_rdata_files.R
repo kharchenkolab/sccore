@@ -18,6 +18,6 @@ con$findCommunities(method =igraph::walktrap.community, steps=7)
 
 con$embedGraph(method="UMAP", min.dist=0.01, spread=15, n.cores=4, min.prob.lower=1e-3)
 
-umapEmbedding = conos:::embedGraphUmap(con$graph, alpha=0.1, verbose=TRUE, return.all=FALSE, n.cores=2)
+umapEmbedding = conos:::embedGraphUmap(con$graph, verbose=TRUE, return.all=FALSE, n.cores=2)
 
 save(umapEmbedding, file="umapEmbedding.rda")

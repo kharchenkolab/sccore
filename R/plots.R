@@ -311,29 +311,29 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param legend.title legend title (default=NULL)
 #' @param gradient.range.quantile Winsorization quantile for the numeric colors and gene gradient (default=1)
 #' @param raster boolean whether layer with the points be rasterized (default=FALSE). Setting of this argument to TRUE is useful when you need to export a plot with large number of points
-#' @param raster.width width of the plot in inches. (default=NULL). Ignored if raster == FALSE.
-#' @param raster.height height of the plot in inches. (default=NULL). Ignored if raster == FALSE.
 #' @param raster.dpi dpi of the rasterized plot. (default=300). Ignored if raster == FALSE.
 #' @param shuffle.colors shuffle colors (default=FALSE)
 #' @param keep.limits Keep axis limits from original plot (default=!is.null(subgroups)). Useful when plotting subgroups, only meaningful it plot.na=FALSE
 #' @return ggplot2 object
+#' @examples 
+#' library(sccore)
+#' embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
+#'
 #' @export
 embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
                           show.legend=FALSE, alpha=0.4, size=0.8, title=NULL, plot.theme=NULL, palette=NULL, color.range="symmetric",
                           font.size=c(3, 7), show.ticks=FALSE, show.labels=FALSE, legend.position=NULL, legend.title=NULL,
-                          gradient.range.quantile=1, raster=FALSE, raster.width=NULL, raster.height=NULL, raster.dpi=300,
-                          shuffle.colors=FALSE, keep.limits=!is.null(subgroups),
-                          ...) {
+                          gradient.range.quantile=1, raster=FALSE, raster.dpi=300, shuffle.colors=FALSE, keep.limits=!is.null(subgroups), ...) {
   plot.df <- tibble::rownames_to_column(as.data.frame(embedding), "CellName")
   colnames(plot.df)[2:3] <- c("x", "y")
 
   if (raster && requireNamespace("ggrastr", quietly = TRUE)) {
     if (utils::packageVersion("ggrastr") <= "0.1.6") {
       geom_point_w0 <- function(...)
-        ggrastr::geom_point_rast(..., width=raster.width, height=raster.height, dpi=raster.dpi)
+        ggrastr::geom_point_rast(..., dpi=raster.dpi)
     } else {
       geom_point_w0 <- function(...)
-        ggrastr::geom_point_rast(..., raster.width=raster.width, raster.height=raster.height, raster.dpi=raster.dpi)
+        ggrastr::geom_point_rast(..., raster.dpi=raster.dpi)
     }
   } else {
     if (raster) {

@@ -1,3 +1,4 @@
+#' @useDynLib sccore
 #' @importFrom magrittr %>% %<>% %$%
 #' @import igraph
 #' @importFrom stats as.dendrogram as.dist is.leaf median na.omit quantile setNames
@@ -178,10 +179,14 @@ sn <- function(x) {
 #'
 #' @param mtx Matrix
 #' @param col.names Columns that should be included in matrix
-#' @return Matrix with new columns
+#' @return Matrix with new columns but rows retained
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
+  ## if all col.names already included in matrix, don't extend
+  if (identical(new.names, character(0))){
+    return(mtx)
+  }
   ext.mtx <- matrix(0, nrow=nrow(mtx), ncol=length(new.names))
   colnames(ext.mtx) <- new.names
   return(cbind(mtx, ext.mtx)[, col.names])

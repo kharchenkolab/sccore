@@ -12,7 +12,7 @@ extendMatrix(mtx, col.names)
 \item{col.names}{Columns that should be included in matrix}
 }
 \value{
-Matrix with new columns
+Matrix with new columns but rows retained
 }
 \description{
 Extend matrix to include new columns in matrix

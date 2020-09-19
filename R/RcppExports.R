@@ -10,10 +10,6 @@ colSumByFac <- function(sY, rowSel) {
     .Call('_sccore_colSumByFac', PACKAGE = 'sccore', sY, rowSel)
 }
 
-as_factor <- function(vals) {
-    .Call('_sccore_as_factor', PACKAGE = 'sccore', vals)
-}
-
 #' Get nearest neighbors method on graph
 #'
 #' @param adjacency_list igraph adjacency list

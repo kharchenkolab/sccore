@@ -26,8 +26,6 @@ embeddingPlot(
   legend.title = NULL,
   gradient.range.quantile = 1,
   raster = FALSE,
-  raster.width = NULL,
-  raster.height = NULL,
   raster.dpi = 300,
   shuffle.colors = FALSE,
   keep.limits = !is.null(subgroups),
@@ -76,10 +74,6 @@ embeddingPlot(
 \item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
 
 \item{raster}{boolean whether layer with the points be rasterized (default=FALSE). Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
-
-\item{raster.width}{width of the plot in inches. (default=NULL). Ignored if raster == FALSE.}
-
-\item{raster.height}{height of the plot in inches. (default=NULL). Ignored if raster == FALSE.}
 
 \item{raster.dpi}{dpi of the rasterized plot. (default=300). Ignored if raster == FALSE.}
 
@@ -160,4 +154,9 @@ ggplot2 object
 }
 \description{
 Plot embedding with provided labels / colors using ggplot2
+}
+\examples{
+library(sccore)
+embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
+
 }

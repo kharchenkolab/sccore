@@ -43,23 +43,6 @@ std::vector<T> reorder(const std::vector<T> &vec, const std::vector<size_t> inde
   return vec_sorted;
 }
 
-// [[Rcpp::export]]
-Rcpp::List as_factor(const std::vector<std::string> &vals) {
-  std::unordered_map<std::string, int> levels;
-  std::vector<int> int_vals;
-  std::vector<std::string> level_vals;
-
-  for (auto const &val : vals) {
-    auto const iter = levels.emplace(val, levels.size());
-    int_vals.emplace_back(iter.first->second + 1);
-    if (iter.second) {
-      level_vals.emplace_back(iter.first->first);
-    }
-  }
-
-  return Rcpp::List::create(Rcpp::_["values"]=int_vals, Rcpp::_["levels"]=level_vals);
-}
-
 std::unordered_map<int, double> get_hitting_time_map(const std::vector<int> &adjacent_ids,
                                                      const std::vector<double> &hitting_times) {
   std::unordered_map<int, double> cur_times;
