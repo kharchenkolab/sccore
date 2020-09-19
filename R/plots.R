@@ -8,7 +8,7 @@ NULL
 
 ## for magrittr and dplyr functions below
 if(getRversion() >= "2.15.1"){
-  utils::globalVariables(c("."))
+  utils::globalVariables(c(".", "n", "Size", "Group", "x", "y"))
 }
 
 #' Utility function to translate a factor into colors
@@ -171,18 +171,18 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   arr.ids <- match(names(groups), plot.df$CellName)
   plot.df$Group[arr.ids[!is.na(arr.ids)]] <- groups[!is.na(arr.ids)]
 
-  big.clusts <- (plot.df %>% subset(!is.na(.data$Group)) %>% dplyr::group_by(.data$Group) %>% dplyr::summarise(Size=n()) %>%
-                   dplyr::filter(.data$Size >= min.cluster.size))$Group %>% as.vector()
+  big.clusts <- (plot.df %>% subset(!is.na(Group)) %>% dplyr::group_by(Group) %>% dplyr::summarise(Size=n()) %>%
+                   dplyr::filter(Size >= min.cluster.size))$Group %>% as.vector()
 
   plot.df$Group[!(plot.df$Group %in% big.clusts)] <- NA
-  na.plot.df <- plot.df %>% dplyr::filter(is.na(.data$Group))
-  plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Group))
+  na.plot.df <- plot.df %>% dplyr::filter(is.na(Group))
+  plot.df <- plot.df %>% dplyr::filter(!is.na(Group))
 
   gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
     geom_point_w(ggplot2::aes(col=.data$Group))
 
   if (mark.groups) {
-    labels.data <- plot.df %>% dplyr::group_by(.data$Group) %>%
+    labels.data <- plot.df %>% dplyr::group_by(Group) %>%
       dplyr::summarise(x=median(x), y=median(y), Size=n())
 
     if (length(font.size) == 1) {
@@ -359,8 +359,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
     plot.info <- embeddingColorsPlot(plot.df, colors, groups, geom_point_w, gradient.range.quantile,
                                      color.range, legend.title, palette)
   } else {
-    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
-                        geom_point_w(alpha=alpha, size=size))
+    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) + geom_point_w(alpha=alpha, size=size))
   }
 
   gg <- plot.info$gg
