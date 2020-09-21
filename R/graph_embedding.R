@@ -51,7 +51,7 @@ graphToAdjList <- function(graph) {
 #' @param target.dims numeric Dimensions for 'n_components' in uwot::umap(n_components=target.dims) (default=2)
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... arguments passed to uwot::umap()
-#' @return result
+#' @return resulting kNN graph embedding within a UMAP
 #' @export
 embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.epochs=1000, spread=15, min.dist=0.001, n.sgd.cores=n.cores, target.dims=2, verbose=TRUE, ...) {
   min.n.neighbors <- sapply(commute.times$idx, length) %>% min()
@@ -91,7 +91,7 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.e
 #' @param n.sgd.cores numeric Number of cores to use during stochastic gradient descent. If set to > 1, then results will not be reproducible, even if 'set.seed' is called with a fixed seed before running (default=n_threads) See 'n_sgd_threads' in uwot::umap()
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... Additional arguments passed to embedKnnGraph()
-#' @return result
+#' @return resulting UMAP embedding
 #' @export
 embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores=1,
                            max.hitting.nn.num=0, max.commute.nn.num=0, min.prob.lower=1e-7,

@@ -261,7 +261,7 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 #' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
 #' @param fixed.initial.labels boolean Prohibit changes of initial labels during diffusion. (default=TRUE)
 #' @param verbose boolean Verbose mode. (default=TRUE)
-#' @return matrix
+#' @return matrix from input graph, with labels propagated
 #' @export
 propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fading=10.0, diffusion.fading.const=0.1, tol=0.025, fixed.initial.labels=TRUE, verbose=TRUE) {
   if (is.factor(labels)) {
