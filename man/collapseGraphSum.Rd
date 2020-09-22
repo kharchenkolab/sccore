@@ -13,6 +13,9 @@ collapseGraphSum(graph, groups, normalize = TRUE)
 
 \item{normalize}{boolean whether to recalculate edge weight as observed/expected (default=TRUE)}
 }
+\value{
+collapsed graph
+}
 \description{
 Collapse Graph By Sum
 }

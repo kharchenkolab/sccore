@@ -1,12 +1,11 @@
 Package: sccore
 Title: Core utilities for single-cell RNA-seq
-Version: 0.1
+Version: 0.1.0
 Authors@R: c(person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = "aut"), person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"), person("Evan","Biederstedt", email="evan.biederstedt@gmail.com", role=c("cre", "aut")))
 Description: Core utilities for single-cell RNA-seq data analysis. Contains functions for manipulating and plotting data via ggplot2.
 License: GPL-3
 Encoding: UTF-8
-Depends: 
-    Matrix
+LazyData: true
 Imports:
     ggplot2,
     magrittr,
@@ -14,17 +13,19 @@ Imports:
     tibble,
     dplyr, 
     pROC, 
+    parallel
+Depends: 
+    Matrix,
     Rcpp, 
-    RcppProgress
+    RcppProgress, 
+    RcppEigen
 Suggests: 
     ggrastr (>= 0.1.7),
-    pbapply,
-    parallel
-Remotes: 
-    VPetukhov/ggrastr
-LazyData: true
+    pbapply, 
+    rmumps,
+    testthat
 RoxygenNote: 7.1.1
-LinkingTo: Rcpp, RcppProgress, igraph
+LinkingTo: Rcpp, RcppProgress, RcppEigen, igraph
 NeedsCompilation: yes
 URL: https://github.com/kharchenkolab/sccore
 BugReports: https://github.com/kharchenkolab/sccore/issues

@@ -15,6 +15,26 @@ fac2col(
   level.colors = NULL
 )
 }
+\arguments{
+\item{s}{(default=1)}
+
+\item{v}{(default=1)}
+
+\item{shuffle}{(default=FALSE)}
+
+\item{min.group.size}{(default=1)}
+
+\item{return.details}{(default=FALSE)}
+
+\item{unclassified.cell.color}{(default='gray50')}
+
+\item{level.colors}{(default=NULL)}
+}
 \description{
-a utility function to translate factor into colors
+a utility function to translate a factor into colors
+}
+\examples{
+genes = factor(c("BRAF", "NPC1", "PAX3", "BRCA2", "FMR1"))
+fac2col(genes)
+
 }

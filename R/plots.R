@@ -61,17 +61,17 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   }
 
   if (is.list(palette)) {
-    palette <- setNames(unlist(palette),names(palette))
+    palette <- stats::setNames(unlist(palette),names(palette))
   }
   if (is.vector(palette)) {
     if (any(levels(groups) %in% names(palette))) {
-      cols <- setNames(palette[match(levels(groups), names(palette))], levels(groups));
+      cols <- stats::setNames(palette[match(levels(groups), names(palette))], levels(groups));
       cols[is.na(cols)] <- unclassified.cell.color
       return(cols)
     } else {
       # just take first n?
       if(length(palette)<length(levels(groups))) stop("provided palette does not have enough colors to show ",length(levels(groups))," levels")
-      return(setNames(palette[1:length(levels(groups))],levels(groups)))
+      return(stats::setNames(palette[1:length(levels(groups))],levels(groups)))
     }
   }
 }
@@ -426,7 +426,7 @@ dotPlot <- function (markers,
       return(res)
     }) %>% Reduce(rbind, .)
   }, n.cores=n.cores, progress=verbose, ...) %>%
-    setNames(levels(cell.groups)) %>%
+    stats::setNames(levels(cell.groups)) %>%
     dplyr::bind_rows(., .id="cluster")
 
   data.plot$cluster %<>% factor(., levels=rev(unique(.)))

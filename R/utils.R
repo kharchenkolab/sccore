@@ -8,7 +8,7 @@
 #' sn(vec)
 #'
 #' @export
-sn <- function(x) {setNames(x, x)}
+sn <- function(x) {stats::setNames(x, x)}
 
 
 #' Include new columns in matrix
@@ -30,7 +30,7 @@ extendMatrix <- function(mtx, col.names) {
 #'
 #' @description Merge count matrices
 #' @param cms List of count matrices
-#' @param transposed Indicate whether cms are transposed, e.g. cells in rows and genes in columns (default=FALSE)
+#' @param transposed boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)
 #' @param ... Parameters for 'plapply' function
 #' @return A matrix
 #' @export

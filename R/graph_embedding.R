@@ -1,3 +1,9 @@
+#' @description splitVectorByNodes
+#' @param vec
+#' @param nodes
+#' @param n.nodes
+#' @return result
+#' @export
 splitVectorByNodes <- function(vec, nodes, n.nodes) {
   res <- lapply(1:n.nodes, function(x) list())
   splitted <- split(vec, nodes)
@@ -5,6 +11,10 @@ splitVectorByNodes <- function(vec, nodes, n.nodes) {
   return(res)
 }
 
+#' @description graphToAdjList
+#' @param graph
+#' @return result
+#' @export
 graphToAdjList <- function(graph) {
   edge.list.fact <- igraph::as_edgelist(graph) %>% as_factor()
   edge.list <- matrix(edge.list.fact$values, ncol=2)
@@ -25,7 +35,16 @@ graphToAdjList <- function(graph) {
   return(list(idx=adj.list, probabilities=probs, names=edge.list.fact$levels))
 }
 
-embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, verbose=TRUE, target.dims=2, ...) {
+#' @description embedKnnGraph
+#' @param commute.times
+#' @param n.neighbors
+#' @param names (default=NULL)
+#' @param target.dims (default=TRUE)
+#' @param verbose (default=TRUE)
+#' @param ... (default=TRUE)
+#' @return result
+#' @export
+embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, target.dims=2, verbose=TRUE, ...) {
   min.n.neighbors <- sapply(commute.times$idx, length) %>% min()
   if (min.n.neighbors < n.neighbors) {
     n.neighbors <- min.n.neighbors
@@ -44,10 +63,28 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, verbose=TRUE, 
   return(umap)
 }
 
-embedGraphUmap <- function(graph, verbose=T, min.prob=1e-3, min.visited.verts=1000, n.cores=1,
+#' @description embedGraphUmap
+#' @param graph
+#' @param min.prob (default=1e-3)
+#' @param min.visited.verts (default=1000)
+#' @param n.cores (default=1)
+#' @param max.hitting.nn.num
+#' @param max.commute.nn.num
+#' @param min.prob.lower
+#' @param n.neighbors
+#' @param n.epochs
+#' @param spread
+#' @param min.dist
+#' @param return.all
+#' @param n.sgd.cores
+#' @param verbose (default=TRUE)
+#' @param ... 
+#' @return result
+#' @export
+embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores=1,
                            max.hitting.nn.num=0, max.commute.nn.num=0, min.prob.lower=1e-7,
-                           n.neighbors=40, n.epochs=1000, spread=15, min.dist=0.001, return.all=F,
-                           n.sgd.cores=n.cores, ...) {
+                           n.neighbors=40, n.epochs=1000, spread=15, min.dist=0.001, return.all=FALSE,
+                           n.sgd.cores=n.cores, verbose=TRUE, ...) {
   conn.comps <- igraph::components(graph)
   if (conn.comps$no > 1) {
     warning("Conos graph is not connected. Embedding may behave unexpectedly. ",

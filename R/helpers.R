@@ -1,32 +1,35 @@
 #' @importFrom magrittr %>% %<>% %$%
 NULL
 
+
 #' Parallel lapply
 #'
 #' @description Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
+#' @param progress Show progress bar via pbapply (default=FALSE)
 #' @param n.cores Number of cores to use (default=1)
-#' @param progress Show progress bar (default=FALSE)
+#' @param mc.preschedule See ?parllel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.
+#' @return list, as returned by lapply
 #' @examples
 #' square = function(x){ x**2 }
 #' plapply(1:10, square, n.cores=1, progress=TRUE)
 #'
-#' @return list, as returned by lapply
 #' @export
-plapply <- function(..., n.cores=1, progress=FALSE, mc.preschedule=TRUE, mc.allow.recursive=TRUE) {
+plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE) {
   if (progress && requireNamespace("pbapply", quietly=TRUE)) {
-    res <- pbapply::pblapply(..., cl=n.cores)
-  } else if ((n.cores == 1) || !requireNamespace("parallel", quietly=TRUE)) {
-  	res <- lapply(...)
+    result <- pbapply::pblapply(..., cl=n.cores)
+  } else if(n.cores>1) {
+    result <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule)
   } else {
-    res <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
+    # fall back on lapply
+    result <- lapply(...)
   }
 
-  is.error <- sapply(res, function(x) "try-error" %in% class(x))
+  is.error <- (sapply(result, class) == "try-error")
   if (any(is.error)) {
-    stop(paste("Errors in papply:", result[is.error]))
+    stop(paste("Errors in plapply:", result[is.error]))
   }
 
-  return(res)
+  return(result)
 }
 
 
@@ -60,7 +63,7 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
   clf.size <- unlist(tapply(clf,factor(clf,levels=seq(1,max(clf))),length))
   rowFac <- rep(NA,nrow(counts));
   rowFac[match(names(clf),rownames(counts))] <- clf;
-  lvec <- colSumByFac(counts,rowFac)[-1,,drop=F];
+  lvec <- colSumByFac(counts,rowFac)[-1,,drop=FALSE]
   if(dist=='JS') {
     lvec.dist <- jsDist(t(lvec/pmax(1,Matrix::rowSums(lvec))));
   } else { # use correlation distance in log10 space
@@ -125,7 +128,7 @@ findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NUL
 mergeCountMatrices <- function(cms, transposed=FALSE) {
   extendMatrix <- function(mtx, col.names) {
     new.names <- setdiff(col.names, colnames(mtx))
-    ext.mtx <- Matrix::Matrix(0, nrow=nrow(mtx), ncol=length(new.names), sparse=T) %>%
+    ext.mtx <- Matrix::Matrix(0, nrow=nrow(mtx), ncol=length(new.names), sparse=TRUE) %>%
       as(class(mtx)) %>% `colnames<-`(new.names)
     return(cbind(mtx, ext.mtx)[,col.names])
   }
