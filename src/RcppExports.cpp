@@ -19,6 +19,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// as_factor
+Rcpp::List as_factor(const std::vector<std::string>& vals);
+RcppExport SEXP _sccore_as_factor(SEXP valsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const std::vector<std::string>& >::type vals(valsSEXP);
+    rcpp_result_gen = Rcpp::wrap(as_factor(vals));
+    return rcpp_result_gen;
+END_RCPP
+}
 // get_nearest_neighbors
 Rcpp::List get_nearest_neighbors(const std::vector<std::vector<int>>& adjacency_list, const std::vector<std::vector<double>>& transition_probabilities, int n_verts, int n_cores, double min_prob, int min_visited_verts, double min_prob_lower, int max_hitting_nn_num, int max_commute_nn_num, bool verbose);
 RcppExport SEXP _sccore_get_nearest_neighbors(SEXP adjacency_listSEXP, SEXP transition_probabilitiesSEXP, SEXP n_vertsSEXP, SEXP n_coresSEXP, SEXP min_probSEXP, SEXP min_visited_vertsSEXP, SEXP min_prob_lowerSEXP, SEXP max_hitting_nn_numSEXP, SEXP max_commute_nn_numSEXP, SEXP verboseSEXP) {
@@ -116,6 +127,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sccore_colSumByFac", (DL_FUNC) &_sccore_colSumByFac, 2},
+    {"_sccore_as_factor", (DL_FUNC) &_sccore_as_factor, 1},
     {"_sccore_get_nearest_neighbors", (DL_FUNC) &_sccore_get_nearest_neighbors, 10},
     {"_sccore_jsDist", (DL_FUNC) &_sccore_jsDist, 2},
     {"_sccore_propagate_labels", (DL_FUNC) &_sccore_propagate_labels, 9},

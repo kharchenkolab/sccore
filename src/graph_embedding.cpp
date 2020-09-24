@@ -43,6 +43,23 @@ std::vector<T> reorder(const std::vector<T> &vec, const std::vector<size_t> inde
   return vec_sorted;
 }
 
+// [[Rcpp::export]]
+Rcpp::List as_factor(const std::vector<std::string> &vals) {
+  std::unordered_map<std::string, int> levels;
+  std::vector<int> int_vals;
+  std::vector<std::string> level_vals;
+
+  for (auto const &val : vals) {
+    auto const iter = levels.emplace(val, levels.size());
+    int_vals.emplace_back(iter.first->second + 1);
+    if (iter.second) {
+      level_vals.emplace_back(iter.first->first);
+    }
+  }
+
+  return Rcpp::List::create(Rcpp::_["values"]=int_vals, Rcpp::_["levels"]=level_vals);
+}
+
 std::unordered_map<int, double> get_hitting_time_map(const std::vector<int> &adjacent_ids,
                                                      const std::vector<double> &hitting_times) {
   std::unordered_map<int, double> cur_times;
@@ -297,7 +314,13 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
 //' @param min_prob_lower numeric Probability threshold to continue iteration in depth first search hitting time, dfs_hitting_time() (default=1e-5)
 //' @param max_hitting_nn_num numeric Maximum adjacencies for calculating hitting time per neighbor, hitting_time_per_neighbors() (default=0)
 //' @param max_commute_nn_num numeric Maximum adjacencies for calculating commute time per neighbor, commute_time_per_node() (default=0)
-//' @param verbose boolean Verbose output
+//' @param verbose boolean Whether to have verbose output (default=TRUE)
+//' @examples
+//' adjList = graphToAdjList(conosGraph)
+//' commuteTimes <- sccore:::get_nearest_neighbors(adjList$idx, adjList$probabilities, min_prob=1e-3, min_visited_verts=1000, n_cores=1, max_hitting_nn_num=0, max_commute_nn_num=0, min_prob_lower=1e-5, verbose=TRUE)
+//' print(names(commuteTimes))
+//' ## [1] "idx"  "dist"
+//' 
 //' @return list of commute times based on adjacencies
 // [[Rcpp::export]]
 Rcpp::List get_nearest_neighbors(const std::vector<std::vector<int>> &adjacency_list,
