@@ -5,3 +5,7 @@
 #' Conos graph 
 #'
 "conosGraph"
+
+#' Conos cell annotations
+#'
+"cellAnnotations"

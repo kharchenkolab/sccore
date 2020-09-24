@@ -142,7 +142,7 @@ embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores
   if (verbose) message("Done")
 
   if (verbose) message("Estimate UMAP embedding...")
-  umap <- embedKnnGraph(commute.times, n.neighbors=n.neighbors, names=adj.info$names, n_threads=n.cores, n.epochs=n.epochs, spread=spread, min_dist=min.dist, verbose=verbose, n_sgd_threads=n.sgd.cores, ...)
+  umap <- embedKnnGraph(commute.times, n.neighbors=n.neighbors, names=adj.info$names, n.cores=n.cores, n.epochs=n.epochs, spread=spread, min.dist=min.dist, verbose=verbose, n.sgd.cores=n.sgd.cores, ...)
   if (verbose) message("Done")
 
   if (return.all){

@@ -37,6 +37,7 @@ test_that("graphToAdjList() functionality", {
 	expect_equal(length(splitVecs), 12000)
 })
 
+
 test_that("graphToAdjList() functionality", {
 	edge.list.fact <- igraph::as_edgelist(conosGraph) %>% sccore:::as_factor()
 	edge.list <- matrix(edge.list.fact$values, ncol=2)
@@ -54,11 +55,17 @@ test_that("embedKnnGraph() functionality", {
 })
 
 
+test_that("embedGraphUmap() functionality", {
+	umapEmbedding = embedGraphUmap(conosGraph, verbose=TRUE, return.all=FALSE, n.cores=2)
+	expect_equal(length(umapEmbedding), 24000)
+})
 
-## test_that("embedGraphUmap() functionality", {
-##	umapEmbedding = embedGraphUmap(conosGraph, verbose=TRUE, return.all=FALSE, n.cores=2)
-##	expect_equal(length(knnGraph), 24000)
-##})
+
+
+
+
+
+
 
 
 

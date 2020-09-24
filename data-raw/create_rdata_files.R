@@ -42,5 +42,26 @@ con$findCommunities(method =igraph::walktrap.community, steps=7)
 conosGraph = con$graph
 save(conosGraph, file="conosGraph.rda")
 
+##
+##
+library(conos)
+library(dplyr)
+
+cellannot <- read.table(file.path(find.package('conos'),'extdata','cellannot.txt'),header=FALSE,sep='\t')
+cellannot <- setNames(cellannot[,2], cellannot[,1])
+
+cellAnnotations = cellannot
+save(cellAnnotations, file="cellAnnotations.rda")
+
+#new.label.info <- con$propagateLabels(labels = cellannot, verbose=TRUE)
+
+
+
+
+
+
+
+
+
 
 
