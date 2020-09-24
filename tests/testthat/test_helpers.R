@@ -17,7 +17,7 @@ test_that("splitVectorByNodes() functionality", {
 	adjList = graphToAdjList(conosGraph)
 	expect_equal(length(names(adjList)), 3)
 	expect_equal(length(adjList$names), 12000)
-}
+})
 
 
 test_that("graphToAdjList() functionality", {
@@ -26,7 +26,7 @@ test_that("graphToAdjList() functionality", {
 	n.nodes <- length(igraph::V(conosGraph))
 	splitVecs = splitVectorByNodes(edge.list[,1], edge.list[,2], n.nodes)
 	expect_equal(length(splitVecs), 12000)
-}
+})
 
 
 
