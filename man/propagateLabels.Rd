@@ -22,3 +22,7 @@ matrix with distribution of label probabilities for each vertex by rows.
 \description{
 Estimate labeling distribution for each vertex, based on provided labels.
 }
+\examples{
+propagateLabels(conosGraph, labels=cellAnnotations)
+
+}

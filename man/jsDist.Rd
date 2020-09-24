@@ -17,3 +17,8 @@ Vectorized version of the lower triangle as an R distance object, stats::dist()
 \description{
 Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m
 }
+\examples{
+ex = matrix(1:9, nrow = 3, ncol = 3)
+jsDist(ex)
+
+}

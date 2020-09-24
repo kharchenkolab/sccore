@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{as_factor}
 \alias{as_factor}
-\title{convert values to factors}
+\title{convert character vector into a factor with names "values" and "levels"}
 \usage{
 as_factor(vals)
 }
@@ -10,8 +10,8 @@ as_factor(vals)
 \item{vals}{vector of values to evaluate}
 }
 \value{
-values and levels
+factor with names "values" and "levels"
 }
 \description{
-convert values to factors
+convert character vector into a factor with names "values" and "levels"
 }

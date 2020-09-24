@@ -24,6 +24,10 @@ using std::chrono::high_resolution_clock;
 //' @param m Input matrix
 //' @param ncores integer Number of cores (default=1)
 //' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
+//' @examples
+//' ex = matrix(1:9, nrow = 3, ncol = 3)
+//' jsDist(ex)
+//'
 // [[Rcpp::export]]
 arma::mat jsDist(const arma::mat& m, int ncores=1) {
   //arma::vec d(m.n_cols*(m.n_cols-1)/2);

@@ -18,8 +18,11 @@ but in this case there is no way to distinguish level of connectivity for highly
 }
 \value{
 collapsed graph
-collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 }
 \description{
 Collapse graph using PAGA 1.2 algorithm, Wolf et al 2019, Genome Biology (2019) <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x>
+}
+\examples{
+collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
+
 }

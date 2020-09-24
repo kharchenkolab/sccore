@@ -17,6 +17,7 @@ if(getRversion() >= "2.15.1"){
 #' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
 #' @return collapsed graph
+#' @examples
 #' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 #' 
 #' @export
@@ -191,8 +192,11 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
 #'  but has bad asymptotics, so it is inappropriate for datasets > 20k cells. 
 #' @param ... additional arguments passed to either propagateLabelsSolver() or propagateLabelsDiffusion()
 #' @return matrix with distribution of label probabilities for each vertex by rows.
+#' @examples 
+#' propagateLabels(conosGraph, labels=cellAnnotations)
+#'
 #' @export
-propagateLabels=function(graph, labels, method="diffusion", ...) {
+propagateLabels = function(graph, labels, method="diffusion", ...) {
   if (method == "solver") {
     label.dist <- propagateLabelsSolver(graph, labels, ...)
   } else if (method == "diffusion") {
@@ -217,6 +221,9 @@ propagateLabels=function(graph, labels, method="diffusion", ...) {
 #' @param labels vector of factor or character labels, named by cell names
 #' @param solver Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")
 #' @return result from Matrix::solve() or rmumps::Rmumps
+#' @examples 
+#' propagateLabelsSolver(conosGraph, labels=cellAnnotations)
+#'
 #' @export
 propagateLabelsSolver <- function(graph, labels, solver="mumps") {
   if (!solver %in% c("mumps", "Matrix")){
@@ -267,6 +274,9 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 #' @param fixed.initial.labels boolean Prohibit changes of initial labels during diffusion. (default=TRUE)
 #' @param verbose boolean Verbose mode. (default=TRUE)
 #' @return matrix from input graph, with labels propagated
+#' @examples 
+#' propagateLabelsDiffusion(conosGraph, labels=cellAnnotations)
+#'
 #' @export
 propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fading=10.0, diffusion.fading.const=0.1, tol=0.025, fixed.initial.labels=TRUE, verbose=TRUE) {
   if (is.factor(labels)) {

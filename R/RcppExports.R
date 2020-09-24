@@ -10,10 +10,10 @@ colSumByFac <- function(sY, rowSel) {
     .Call('_sccore_colSumByFac', PACKAGE = 'sccore', sY, rowSel)
 }
 
-#' convert values to factors
+#' convert character vector into a factor with names "values" and "levels"
 #' 
 #' @param vals vector of values to evaluate
-#' @return values and levels
+#' @return factor with names "values" and "levels"
 as_factor <- function(vals) {
     .Call('_sccore_as_factor', PACKAGE = 'sccore', vals)
 }
@@ -46,6 +46,10 @@ get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_ve
 #' @param m Input matrix
 #' @param ncores integer Number of cores (default=1)
 #' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
+#' @examples
+#' ex = matrix(1:9, nrow = 3, ncol = 3)
+#' jsDist(ex)
+#'
 jsDist <- function(m, ncores = 1L) {
     .Call('_sccore_jsDist', PACKAGE = 'sccore', m, ncores)
 }

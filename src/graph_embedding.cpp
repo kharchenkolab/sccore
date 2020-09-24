@@ -43,10 +43,10 @@ std::vector<T> reorder(const std::vector<T> &vec, const std::vector<size_t> inde
   return vec_sorted;
 }
 
-//' convert values to factors
+//' convert character vector into a factor with names "values" and "levels"
 //' 
 //' @param vals vector of values to evaluate
-//' @return values and levels
+//' @return factor with names "values" and "levels"
 // [[Rcpp::export]]
 Rcpp::List as_factor(const std::vector<std::string> &vals) {
   std::unordered_map<std::string, int> levels;
