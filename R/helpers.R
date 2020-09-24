@@ -1,9 +1,10 @@
 #' @useDynLib sccore
+#' @importFrom Rcpp evalCpp
+#' @exportPattern "^[[:alpha:]]+"
 #' @importFrom magrittr %>% %<>% %$%
 #' @import igraph
 #' @importFrom stats as.dendrogram as.dist is.leaf median na.omit quantile setNames
 NULL
-
 
 #' Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 #'

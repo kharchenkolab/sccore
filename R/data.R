@@ -1,7 +1,7 @@
-#' UMAP embedding from <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
+#' UMAP embedding 
 #'
 "umapEmbedding"
 
-#' Conos graph from <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
+#' Conos graph 
 #'
 "conosGraph"

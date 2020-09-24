@@ -41,3 +41,7 @@ collapsed graph
 \description{
 Collapse vertices belonging to each cluster in a graph
 }
+\examples{
+cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
+
+}

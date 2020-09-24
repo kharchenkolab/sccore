@@ -3,7 +3,7 @@
 \docType{data}
 \name{umapEmbedding}
 \alias{umapEmbedding}
-\title{UMAP embedding from <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>}
+\title{UMAP embedding}
 \format{
 An object of class \code{matrix} (inherits from \code{array}) with 12000 rows and 2 columns.
 }
@@ -11,6 +11,6 @@ An object of class \code{matrix} (inherits from \code{array}) with 12000 rows an
 umapEmbedding
 }
 \description{
-UMAP embedding from <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
+UMAP embedding
 }
 \keyword{datasets}

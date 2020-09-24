@@ -3,7 +3,7 @@
 \docType{data}
 \name{conosGraph}
 \alias{conosGraph}
-\title{Conos graph from <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>}
+\title{Conos graph}
 \format{
 An object of class \code{igraph} of length 10.
 }
@@ -11,6 +11,6 @@ An object of class \code{igraph} of length 10.
 conosGraph
 }
 \description{
-Conos graph from <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
+Conos graph
 }
 \keyword{datasets}

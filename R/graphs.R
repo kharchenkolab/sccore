@@ -17,6 +17,8 @@ if(getRversion() >= "2.15.1"){
 #' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
 #' @return collapsed graph
+#' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
+#' 
 #' @export
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
@@ -119,6 +121,9 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' @param seed numeric Set seed via set.seed() for plotting (default=1)
 #' @param ... arguments passed to collapseGraphSum()
 #' @return collapsed graph
+#' @examples
+#' cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
+#'
 #' @export
 getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=50, edge.scale=50, edge.alpha=0.3, seed=1,...) {
   

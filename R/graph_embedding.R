@@ -34,7 +34,7 @@ splitVectorByNodes <- function(vec, nodes, n.nodes) {
 #' 
 #' @export
 graphToAdjList <- function(graph) {
-  edge.list.fact <- igraph::as_edgelist(graph) %>% as_factor()
+  edge.list.fact <- igraph::as_edgelist(graph) %>% sccore:::as_factor()
   edge.list <- matrix(edge.list.fact$values, ncol=2)
   n.nodes <- length(igraph::V(graph))
   adj.list <- mapply(c, splitVectorByNodes(edge.list[,1], edge.list[,2], n.nodes),
@@ -142,8 +142,7 @@ embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores
   if (verbose) message("Done")
 
   if (verbose) message("Estimate UMAP embedding...")
-  umap <- embedKnnGraph(commute.times, n.neighbors=n.neighbors, names=adj.info$names, n_threads=n.cores,
-                        n_epochs=n.epochs, spread=spread, min_dist=min.dist, verbose=verbose, n_sgd_threads=n.sgd.cores, ...)
+  umap <- embedKnnGraph(commute.times, n.neighbors=n.neighbors, names=adj.info$names, n_threads=n.cores, n.epochs=n.epochs, spread=spread, min_dist=min.dist, verbose=verbose, n_sgd_threads=n.sgd.cores, ...)
   if (verbose) message("Done")
 
   if (return.all){

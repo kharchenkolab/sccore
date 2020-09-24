@@ -10,6 +10,10 @@ colSumByFac <- function(sY, rowSel) {
     .Call('_sccore_colSumByFac', PACKAGE = 'sccore', sY, rowSel)
 }
 
+#' convert values to factors
+#' 
+#' @param vals vector of values to evaluate
+#' @return values and levels
 as_factor <- function(vals) {
     .Call('_sccore_as_factor', PACKAGE = 'sccore', vals)
 }
