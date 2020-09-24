@@ -15,3 +15,11 @@ adjacency list, defined by list(idx=adj.list, probabilities=probs, names=edge.li
 \description{
 Convert igraph graph into an adjacency list
 }
+\examples{
+## using an example graph from Conos, generated following the vignettes in <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
+edge.list.fact <- igraph::as_edgelist(conosGraph) \%>\% sccore:::as_factor()
+edge.list <- matrix(edge.list.fact$values, ncol=2)
+n.nodes <- length(igraph::V(conosGraph))
+splitVectorByNodes(edge.list[,1], edge.list[,2], n.nodes)
+
+}

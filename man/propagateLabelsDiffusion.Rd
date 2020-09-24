@@ -33,7 +33,7 @@ propagateLabelsDiffusion(
 \item{verbose}{boolean Verbose mode. (default=TRUE)}
 }
 \value{
-matrix
+matrix from input graph, with labels propagated
 }
 \description{
 Estimate labeling distribution for each vertex, based on provided labels using a Random Walk on graph
