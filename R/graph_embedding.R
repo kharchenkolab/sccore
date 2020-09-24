@@ -26,6 +26,7 @@ splitVectorByNodes <- function(vec, nodes, n.nodes) {
 #' @return adjacency list, defined by list(idx=adj.list, probabilities=probs, names=edge.list.fact$levels
 #' @examples
 #' ## using an example graph from Conos, generated following the vignettes in <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
+#' library(dplyr)
 #' edge.list.fact <- igraph::as_edgelist(conosGraph) %>% sccore:::as_factor()
 #' edge.list <- matrix(edge.list.fact$values, ncol=2)
 #' n.nodes <- length(igraph::V(conosGraph))

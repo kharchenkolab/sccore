@@ -13,14 +13,14 @@ test_that("plapply() functionality", {
 })
 
 
-test_that("splitVectorByNodes() functionality"){
+test_that("splitVectorByNodes() functionality", {
 	adjList = graphToAdjList(conosGraph)
 	expect_equal(length(names(adjList)), 3)
 	expect_equal(length(adjList$names), 12000)
 }
 
 
-test_that("graphToAdjList() functionality"){
+test_that("graphToAdjList() functionality", {
 	edge.list.fact <- igraph::as_edgelist(conosGraph) %>% sccore:::as_factor()
 	edge.list <- matrix(edge.list.fact$values, ncol=2)
 	n.nodes <- length(igraph::V(conosGraph))
