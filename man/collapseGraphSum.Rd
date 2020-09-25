@@ -19,3 +19,8 @@ collapsed graph
 \description{
 Collapse Graph By Sum
 }
+\examples{
+\dontrun{
+collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
+}
+}

@@ -20,7 +20,6 @@ list from vec with names given by the nodes
 splitVectorByNodes
 }
 \examples{
-## using conosGraph as an example graph from Conos, generated following the vignettes in <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
 adjList = graphToAdjList(conosGraph)
 print(names(adjList))
 ## [1] "idx" "probabilities" "names" 

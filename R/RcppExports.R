@@ -32,11 +32,10 @@ as_factor <- function(vals) {
 #' @param verbose boolean Whether to have verbose output (default=TRUE)
 #' @return list of commute times based on adjacencies
 #' @examples
+#' \dontrun{
 #' adjList = graphToAdjList(conosGraph)
-#' commuteTimes <- sccore:::get_nearest_neighbors(adjList$idx, adjList$probabilities, min_prob=1e-3, min_visited_verts=1000, n_cores=1, max_hitting_nn_num=0, max_commute_nn_num=0, min_prob_lower=1e-5, verbose=TRUE)
-#' print(names(commuteTimes))
-#' ## [1] "idx"  "dist"
-#' 
+#' commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
+#' }
 get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_verts = 0L, n_cores = 1L, min_prob = 1e-3, min_visited_verts = 1000L, min_prob_lower = 1e-5, max_hitting_nn_num = 0L, max_commute_nn_num = 0L, verbose = TRUE) {
     .Call('_sccore_get_nearest_neighbors', PACKAGE = 'sccore', adjacency_list, transition_probabilities, n_verts, n_cores, min_prob, min_visited_verts, min_prob_lower, max_hitting_nn_num, max_commute_nn_num, verbose)
 }
@@ -54,18 +53,64 @@ jsDist <- function(m, ncores = 1L) {
     .Call('_sccore_jsDist', PACKAGE = 'sccore', m, ncores)
 }
 
+#' Label propagation
+#' 
+#' @param edge_verts edge vertices of igraph graph object  
+#' @param edge_weights edge weights of igraph graph object 
+#' @param vert_labels vector of factor or character labels, named by cell names
+#' @param max_n_iters integer Maximal number of iterations (default=10)
+#' @param verbose boolean Verbose mode (default=TRUE)
+#' @param diffusion_fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=10.0)
+#' @param diffusion_fading_const numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.5)
+#' @param tol numeric Absolute tolerance as a stopping criteria (default=5e-3)
+#' @param fixed_initial_labels boolean Prohibit changes of initial labels during diffusion (default=FALSE)
+#' @return matrix from input graph, with labels propagated
 propagate_labels <- function(edge_verts, edge_weights, vert_labels, max_n_iters = 10L, verbose = TRUE, diffusion_fading = 10, diffusion_fading_const = 0.5, tol = 5e-3, fixed_initial_labels = FALSE) {
     .Call('_sccore_propagate_labels', PACKAGE = 'sccore', edge_verts, edge_weights, vert_labels, max_n_iters, verbose, diffusion_fading, diffusion_fading_const, tol, fixed_initial_labels)
 }
 
+#' Smooth gene expression, used primarily within conos::correctGenes. Used to smooth gene expression values in order to better represent the graph structure.
+#' Use diffusion of expression on graph with the equation dv = exp(-a * (v + b))
+#' 
+#' @param edge_verts edge vertices of igraph graph object 
+#' @param edge_weights edge weights of igraph graph object 
+#' @param count_matrix gene count matrix
+#' @param is_label_fixed boolean Whether label is fixed
+#' @param max_n_iters integer Maximal number of iterations (default=10)
+#' @param diffusion_fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=1.0)
+#' @param diffusion_fading_const numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.1)
+#' @param tol numeric Absolute tolerance as a stopping criteria (default=1e-3)
+#' @param verbose boolean Verbose mode (default=TRUE)
+#' @param normalize boolean Whether to normalize values (default=FALSE)
+#' @return matrix from input graph, with labels propagated
 smooth_count_matrix <- function(edge_verts, edge_weights, count_matrix, is_label_fixed, max_n_iters = 10L, diffusion_fading = 1.0, diffusion_fading_const = 0.1, tol = 1e-3, verbose = TRUE, normalize = FALSE) {
     .Call('_sccore_smooth_count_matrix', PACKAGE = 'sccore', edge_verts, edge_weights, count_matrix, is_label_fixed, max_n_iters, diffusion_fading, diffusion_fading_const, tol, verbose, normalize)
 }
 
+#' List of adjacent vertices from igraph object
+#' 
+#' @param edge_verts edge vertices of igraph graph object 
+#' @return list of adjacent vertices
+#' @examples
+#' \dontrun{
+#' edges <- igraph::as_edgelist(conosGraph)
+#' adjacent_vertices(edges)
+#' }
 adjacent_vertices <- function(edge_verts) {
     .Call('_sccore_adjacent_vertices', PACKAGE = 'sccore', edge_verts)
 }
 
+#' List of adjacent vertex weights from igraph object
+#' 
+#' @param edge_verts edge vertices of igraph graph object 
+#' @param edge_weights edge weights of igraph graph object  
+#' @return list of adjacent vertices
+#' @examples
+#' \dontrun{
+#' edges <- igraph::as_edgelist(conosGraph)
+#' edge.weights <- igraph::edge.attributes(conosGraph)$weight
+#' adjacent_vertex_weights(edges, edge.weights)
+#' }
 adjacent_vertex_weights <- function(edge_verts, edge_weights) {
     .Call('_sccore_adjacent_vertex_weights', PACKAGE = 'sccore', edge_verts, edge_weights)
 }

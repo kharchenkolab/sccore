@@ -26,11 +26,11 @@ propagateLabelsDiffusion(
 
 \item{diffusion.fading.const}{numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.1)}
 
-\item{tol}{numeric Absolute tolerance as a stopping criteria. (default=0.025)}
+\item{tol}{numeric Absolute tolerance as a stopping criteria (default=0.025)}
 
-\item{fixed.initial.labels}{boolean Prohibit changes of initial labels during diffusion. (default=TRUE)}
+\item{fixed.initial.labels}{boolean Prohibit changes of initial labels during diffusion (default=TRUE)}
 
-\item{verbose}{boolean Verbose mode. (default=TRUE)}
+\item{verbose}{boolean Verbose mode (default=TRUE)}
 }
 \value{
 matrix from input graph, with labels propagated

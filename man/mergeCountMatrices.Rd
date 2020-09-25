@@ -20,7 +20,7 @@ A merged extended matrix, with 0s for missing entries
 Merge list of count matrices into a common matrix, entering 0s for the missing entries
 }
 \examples{
-mergeCountMatrices(conosClusterList)
+mergeCountMatrices(conosClusterList, n.cores=1)
 ## 12 x 67388 sparse Matrix of class "dgCMatrix"
 
 }

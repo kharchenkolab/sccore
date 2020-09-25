@@ -66,14 +66,11 @@ dotPlot(
 
 \item{verbose}{boolean Verbose output (default=TRUE)}
 
-\item{...}{Additional inputs passed to sccore:::plapply(), see man for description.}
+\item{...}{Additional inputs passed to sccore::plapply(), see man for description.}
 }
 \value{
 ggplot2 object
 }
 \description{
 Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
-}
-\examples{
-
 }

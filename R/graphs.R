@@ -16,10 +16,7 @@ if(getRversion() >= "2.15.1"){
 #' @param linearize should normally be always TRUE (default=TRUE)
 #' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
-#' @return collapsed graph
-#' @examples
-#' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
-#' 
+#' @return collapsed graph 
 #' @export
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
@@ -87,6 +84,10 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 #' @inheritParams collapseGraphPaga
 #' @param normalize boolean Whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @return collapsed graph
+#' @examples 
+#' \dontrun{
+#' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
+#' }
 #' @export
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 
@@ -122,8 +123,9 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' @param ... arguments passed to collapseGraphSum()
 #' @return collapsed graph
 #' @examples
+#' \dontrun{
 #' cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
-#'
+#' }
 #' @export
 getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=50, edge.scale=50, edge.alpha=0.3, seed=1,...) {
   
@@ -218,8 +220,9 @@ propagateLabels = function(graph, labels, method="diffusion", ...) {
 #' @param solver Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")
 #' @return result from Matrix::solve() or rmumps::Rmumps
 #' @examples 
+#' \dontrun{
 #' propagateLabelsSolver(conosGraph, labels=cellAnnotations)
-#'
+#' }
 #' @export
 propagateLabelsSolver <- function(graph, labels, solver="mumps") {
   if (!solver %in% c("mumps", "Matrix")){
@@ -265,9 +268,9 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 #' @param max.iters integer Maximal number of iterations (default=100)
 #' @param diffusion.fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=10.0)
 #' @param diffusion.fading.const numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.1)
-#' @param tol numeric Absolute tolerance as a stopping criteria. (default=0.025)
-#' @param fixed.initial.labels boolean Prohibit changes of initial labels during diffusion. (default=TRUE)
-#' @param verbose boolean Verbose mode. (default=TRUE)
+#' @param tol numeric Absolute tolerance as a stopping criteria (default=0.025)
+#' @param fixed.initial.labels boolean Prohibit changes of initial labels during diffusion (default=TRUE)
+#' @param verbose boolean Verbose mode (default=TRUE)
 #' @return matrix from input graph, with labels propagated
 #' @examples 
 #' propagateLabelsDiffusion(conosGraph, labels=cellAnnotations)

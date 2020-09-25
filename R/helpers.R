@@ -137,7 +137,7 @@ extendMatrix <- function(mtx, col.names) {
 #' @param ... Parameters for 'plapply' function
 #' @return A merged extended matrix, with 0s for missing entries
 #' @examples
-#' mergeCountMatrices(conosClusterList)
+#' mergeCountMatrices(conosClusterList, n.cores=1)
 #' ## 12 x 67388 sparse Matrix of class "dgCMatrix"
 #'
 #' @export

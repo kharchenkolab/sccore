@@ -45,9 +45,8 @@ list of commute times based on adjacencies
 Get nearest neighbors method on graph
 }
 \examples{
+\dontrun{
 adjList = graphToAdjList(conosGraph)
-commuteTimes <- sccore:::get_nearest_neighbors(adjList$idx, adjList$probabilities, min_prob=1e-3, min_visited_verts=1000, n_cores=1, max_hitting_nn_num=0, max_commute_nn_num=0, min_prob_lower=1e-5, verbose=TRUE)
-print(names(commuteTimes))
-## [1] "idx"  "dist"
-
+commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
+}
 }

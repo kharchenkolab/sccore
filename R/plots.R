@@ -396,10 +396,8 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param scale.min numeric Set lower limit for scaling, use NA for default (default=NA)
 #' @param scale.max numeric Set upper limit for scaling, use NA for default (default=NA)
 #' @param verbose boolean Verbose output (default=TRUE)
-#' @param ... Additional inputs passed to sccore:::plapply(), see man for description.
+#' @param ... Additional inputs passed to sccore::plapply(), see man for description.
 #' @return ggplot2 object
-#' @examples
-#'
 #' @export
 dotPlot <- function (markers,
                      count.matrix,

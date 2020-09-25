@@ -42,6 +42,7 @@ collapsed graph
 Collapse vertices belonging to each cluster in a graph
 }
 \examples{
+\dontrun{
 cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
-
+}
 }

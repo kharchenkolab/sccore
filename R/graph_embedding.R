@@ -5,7 +5,6 @@
 #' @param n.nodes numeric The number of nodes for splitting
 #' @return list from vec with names given by the nodes
 #' @examples
-#' ## using conosGraph as an example graph from Conos, generated following the vignettes in <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
 #' adjList = graphToAdjList(conosGraph)
 #' print(names(adjList))
 #' ## [1] "idx" "probabilities" "names" 
@@ -25,16 +24,15 @@ splitVectorByNodes <- function(vec, nodes, n.nodes) {
 #' @param graph input igraph object
 #' @return adjacency list, defined by list(idx=adj.list, probabilities=probs, names=edge.list.fact$levels
 #' @examples
-#' ## using an example graph from Conos, generated following the vignettes in <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
 #' library(dplyr)
-#' edge.list.fact <- igraph::as_edgelist(conosGraph) %>% sccore:::as_factor()
+#' edge.list.fact <- igraph::as_edgelist(conosGraph) %>% as_factor()
 #' edge.list <- matrix(edge.list.fact$values, ncol=2)
 #' n.nodes <- length(igraph::V(conosGraph))
 #' splitVectorByNodes(edge.list[,1], edge.list[,2], n.nodes)
 #' 
 #' @export
 graphToAdjList <- function(graph) {
-  edge.list.fact <- igraph::as_edgelist(graph) %>% sccore:::as_factor()
+  edge.list.fact <- igraph::as_edgelist(graph) %>% as_factor()
   edge.list <- matrix(edge.list.fact$values, ncol=2)
   n.nodes <- length(igraph::V(graph))
   adj.list <- mapply(c, splitVectorByNodes(edge.list[,1], edge.list[,2], n.nodes),
@@ -68,10 +66,11 @@ graphToAdjList <- function(graph) {
 #' @param ... arguments passed to uwot::umap()
 #' @return resulting kNN graph embedding within a UMAP
 #' @examples
+#' \dontrun{
 #' adjList = graphToAdjList(conosGraph)
-#' commuteTimes <- sccore:::get_nearest_neighbors(adjList$idx, adjList$probabilities, min_prob=1e-3, min_visited_verts=1000, n_cores=1, max_hitting_nn_num=0, max_commute_nn_num=0, min_prob_lower=1e-5, verbose=TRUE)
-#' embedKnnGraph(commuteTimes, n.neighbors=40, n.cores=1, n.epochs=1000, spread=15, min.dist=0.001, verbose=TRUE)
-#' 
+#' commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
+#' embedKnnGraph(commuteTimes, n.neighbors=40, n.cores=1)
+#' }
 #' @export
 embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.epochs=1000, spread=15, min.dist=0.001, n.sgd.cores=n.cores, target.dims=2, verbose=TRUE, ...) {
   min.n.neighbors <- sapply(commute.times$idx, length) %>% min()
@@ -110,9 +109,9 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.e
 #' @param ... Additional arguments passed to embedKnnGraph()
 #' @return resulting UMAP embedding
 #' @examples
-#' ## using an example graph from Conos, generated following the vignettes in <https://github.com/kharchenkolab/conos/blob/master/vignettes/walkthrough.md>
+#' \dontrun{
 #' umapEmbedding = embedGraphUmap(conosGraph, verbose=TRUE, return.all=FALSE, n.cores=2)
-#' 
+#' }
 #' @export
 embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores=1,
                            max.hitting.nn.num=0, max.commute.nn.num=0, min.prob.lower=1e-7,

@@ -48,8 +48,9 @@ resulting kNN graph embedding within a UMAP
 Embed a k-nearest neighbor (kNN) graph within a UMAP. Used within embedGraphUmap(). Please see McInnes et al <doi:10.21105/joss.00861> for the UMAP description and implementation.
 }
 \examples{
+\dontrun{
 adjList = graphToAdjList(conosGraph)
-commuteTimes <- sccore:::get_nearest_neighbors(adjList$idx, adjList$probabilities, min_prob=1e-3, min_visited_verts=1000, n_cores=1, max_hitting_nn_num=0, max_commute_nn_num=0, min_prob_lower=1e-5, verbose=TRUE)
-embedKnnGraph(commuteTimes, n.neighbors=40, n.cores=1, n.epochs=1000, spread=15, min.dist=0.001, verbose=TRUE)
-
+commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
+embedKnnGraph(commuteTimes, n.neighbors=40, n.cores=1)
+}
 }
