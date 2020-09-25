@@ -16,19 +16,9 @@ conosClusterList = lapply(con$samples, conos:::getCountMatrix, transposed=TRUE)
 conosClusterList = list(head(conosClusterList$MantonBM1_HiSeq_1), head(conosClusterList$MantonBM2_HiSeq_1))
 save(conosClusterList, file="conosClusterList.rda")
 
-
-## counts.rda
-## conosCounts = con$getJointCountMatrix()
-## save(conosCounts, file="conosCounts.rda")
-
 con$buildGraph(k=30, k.self=5, space='PCA', ncomps=30, n.odgenes=2000, matching.method='mNN', metric='angular', score.component.variance=TRUE, verbose=TRUE)
 
 con$findCommunities(method =igraph::walktrap.community, steps=7)
-
-## conosClusters.rda
-conosClusters = con$clusters
-save(conosClusters, file="conosClusters.rda")
-
 
 con$embedGraph(method="UMAP", min.dist=0.01, spread=15, n.cores=4, min.prob.lower=1e-3)
 
@@ -46,6 +36,5 @@ cellAnnotations <- setNames(cellannot[,2], cellannot[,1])
 
 ## cellAnnotations.rda
 save(cellAnnotations, file="cellAnnotations.rda")
-
 
 
