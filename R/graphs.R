@@ -78,8 +78,8 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
   }
   inter.es@x <- scaled.values
   dimnames(inter.es) <- list(cluster.names, cluster.names)
-  return(inter.es)
 
+  return(inter.es)
 }
 
 #' Collapse Graph By Sum
@@ -109,7 +109,6 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 
   return(gcon)
 }
-
 
 #' Collapse vertices belonging to each cluster in a graph
 #'
@@ -181,7 +180,6 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
   }
 
   return(invisible(gcon))
-
 }
 
 #' Estimate labeling distribution for each vertex, based on provided labels.
@@ -212,8 +210,6 @@ propagateLabels = function(graph, labels, method="diffusion", ...) {
 
   return(list(labels=labels, uncertainty=(1 - confidence), label.distribution=label.dist))
 }
-
-
 
 #' Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm, "Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions" <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
 #' 
@@ -262,7 +258,6 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
   return(rbind(res, type.scores))
 }
 
-    
 #' Estimate labeling distribution for each vertex, based on provided labels using a Random Walk on graph
 #'
 #' @param graph igraph graph object Graph input 
@@ -291,4 +286,3 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
                                          tol=tol, fixed_initial_labels=fixed.initial.labels)
   return(label.distribution)
 }
-

@@ -11,6 +11,12 @@ panel.preprocessed <- lapply(panel, basicP2proc, n.cores=4, min.cells.per.gene=0
 
 con <- Conos$new(panel.preprocessed, n.cores=4)
 
+conosClusterList = lapply(con$samples, conos:::getCountMatrix, transposed=TRUE)
+## subset the list to be smaller for the R package
+conosClusterList = list(head(conosClusterList$MantonBM1_HiSeq_1), head(conosClusterList$MantonBM2_HiSeq_1))
+save(conosClusterList, file="conosClusterList.rda")
+
+
 ## counts.rda
 ## conosCounts = con$getJointCountMatrix()
 ## save(conosCounts, file="conosCounts.rda")
@@ -18,6 +24,11 @@ con <- Conos$new(panel.preprocessed, n.cores=4)
 con$buildGraph(k=30, k.self=5, space='PCA', ncomps=30, n.odgenes=2000, matching.method='mNN', metric='angular', score.component.variance=TRUE, verbose=TRUE)
 
 con$findCommunities(method =igraph::walktrap.community, steps=7)
+
+## conosClusters.rda
+conosClusters = con$clusters
+save(conosClusters, file="conosClusters.rda")
+
 
 con$embedGraph(method="UMAP", min.dist=0.01, spread=15, n.cores=4, min.prob.lower=1e-3)
 
@@ -35,10 +46,6 @@ cellAnnotations <- setNames(cellannot[,2], cellannot[,1])
 
 ## cellAnnotations.rda
 save(cellAnnotations, file="cellAnnotations.rda")
-
-con <- Conos$new(panel.preprocessed, n.cores=4)
-## take first sample only
-con$samples = con$samples[1]
 
 
 

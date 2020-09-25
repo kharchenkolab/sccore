@@ -319,13 +319,13 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
 //' @param max_hitting_nn_num numeric Maximum adjacencies for calculating hitting time per neighbor, hitting_time_per_neighbors() (default=0)
 //' @param max_commute_nn_num numeric Maximum adjacencies for calculating commute time per neighbor, commute_time_per_node() (default=0)
 //' @param verbose boolean Whether to have verbose output (default=TRUE)
+//' @return list of commute times based on adjacencies
 //' @examples
 //' adjList = graphToAdjList(conosGraph)
 //' commuteTimes <- sccore:::get_nearest_neighbors(adjList$idx, adjList$probabilities, min_prob=1e-3, min_visited_verts=1000, n_cores=1, max_hitting_nn_num=0, max_commute_nn_num=0, min_prob_lower=1e-5, verbose=TRUE)
 //' print(names(commuteTimes))
 //' ## [1] "idx"  "dist"
 //' 
-//' @return list of commute times based on adjacencies
 // [[Rcpp::export]]
 Rcpp::List get_nearest_neighbors(const std::vector<std::vector<int>> &adjacency_list,
                                  const std::vector<std::vector<double>> &transition_probabilities,

@@ -9,3 +9,7 @@
 #' Conos cell annotations
 #'
 "cellAnnotations"
+
+#' Conos clusters list
+#' 
+"conosClusterList"

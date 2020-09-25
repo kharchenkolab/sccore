@@ -154,7 +154,6 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
   }
 }
 
-
 #' Plotting function for cluster labels, names contain cell names. Used primarily in embeddingPlot().
 #' 
 #' @inheritParams embeddingPlot
@@ -214,6 +213,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 
   return(list(gg=gg, na.plot.df=na.plot.df))
 }
+
 #' Set colors for embedding plot. Used primarily in embeddingPlot().
 #' 
 #' @inheritParams embeddingPlot
@@ -374,7 +374,6 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
                            show.legend=show.legend, show.ticks=show.ticks, show.labels=show.labels)
   return(gg)
 }
-
 
 #' Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 #'

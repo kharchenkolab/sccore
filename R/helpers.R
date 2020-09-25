@@ -36,7 +36,6 @@ plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.pre
   return(result)
 }
 
-
 #' Set range for values in object. Changes values outside of range to min or max. Adapted from Seurat::MinMax
 #'
 #' @param obj Object to manipulate
@@ -53,7 +52,6 @@ setMinMax <- function(obj, min, max) {
   obj[obj>max] <- max
   return(obj)
 }
-
 
 #' Translate multilevel segmentation into a dendrogram, with the lowest level of the dendrogram listing the cells
 #'
@@ -97,71 +95,6 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
   return(d)
 }
 
-
-#' Increase resolution for a specific set of clusters
-#'
-#' @param con conos object, from <https://github.com/kharchenkolab/conos>, "Joint analysis of heterogeneous single-cell RNA-seq dataset collections", DOI: 10.1038/s41592-019-0466-z
-#' @param target.clusters Clusters for which the resolution should be increased
-#' @param clustering Name of clustering in the conos object to use (default=NULL). Either 'clustering' or 'groups' must be provided.
-#' @param groups Set of clusters to use (default=NULL). Ignored if 'clustering' is not NULL.
-#' @param method Function, used to find communities (default=igraph::cluster_louvain)
-#' @param ... Additional params passed to the community function
-#' @return The input conos object "subset" with the input target.clusters, thereby resulting in a magnified view of these clusters
-#' @export
-findSubcommunities <- function(con, target.clusters, clustering=NULL, groups=NULL, method=igraph::cluster_louvain, ...) {
-
-  parseCellGroups <- function(con, clustering, groups) {
-
-    if (!is.null(groups)) {
-      if (!any(names(groups) %in% names(con$getDatasetPerCell()))){
-        stop("'groups' aren't defined for any of the cells.")
-      }
-      
-      return(groups)
-    }
-
-    if (is.null(clustering)) {
-      if (length(con$clusters) > 0){
-        return(con$clusters[[1]]$groups)
-      }
-
-      stop("Either 'groups' must be provided or the conos object must have some clustering estimated")
-    }
-    if(is.null(clusters[[clustering]])){
-      stop(paste("clustering",clustering,"doesn't exist, run findCommunity() first"))
-    }
-
-    return(con$clusters[[clustering]]$groups)
-  }
-
-  groups <- parseCellGroups(con=con, clustering=clustering, groups=groups)
-
-  groups.raw <- as.character(groups) %>% stats::setNames(names(groups))
-  groups <- groups[intersect(names(groups), V(con$graph)$name)]
-
-  if (length(groups) == 0) {
-    stop("'groups' not defined for graph object.")
-  }
-
-  groups <- droplevels(as.factor(groups)[groups %in% target.clusters])
-  if (length(groups) == 0) {
-    stop("None of 'target.clusters' can be found in 'groups'.")
-  }
-
-  subgroups <- split(names(groups), groups)
-  for (n in names(subgroups)) {
-    if (length(subgroups[[n]]) < 2){
-      next
-    }
-
-    new.clusts <- method(induced_subgraph(con$graph, subgroups[[n]]), ...)
-    groups.raw[new.clusts$names] <- paste0(n, "_", new.clusts$membership)
-  }
-
-  return(groups.raw)
-}
-
-
 #' Set names equal to values, a stats::setNames wrapper function
 #'
 #' @param x an object for which names attribute will be meaningful 
@@ -175,12 +108,16 @@ sn <- function(x) {
   stats::setNames(x, x)
 }
 
-
 #' Extend matrix to include new columns in matrix
 #'
 #' @param mtx Matrix
 #' @param col.names Columns that should be included in matrix
 #' @return Matrix with new columns but rows retained
+#' @examples
+#' library(dplyr)
+#' geneUnion <- lapply(conosClusterList, colnames) %>% Reduce(union, .)
+#' extendMatrix(conosClusterList[[1]], col.names=geneUnion)
+#' 
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
@@ -193,13 +130,16 @@ extendMatrix <- function(mtx, col.names) {
   return(cbind(mtx, ext.mtx)[, col.names])
 }
 
-
 #' Merge list of count matrices into a common matrix, entering 0s for the missing entries
 #'
 #' @param cms List of count matrices
 #' @param transposed boolean Indicate whether 'cms' is transposed, e.g. cells in rows and genes in columns (default=FALSE)
 #' @param ... Parameters for 'plapply' function
 #' @return A merged extended matrix, with 0s for missing entries
+#' @examples
+#' mergeCountMatrices(conosClusterList)
+#' ## 12 x 67388 sparse Matrix of class "dgCMatrix"
+#'
 #' @export
 mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   if (!transposed) {
@@ -214,5 +154,3 @@ mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   }
   return(res)
 }
-
-

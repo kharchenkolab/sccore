@@ -17,3 +17,9 @@ Matrix with new columns but rows retained
 \description{
 Extend matrix to include new columns in matrix
 }
+\examples{
+library(dplyr)
+geneUnion <- lapply(conosClusterList, colnames) \%>\% Reduce(union, .)
+extendMatrix(conosClusterList[[1]], col.names=geneUnion)
+
+}
