@@ -104,8 +104,9 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
 #' sn(vec)
 #'
 #' @export
-sn <- function(x) {
-  stats::setNames(x, x)
+sn <- function(x) { 
+  names(x) <- x
+  return(x)
 }
 
 #' Extend matrix to include new columns in matrix

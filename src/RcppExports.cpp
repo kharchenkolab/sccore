@@ -101,14 +101,14 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// adjacent_vertices
-Rcpp::List adjacent_vertices(const Rcpp::StringMatrix& edge_verts);
-RcppExport SEXP _sccore_adjacent_vertices(SEXP edge_vertsSEXP) {
+// adjacentVertices
+Rcpp::List adjacentVertices(const Rcpp::StringMatrix& edge_verts);
+RcppExport SEXP _sccore_adjacentVertices(SEXP edge_vertsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const Rcpp::StringMatrix& >::type edge_verts(edge_vertsSEXP);
-    rcpp_result_gen = Rcpp::wrap(adjacent_vertices(edge_verts));
+    rcpp_result_gen = Rcpp::wrap(adjacentVertices(edge_verts));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -132,7 +132,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sccore_jsDist", (DL_FUNC) &_sccore_jsDist, 2},
     {"_sccore_propagate_labels", (DL_FUNC) &_sccore_propagate_labels, 9},
     {"_sccore_smooth_count_matrix", (DL_FUNC) &_sccore_smooth_count_matrix, 10},
-    {"_sccore_adjacent_vertices", (DL_FUNC) &_sccore_adjacent_vertices, 1},
+    {"_sccore_adjacentVertices", (DL_FUNC) &_sccore_adjacentVertices, 1},
     {"_sccore_adjacent_vertex_weights", (DL_FUNC) &_sccore_adjacent_vertex_weights, 2},
     {NULL, NULL, 0}
 };

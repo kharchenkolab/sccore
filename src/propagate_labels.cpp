@@ -254,10 +254,10 @@ SEXP smooth_count_matrix(const Rcpp::StringMatrix &edge_verts, const std::vector
 //' @examples
 //' \dontrun{
 //' edges <- igraph::as_edgelist(conosGraph)
-//' adjacent_vertices(edges)
+//' adjacentVertices(edges)
 //' }
 // [[Rcpp::export]]
-Rcpp::List adjacent_vertices(const Rcpp::StringMatrix &edge_verts) {
+Rcpp::List adjacentVertices(const Rcpp::StringMatrix &edge_verts) {
   std::unordered_map<std::string, s_vec_t> adj_verts;
   for (size_t i = 0; i < edge_verts.nrow(); ++i) {
     auto v1 = Rcpp::as<std::string>(edge_verts(i, 0));

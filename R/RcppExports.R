@@ -94,10 +94,10 @@ smooth_count_matrix <- function(edge_verts, edge_weights, count_matrix, is_label
 #' @examples
 #' \dontrun{
 #' edges <- igraph::as_edgelist(conosGraph)
-#' adjacent_vertices(edges)
+#' adjacentVertices(edges)
 #' }
-adjacent_vertices <- function(edge_verts) {
-    .Call('_sccore_adjacent_vertices', PACKAGE = 'sccore', edge_verts)
+adjacentVertices <- function(edge_verts) {
+    .Call('_sccore_adjacentVertices', PACKAGE = 'sccore', edge_verts)
 }
 
 #' List of adjacent vertex weights from igraph object
