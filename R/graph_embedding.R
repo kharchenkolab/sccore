@@ -65,12 +65,6 @@ graphToAdjList <- function(graph) {
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... arguments passed to uwot::umap()
 #' @return resulting kNN graph embedding within a UMAP
-#' @examples
-#' \dontrun{
-#' adjList = graphToAdjList(conosGraph)
-#' commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
-#' embedKnnGraph(commuteTimes, n.neighbors=40, n.cores=1)
-#' }
 #' @export
 embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.epochs=1000, spread=15, min.dist=0.001, n.sgd.cores=n.cores, target.dims=2, verbose=TRUE, ...) {
   min.n.neighbors <- sapply(commute.times$idx, length) %>% min()
@@ -108,10 +102,6 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.e
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... Additional arguments passed to embedKnnGraph()
 #' @return resulting UMAP embedding
-#' @examples
-#' \dontrun{
-#' umapEmbedding = embedGraphUmap(conosGraph, verbose=TRUE, return.all=FALSE, n.cores=2)
-#' }
 #' @export
 embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores=1,
                            max.hitting.nn.num=0, max.commute.nn.num=0, min.prob.lower=1e-7,

@@ -59,8 +59,3 @@ resulting UMAP embedding
 \description{
 Embed a graph into a UMAP, Uniform Manifold Approximation and Projection for Dimension Reduction, <https://github.com/lmcinnes/umap>, <doi:10.21105/joss.00861>
 }
-\examples{
-\dontrun{
-umapEmbedding = embedGraphUmap(conosGraph, verbose=TRUE, return.all=FALSE, n.cores=2)
-}
-}

@@ -44,9 +44,3 @@ list of commute times based on adjacencies
 \description{
 Get nearest neighbors method on graph
 }
-\examples{
-\dontrun{
-adjList = graphToAdjList(conosGraph)
-commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
-}
-}

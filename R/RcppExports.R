@@ -31,11 +31,6 @@ as_factor <- function(vals) {
 #' @param max_commute_nn_num numeric Maximum adjacencies for calculating commute time per neighbor, commute_time_per_node() (default=0)
 #' @param verbose boolean Whether to have verbose output (default=TRUE)
 #' @return list of commute times based on adjacencies
-#' @examples
-#' \dontrun{
-#' adjList = graphToAdjList(conosGraph)
-#' commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
-#' }
 get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_verts = 0L, n_cores = 1L, min_prob = 1e-3, min_visited_verts = 1000L, min_prob_lower = 1e-5, max_hitting_nn_num = 0L, max_commute_nn_num = 0L, verbose = TRUE) {
     .Call('_sccore_get_nearest_neighbors', PACKAGE = 'sccore', adjacency_list, transition_probabilities, n_verts, n_cores, min_prob, min_visited_verts, min_prob_lower, max_hitting_nn_num, max_commute_nn_num, verbose)
 }

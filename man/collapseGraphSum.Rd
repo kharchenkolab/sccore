@@ -20,7 +20,7 @@ collapsed graph
 Collapse Graph By Sum
 }
 \examples{
-\dontrun{
+\donttest{
 collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 }
 }

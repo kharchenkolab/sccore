@@ -320,11 +320,6 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
 //' @param max_commute_nn_num numeric Maximum adjacencies for calculating commute time per neighbor, commute_time_per_node() (default=0)
 //' @param verbose boolean Whether to have verbose output (default=TRUE)
 //' @return list of commute times based on adjacencies
-//' @examples
-//' \dontrun{
-//' adjList = graphToAdjList(conosGraph)
-//' commuteTimes <- get_nearest_neighbors(adjList$idx, adjList$probabilities)
-//' }
 // [[Rcpp::export]]
 Rcpp::List get_nearest_neighbors(const std::vector<std::vector<int>> &adjacency_list,
                                  const std::vector<std::vector<double>> &transition_probabilities,

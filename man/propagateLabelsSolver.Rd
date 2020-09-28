@@ -20,7 +20,7 @@ result from Matrix::solve() or rmumps::Rmumps
 Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm, "Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions" <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
 }
 \examples{
-\dontrun{
+\donttest{
 propagateLabelsSolver(conosGraph, labels=cellAnnotations)
 }
 }

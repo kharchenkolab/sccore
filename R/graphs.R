@@ -85,7 +85,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 #' @param normalize boolean Whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @return collapsed graph
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 #' }
 #' @export
@@ -123,7 +123,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' @param ... arguments passed to collapseGraphSum()
 #' @return collapsed graph
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
 #' }
 #' @export
@@ -220,7 +220,7 @@ propagateLabels = function(graph, labels, method="diffusion", ...) {
 #' @param solver Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")
 #' @return result from Matrix::solve() or rmumps::Rmumps
 #' @examples 
-#' \dontrun{
+#' \donttest{
 #' propagateLabelsSolver(conosGraph, labels=cellAnnotations)
 #' }
 #' @export
