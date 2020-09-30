@@ -5,6 +5,10 @@
 #include <numeric>
 #include <Rcpp.h>
 
+#ifdef _OPENMP
+  #include <omp.h>
+#endif
+
 #include <progress.hpp>
 
 void trace_time(const std::string &message, bool print_date=false)
