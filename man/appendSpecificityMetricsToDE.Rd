@@ -14,14 +14,20 @@ appendSpecificityMetricsToDE(
 )
 }
 \arguments{
-\item{de.df}{}
+\item{de.df}{data.frame of differential expression values}
 
-\item{low.expression.threshold}{(default=0)}
+\item{clusters}{factor of clusters}
 
-\item{append.auc}{(default=FALSE)}
+\item{cluster.id}{names of 'clusters' factor. If a cluster.id doesn't exist in cluster names, an error is thrown.}
+
+\item{p2.counts}{counts from Pagoda2, refer to <https://github.com/kharchenkolab/pagoda2>}
+
+\item{low.expression.threshold}{numeric Threshold to remove expression values (default=0). Values under this threshold are discarded.}
+
+\item{append.auc}{boolean If TRUE, append AUC values (default=FALSE)}
 }
 \value{
-de.df
+data.frame of differential expression values with metrics attached
 }
 \description{
 Append specificity metrics to DE

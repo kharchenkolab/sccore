@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphs.R
 \name{getClusterGraph}
 \alias{getClusterGraph}
-\title{Get Cluster Graph}
+\title{Collapse vertices belonging to each cluster in a graph}
 \usage{
 getClusterGraph(
   graph,
@@ -12,21 +12,37 @@ getClusterGraph(
   node.scale = 50,
   edge.scale = 50,
   edge.alpha = 0.3,
+  seed = 1,
   ...
 )
 }
 \arguments{
-\item{graph}{graph to be collapsed}
+\item{graph}{igraph graph object Graph to be collapsed}
 
 \item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{method}{either "sum" or "paga" (default="sum")}
+\item{method}{string Method to be used, either "sum" or "paga" (default="sum")}
 
-\item{plot}{whether to show collapsed graph plot}
+\item{plot}{boolean Whether to show collapsed graph plot (default=FALSE)}
+
+\item{node.scale}{numeric Scaling to control value of 'vertex.size' in plot.igraph() (default=50)}
+
+\item{edge.scale}{numeric Scaling to control value of 'edge.width' in plot.igraph() (default=50)}
+
+\item{edge.alpha}{numeric Scaling to control value of 'alpha.f' in adjustcolor() within plot.igraph() (default=0.3)}
+
+\item{seed}{numeric Set seed via set.seed() for plotting (default=1)}
+
+\item{...}{arguments passed to collapseGraphSum()}
 }
 \value{
 collapsed graph
 }
 \description{
 Collapse vertices belonging to each cluster in a graph
+}
+\examples{
+\donttest{
+cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
+}
 }

@@ -61,8 +61,18 @@ si_map_t parse_edges(const Rcpp::StringMatrix &edge_verts, const std::vector<dou
   return vertex_ids;
 }
 
-// Label propogation
-
+//' Label propagation
+//' 
+//' @param edge_verts edge vertices of igraph graph object  
+//' @param edge_weights edge weights of igraph graph object 
+//' @param vert_labels vector of factor or character labels, named by cell names
+//' @param max_n_iters integer Maximal number of iterations (default=10)
+//' @param verbose boolean Verbose mode (default=TRUE)
+//' @param diffusion_fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=10.0)
+//' @param diffusion_fading_const numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.5)
+//' @param tol numeric Absolute tolerance as a stopping criteria (default=5e-3)
+//' @param fixed_initial_labels boolean Prohibit changes of initial labels during diffusion (default=FALSE)
+//' @return matrix from input graph, with labels propagated
 // [[Rcpp::export]]
 Rcpp::NumericMatrix propagate_labels(const Rcpp::StringMatrix &edge_verts, const std::vector<double> &edge_weights, const Rcpp::StringVector &vert_labels, int max_n_iters=10, bool verbose=true,
                                      double diffusion_fading=10, double diffusion_fading_const=0.5, double tol=5e-3, bool fixed_initial_labels=false) {
@@ -180,6 +190,20 @@ void smooth_count_matrix_c(const std::vector<Edge> &edges, Mat &count_matrix, in
             << diffusion_fading << ", " << diffusion_fading_const << ")" << std::endl;
 }
 
+//' Smooth gene expression, used primarily within conos::correctGenes. Used to smooth gene expression values in order to better represent the graph structure.
+//' Use diffusion of expression on graph with the equation dv = exp(-a * (v + b))
+//' 
+//' @param edge_verts edge vertices of igraph graph object 
+//' @param edge_weights edge weights of igraph graph object 
+//' @param count_matrix gene count matrix
+//' @param is_label_fixed boolean Whether label is fixed
+//' @param max_n_iters integer Maximal number of iterations (default=10)
+//' @param diffusion_fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=1.0)
+//' @param diffusion_fading_const numeric Another constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=0.1)
+//' @param tol numeric Absolute tolerance as a stopping criteria (default=1e-3)
+//' @param verbose boolean Verbose mode (default=TRUE)
+//' @param normalize boolean Whether to normalize values (default=FALSE)
+//' @return matrix from input graph, with labels propagated
 // [[Rcpp::export]]
 SEXP smooth_count_matrix(const Rcpp::StringMatrix &edge_verts, const std::vector<double> &edge_weights, const Rcpp::NumericMatrix &count_matrix,
                          const std::vector<bool> &is_label_fixed, int max_n_iters=10, double diffusion_fading=1.0, double diffusion_fading_const=0.1,
@@ -222,8 +246,18 @@ SEXP smooth_count_matrix(const Rcpp::StringMatrix &edge_verts, const std::vector
 
 // Functions for debugging
 
+
+//' List of adjacent vertices from igraph object
+//' 
+//' @param edge_verts edge vertices of igraph graph object 
+//' @return list of adjacent vertices
+//' @examples
+//' \dontrun{
+//' edges <- igraph::as_edgelist(conosGraph)
+//' adjacentVertices(edges)
+//' }
 // [[Rcpp::export]]
-Rcpp::List adjacent_vertices(const Rcpp::StringMatrix &edge_verts) {
+Rcpp::List adjacentVertices(const Rcpp::StringMatrix &edge_verts) {
   std::unordered_map<std::string, s_vec_t> adj_verts;
   for (size_t i = 0; i < edge_verts.nrow(); ++i) {
     auto v1 = Rcpp::as<std::string>(edge_verts(i, 0));
@@ -235,6 +269,17 @@ Rcpp::List adjacent_vertices(const Rcpp::StringMatrix &edge_verts) {
   return Rcpp::wrap(adj_verts);
 }
 
+//' List of adjacent vertex weights from igraph object
+//' 
+//' @param edge_verts edge vertices of igraph graph object 
+//' @param edge_weights edge weights of igraph graph object  
+//' @return list of adjacent vertices
+//' @examples
+//' \dontrun{
+//' edges <- igraph::as_edgelist(conosGraph)
+//' edge.weights <- igraph::edge.attributes(conosGraph)$weight
+//' adjacent_vertex_weights(edges, edge.weights)
+//' }
 // [[Rcpp::export]]
 Rcpp::List adjacent_vertex_weights(const Rcpp::StringMatrix &edge_verts, const std::vector<double> &edge_weights) {
   std::unordered_map<std::string, std::vector<double>> adj_verts;

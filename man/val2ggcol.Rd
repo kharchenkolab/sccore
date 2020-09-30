@@ -2,7 +2,8 @@
 % Please edit documentation in R/plots.R
 \name{val2ggcol}
 \alias{val2ggcol}
-\title{val2ggcol}
+\title{Helper function to return a ggplot color gradient for a numeric vector
+ggplot(aes(color=x, ...), ...) + val2ggcol(x)}
 \usage{
 val2ggcol(
   values,
@@ -18,26 +19,24 @@ val2ggcol(
 \arguments{
 \item{values}{values by which the color gradient is determined}
 
-\item{gradient.range.quantile}{trimming quantile (either a single number or two numbers - for lower and upper quantile)}
+\item{gradient.range.quantile}{numeric Trimming quantile (default=1). Either a single number or two numbers - for lower and upper quantile.}
 
-\item{color.range}{either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or "symmetric" - range will fit data, but will be symmetrized around zeros; "all" - gradient will match the span of the range of the data (after gradient.range.quantile);}
+\item{color.range}{either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or string "symmetric" or "all" (default="symmetric"). "symmetric": range will fit data, but will be symmetrized around zeros, "all": gradient will match the span of the range of the data (after gradient.range.quantile)}
 
-\item{palette}{an optinoal palette fucntion; Default is blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used}
+\item{palette}{an optional palette fucntion (default=NULL). The default becomes blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used}
 
-\item{midpoint}{optional midpoint (set for th center of the resulting range by default)}
+\item{midpoint}{optional midpoint (default=NULL). Set for the center of the resulting range by default}
 
-\item{oob}{function to determine what to do with the values outside of the range (default is scales::squish), see oob parameter in ggplot}
+\item{oob}{function to determine what to do with the values outside of the range (default =scales::squish). Refer to 'oob' parameter in ggplot}
 
-\item{return.fill}{wheter to return fill gradients instead of color}
+\item{return.fill}{boolean Whether to return fill gradients instead of color (default=FALSE)}
 
-\item{...}{additional arguments are passed to ggplot2::scale_color_gradient* functions}
+\item{...}{additional arguments are passed to ggplot2::scale_color_gradient* functions, i.e. scale_color_gradient(), scale_color_gradient2(), scale_color_gradientn()}
 }
 \value{
 ggplot2::scale_colour_gradient* object
 }
 \description{
 Helper function to return a ggplot color gradient for a numeric vector
-}
-\details{
 ggplot(aes(color=x, ...), ...) + val2ggcol(x)
 }

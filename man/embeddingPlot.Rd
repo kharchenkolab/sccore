@@ -26,8 +26,6 @@ embeddingPlot(
   legend.title = NULL,
   gradient.range.quantile = 1,
   raster = FALSE,
-  raster.width = NULL,
-  raster.height = NULL,
   raster.dpi = 300,
   shuffle.colors = FALSE,
   keep.limits = !is.null(subgroups),
@@ -39,13 +37,13 @@ embeddingPlot(
 
 \item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
-\item{colors}{vector of numbers, which must be shouwn with point colors, names contain cell names. (default=NULL) This argument is ignored if groups are provided.}
+\item{colors}{vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
 
-\item{subgroups}{subset of 'groups', selecting the cells for plot. (default=NULL) Ignored if 'groups' is NULL}
+\item{subgroups}{subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL}
 
-\item{plot.na}{boolean whether to plot points, for which groups / colors are missed (default=FALSE) This argument is FALSE if 'subgroups' is NULL}
+\item{plot.na}{boolean whether to plot points, for which groups / colors are missed (default=FALSE). This argument is FALSE if 'subgroups' is NULL}
 
-\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed. (default=0) This argument is ignored if groups aren't provided}
+\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided}
 
 \item{mark.groups}{plot cluster labels above points (default=TRUE)}
 
@@ -59,13 +57,15 @@ embeddingPlot(
 
 \item{plot.theme}{theme for the plot (default=NULL)}
 
-\item{palette}{function, which accepts number of colors and return list of colors (i.e. see colorRampPalette) (default=NULL)}
+\item{palette}{function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
 
-\item{color.range}{controls range, in which colors are estimated. (default="symmetric") Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
+\item{color.range}{controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
 
-\item{font.size}{font size for cluster labels. It can either be single number for constant font size or pair (min, max) for font size depending on cluster size}
+\item{font.size}{font size for cluster labels (default=c(3, 7)). It can either be single number for constant font size or pair (min, max) for font size depending on cluster size}
 
 \item{show.ticks}{show ticks and tick labels (default=FALSE)}
+
+\item{show.labels}{show labels (default=FALSE)}
 
 \item{legend.position}{vector with (x, y) positions of the legend (default=NULL)}
 
@@ -73,17 +73,13 @@ embeddingPlot(
 
 \item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
 
-\item{raster}{boolean whether layer with the points be rasterized (default=FALSE) Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
+\item{raster}{boolean whether layer with the points be rasterized (default=FALSE). Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
 
-\item{raster.width}{width of the plot in inches. (default=NULL) Ignored if raster == FALSE.}
-
-\item{raster.height}{height of the plot in inches. (default=NULL) Ignored if raster == FALSE.}
-
-\item{raster.dpi}{dpi of the rasterized plot. (default=300) Ignored if raster == FALSE.}
+\item{raster.dpi}{dpi of the rasterized plot. (default=300). Ignored if raster == FALSE.}
 
 \item{shuffle.colors}{shuffle colors (default=FALSE)}
 
-\item{keep.limits}{Keep axis limits from original plot, useful when plotting subgroups, only meaningful it plot.na=FALSE}
+\item{keep.limits}{Keep axis limits from original plot (default=!is.null(subgroups)). Useful when plotting subgroups, only meaningful it plot.na=FALSE}
 
 \item{...}{
   Arguments passed on to \code{\link[ggrepel:geom_text_repel]{ggrepel::geom_label_repel}}
@@ -158,4 +154,9 @@ ggplot2 object
 }
 \description{
 Plot embedding with provided labels / colors using ggplot2
+}
+\examples{
+library(sccore)
+embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
+
 }

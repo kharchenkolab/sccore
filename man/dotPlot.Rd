@@ -2,16 +2,17 @@
 % Please edit documentation in R/plots.R
 \name{dotPlot}
 \alias{dotPlot}
-\title{Dot plot for group markers}
+\title{Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details}
 \usage{
 dotPlot(
   markers,
   count.matrix,
   cell.groups,
-  verbose = TRUE,
-  n.cores = 1,
   marker.colour = "black",
   cluster.colour = "black",
+  xlab = "Marker",
+  ylab = "Cluster",
+  n.cores = 1,
   text.angle = 45,
   gene.order = NULL,
   cols = c("blue", "red"),
@@ -22,15 +23,14 @@ dotPlot(
   scale.by = "radius",
   scale.min = NA,
   scale.max = NA,
-  xlab = "Marker",
-  ylab = "Cluster",
+  verbose = TRUE,
   ...
 )
 }
 \arguments{
 \item{markers}{Vector of gene markers to plot}
 
-\item{count.matrix}{Merged count matrix, e.g., through conos.obj$getJointCountMatrix()}
+\item{count.matrix}{Merged count matrix}
 
 \item{cell.groups}{Named factor containing cell groups (clusters) and cell names}
 
@@ -38,15 +38,39 @@ dotPlot(
 
 \item{cluster.colour}{Character or numeric vector (default="black")}
 
-\item{xlab}{X axis title (default="Marker")}
+\item{xlab}{string X-axis title (default="Marker")}
 
-\item{ylab}{Y axis title (default="Cluster")}
+\item{ylab}{string Y-axis title (default="Cluster")}
 
-\item{...}{Additional input to sccore:::plapply, see man for description.}
+\item{n.cores}{integer Number of cores (default=1)}
+
+\item{text.angle}{numeric Angle of text displayed (default=45)}
+
+\item{gene.order}{Either factor of genes passed to dplyr::mutate(levels=gene.order), or a boolean. (default=NULL) If TRUE, gene.order is set to the unique markers. If FALSE, gene.order is set to NULL. If NULL, the argument is ignored.}
+
+\item{cols}{Colors to plot (default=c("blue", "red")). The name of a palette from 'RColorBrewer::brewer.pal.info', a pair of colors defining a gradient, or 3+ colors defining multiple gradients (if 'split.by' is set).}
+
+\item{col.min}{numeric Minimum scaled average expression threshold (default=-2.5). Everything smaller will be set to this.}
+
+\item{col.max}{numeric Maximum scaled average expression threshold (default=2.5). Everything larger will be set to this.}
+
+\item{dot.min}{numeric The fraction of cells at which to draw the smallest dot (default=0). All cell groups with less than this expressing the given gene will have no dot drawn.}
+
+\item{dot.scale}{numeric Scale the size of the points, similar to cex (default=6)}
+
+\item{scale.by}{string Scale the size of the points by 'size' or by 'radius' (default="radius")}
+
+\item{scale.min}{numeric Set lower limit for scaling, use NA for default (default=NA)}
+
+\item{scale.max}{numeric Set upper limit for scaling, use NA for default (default=NA)}
+
+\item{verbose}{boolean Verbose output (default=TRUE)}
+
+\item{...}{Additional inputs passed to sccore::plapply(), see man for description.}
 }
 \value{
 ggplot2 object
 }
 \description{
-Dot plot adapted from Seurat:::DotPlot, see man for description.
+Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 }

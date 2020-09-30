@@ -7,15 +7,20 @@
 collapseGraphSum(graph, groups, normalize = TRUE)
 }
 \arguments{
-\item{graph}{graph to be collapsed}
+\item{graph}{igraph graph object Graph to be collapsed}
 
 \item{groups}{factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)}
 
-\item{normalize}{boolean whether to recalculate edge weight as observed/expected (default=TRUE)}
+\item{normalize}{boolean Whether to recalculate edge weight as observed/expected (default=TRUE)}
 }
 \value{
 collapsed graph
 }
 \description{
 Collapse Graph By Sum
+}
+\examples{
+\donttest{
+collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
+}
 }
