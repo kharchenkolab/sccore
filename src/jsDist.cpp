@@ -10,7 +10,10 @@
 #include <vector>
 #include <queue>
 #include <list>
-#include <omp.h>
+
+#ifdef _OPENMP
+  #include <omp.h>
+#endif
 
 using namespace std;
 using namespace Rcpp;
