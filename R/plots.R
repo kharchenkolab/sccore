@@ -2,7 +2,7 @@
 #' @import ggplot2
 #' @importFrom grDevices adjustcolor rainbow
 #' @importFrom graphics par
-#' @importFrom rlang .data 
+#' @importFrom rlang .data
 NULL
 
 ## for magrittr and dplyr functions below
@@ -61,11 +61,11 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
 }
 
 #' Encodes logic of how to handle named-vector and functional palettes. Used primarily within embeddingGroupPlot()
-#' 
-#' @param groups vector of cluster labels, names contain cell names 
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') 
+#'
+#' @param groups vector of cluster labels, names contain cell names
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette')
 #' @param unclassified.cell.color Color for unclassified cells (default='gray50')
-#' @return vector or palette 
+#' @return vector or palette
 fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   groups <- as.factor(groups)
 
@@ -73,8 +73,8 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
     return(palette(length(levels(groups))))
   }
 
-  if (is.list(palette)) { 
-    palette <- stats::setNames(unlist(palette),names(palette)) 
+  if (is.list(palette)) {
+    palette <- stats::setNames(unlist(palette),names(palette))
   }
   if (is.vector(palette)) {
     if (any(levels(groups) %in% names(palette))) {
@@ -126,7 +126,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
     if (max(abs(zlim))==0) {
       ## if gene counts all 0, then simply plot all cells as "gray90"
       ggplot2::scale_color_gradient(low="gray90", high="gray90", limits=zlim, ...)
-    } else if(zlim[2]<0) { 
+    } else if(zlim[2]<0) {
       if(return.fill) {
         ggplot2::scale_fill_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
       } else {
@@ -155,14 +155,14 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 }
 
 #' Plotting function for cluster labels, names contain cell names. Used primarily in embeddingPlot().
-#' 
+#'
 #' @inheritParams embeddingPlot
 #' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @param ... Additional arguments passed to ggplot2::geom_label_repel()
 #' @return ggplot2 object
 embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
-  
+
   groups <- as.factor(groups)
 
   plot.df$Group <- factor(NA, levels=levels(groups))
@@ -215,7 +215,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 }
 
 #' Set colors for embedding plot. Used primarily in embeddingPlot().
-#' 
+#'
 #' @inheritParams embeddingPlot
 #' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
@@ -296,13 +296,13 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param subgroups subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL
 #' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE). This argument is FALSE if 'subgroups' is NULL
 #' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided
-#' @param mark.groups plot cluster labels above points (default=TRUE) 
+#' @param mark.groups plot cluster labels above points (default=TRUE)
 #' @param show.legend show legend (default=FALSE)
-#' @param alpha opacity level [0, 1] (default=0.4) 
-#' @param size point size (default=0.8) 
-#' @param title plot title (default=NULL) 
-#' @param plot.theme theme for the plot (default=NULL) 
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL) 
+#' @param alpha opacity level [0, 1] (default=0.4)
+#' @param size point size (default=0.8)
+#' @param title plot title (default=NULL)
+#' @param plot.theme theme for the plot (default=NULL)
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)
 #' @param color.range controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
 #' @param font.size font size for cluster labels (default=c(3, 7)). It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
 #' @param show.ticks show ticks and tick labels (default=FALSE)
@@ -315,7 +315,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param shuffle.colors shuffle colors (default=FALSE)
 #' @param keep.limits Keep axis limits from original plot (default=!is.null(subgroups)). Useful when plotting subgroups, only meaningful it plot.na=FALSE
 #' @return ggplot2 object
-#' @examples 
+#' @examples
 #' library(sccore)
 #' embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
 #'
@@ -378,8 +378,8 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 #'
 #' @param markers Vector of gene markers to plot
-#' @param count.matrix Merged count matrix
-#' @param cell.groups Named factor containing cell groups (clusters) and cell names
+#' @param count.matrix Merged count matrix, cells in rows and genes in columns
+#' @param cell.groups Named factor containing cell groups (clusters) and cell names as names
 #' @param marker.colour Character or numeric vector (default="black")
 #' @param cluster.colour Character or numeric vector (default="black")
 #' @param xlab string X-axis title (default="Marker")
@@ -398,6 +398,23 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... Additional inputs passed to sccore::plapply(), see man for description.
 #' @return ggplot2 object
+#' @examples
+#' # Create merged count matrix
+#' # Here, cms is a list of count matrices from, e.g., Cellranger count where cells are in columns and genes in rows
+#' cm <- sccore:::mergeCountMatrices(cms, transposed = F) %>% Matrix::t() # magrittr pipe
+#'
+#' # If coming from Conos, this can be extracted like so
+#' cm <- conos.obj$getJointCountMatrix(raw = F) # Either normalized or raw values can be used
+#'
+#' # Create marker vector
+#' markers <- c("gene1","gene2","gene3")
+#'
+#' # Additionally, color vectors can be included. These should have the same length as the input (markers, cell groups), otherwise they are recycled
+#' col.markers <- c("black","black","red") # or c(1,1,2)
+#' col.groups <- c("black","red","black")
+#'
+#' # An annotation vector has been loaded
+#' sccore:::dotPlot(markers = markers, count.matrix = cm, cell.groups = annotation, marker.colour = col.markers, cluster.colour = col.groups)
 #' @export
 dotPlot <- function (markers,
                      count.matrix,
@@ -419,7 +436,7 @@ dotPlot <- function (markers,
                      scale.max = NA,
                      verbose=TRUE,
                      ...) {
-  
+
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
   if (!is.character(markers)) {
     stop("'markers' must be a character vector.")
@@ -451,7 +468,7 @@ dotPlot <- function (markers,
   }
 
   # Adapted from Seurat:::DotPlot
-  if (verbose) { 
+  if (verbose) {
     message("Calculating expression distributions... ")
   }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {
