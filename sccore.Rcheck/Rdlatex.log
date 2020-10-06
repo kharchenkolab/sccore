@@ -1,0 +1,938 @@
+Hmm ... looks like a package
+
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-06-18>
+(./Rd2.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/textcomp.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/fontenc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/iftex/iftex.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/infwarerr/infwarerr.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.
+sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdfescape/pdfescape.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty)
+ (/usr/local/texlive/2020basic/texmf-dist/tex/latex/auxhook/auxhook.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/kvoptions/kvoptions.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/etexcmds/etexcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bitset/bitset.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)
+) (/usr/local/texlive/2020basic/texmf-dist/tex/generic/atbegshi/atbegshi.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/atveryend/atveryend.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/rerunfilecheck/rerunfilechec
+k.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/uniquecounter/uniquecounte
+r.sty)))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.
+def)
+No file Rd2.aux.
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/refcount/refcount.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/gettitlestring/gettitlestr
+ing.sty)) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1phv.fd) [1{/usr/loc
+al/texlive/2020basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+[]\T1/ptm/m/it/10 Collapse graph us-ing PAGA 1.2 al-go-rithm,
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 Wolf et al 2019, Genome Bi-ol-ogy (2019)
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 <https://genomebiology.biomedcentral.com/articles/10.1186/s1305
+9-
+
+Overfull \hbox (214.775pt too wide) in paragraph at lines 186--187
+[]\T1/ptm/m/n/10 Collapse graph us-ing PAGA 1.2 al-go-rithm, Wolf et al 2019, G
+enome Bi-ol-ogy (2019) <https://genomebiology.biomedcentral.com/articles/10.118
+6/s13059-
+[4]
+Overfull \hbox (8.65796pt too wide) in paragraph at lines 230--231
+[]\T1/ptm/m/n/10 boolean Whether to re-cal-cu-late edge weight as ob-served/exp
+ected (de-fault=TRUE) 
+
+Overfull \hbox (33.76555pt too wide) in paragraph at lines 241--241
+ []\T1/zi4/m/n/9 collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph
+), linearize=TRUE, winsorize=FALSE)[] 
+[5] [6] [7]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 408--409
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 414--415
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[8]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 459--460
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[9] [10]
+Overfull \hbox (6.31776pt too wide) in paragraph at lines 527--528
+[]\T1/ptm/m/n/10 subset of 'groups', se-lect-ing the cells for plot (de-fault=N
+ULL). Ig-nored if 'groups'
+
+Overfull \hbox (21.94772pt too wide) in paragraph at lines 529--530
+[]\T1/ptm/m/n/10 boolean whether to plot points, for which groups / col-ors are
+ missed (de-fault=FALSE).
+[11]
+Overfull \hbox (17.79836pt too wide) in paragraph at lines 595--598
+\T1/ptm/m/n/10 fault unit is lines, but other units can be spec-i-fied by pass-
+ing \T1/zi4/m/n/10 unit(x,"units")\T1/ptm/m/n/10 ). 
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+[]\T1/ptm/m/it/10 Embed a graph into a UMAP, Uni-form Man-i-fold Ap-
+
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+\T1/ptm/m/it/10 prox-i-ma-tion and Pro-jec-tion for Di-men-sion Re-duc-tion,
+
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 694--695
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[13]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 704--705
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Underfull \hbox (badness 5771) in paragraph at lines 720--720
+[]\T1/ptm/m/it/10 Embed a k-nearest neigh-bor (kNN) graph within a UMAP.
+
+Underfull \hbox (badness 2799) in paragraph at lines 720--720
+\T1/ptm/m/it/10 Used within em-bed-Gra-phUmap(). Please see McInnes et al
+[14]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 758--759
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Overfull \hbox (19.37749pt too wide) in paragraph at lines 762--763
+[]\T1/ptm/m/n/10 numeric Di-men-sions for 'n_components' in uwot::umap(n_compon
+ents=target.dims)
+[15] [16] [17] [18]
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 983--984
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[19]
+Underfull \hbox (badness 2205) in paragraph at lines 1026--1026
+[]\T1/ptm/m/it/10 Jensen^^UShannon dis-tance met-ric (i.e. the square root of t
+he
+[20]
+Overfull \hbox (37.67719pt too wide) in paragraph at lines 1110--1111
+[]\T1/ptm/m/n/10 boolean If TRUE, take (cl$memberships[1,]). Oth-er-wise, uses 
+as.integer(membership(cl))
+[21] [22]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1226--1227
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[23] [24]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1317--1318
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[25]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1401--1402
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[26] [27] [28]
+Overfull \hbox (14.17809pt too wide) in paragraph at lines 1521--1522
+[]\T1/ptm/m/n/10 boolean If TRUE, re-la-bel axes with gg-plot2::labs(x='Compone
+nt 1', y='Component
+[29]
+Overfull \hbox (5.31758pt too wide) in paragraph at lines 1574--1575
+\T1/ptm/m/n/10 gra-di-ent will match the span of the range of the data (af-ter 
+gra-di-ent.range.quantile) 
+No file Rd2.ind.
+[30]
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.borders} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.set.seed} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes.Rul.} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggrepel::geom.Rul.label.Rul.repel} has been ref
+erenced but does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2020basic/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/loca
+l/texlive/2020basic/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/lo
+cal/texlive/2020basic/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4
+r.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.
+pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><
+/usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/
+local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local
+/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (30 pages, 134793 bytes).
+Transcript written on Rd2.log.
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-06-18>
+(./Rd2.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/textcomp.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/fontenc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/iftex/iftex.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/infwarerr/infwarerr.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.
+sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdfescape/pdfescape.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty)
+ (/usr/local/texlive/2020basic/texmf-dist/tex/latex/auxhook/auxhook.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/kvoptions/kvoptions.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/etexcmds/etexcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bitset/bitset.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)
+) (/usr/local/texlive/2020basic/texmf-dist/tex/generic/atbegshi/atbegshi.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/atveryend/atveryend.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/rerunfilecheck/rerunfilechec
+k.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/uniquecounter/uniquecounte
+r.sty)))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.
+def)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.aux)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/refcount/refcount.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/gettitlestring/gettitlestr
+ing.sty))
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.out)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.out)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.toc [1{/usr/local/texlive/2020basic/texmf-var/fonts/map/pdftex/up
+dmap/pdftex.map}]) [2] [3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+[]\T1/ptm/m/it/10 Collapse graph us-ing PAGA 1.2 al-go-rithm,
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 Wolf et al 2019, Genome Bi-ol-ogy (2019)
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 <https://genomebiology.biomedcentral.com/articles/10.1186/s1305
+9-
+
+Overfull \hbox (214.775pt too wide) in paragraph at lines 186--187
+[]\T1/ptm/m/n/10 Collapse graph us-ing PAGA 1.2 al-go-rithm, Wolf et al 2019, G
+enome Bi-ol-ogy (2019) <https://genomebiology.biomedcentral.com/articles/10.118
+6/s13059-
+[5]
+Overfull \hbox (8.65796pt too wide) in paragraph at lines 230--231
+[]\T1/ptm/m/n/10 boolean Whether to re-cal-cu-late edge weight as ob-served/exp
+ected (de-fault=TRUE) 
+
+Overfull \hbox (33.76555pt too wide) in paragraph at lines 241--241
+ []\T1/zi4/m/n/9 collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph
+), linearize=TRUE, winsorize=FALSE)[] 
+[6] [7] [8]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 408--409
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 414--415
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[9]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 459--460
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[10]
+Overfull \hbox (6.31776pt too wide) in paragraph at lines 527--528
+[]\T1/ptm/m/n/10 subset of 'groups', se-lect-ing the cells for plot (de-fault=N
+ULL). Ig-nored if 'groups'
+
+Overfull \hbox (21.94772pt too wide) in paragraph at lines 529--530
+[]\T1/ptm/m/n/10 boolean whether to plot points, for which groups / col-ors are
+ missed (de-fault=FALSE).
+[11] [12]
+Overfull \hbox (17.79836pt too wide) in paragraph at lines 595--598
+\T1/ptm/m/n/10 fault unit is lines, but other units can be spec-i-fied by pass-
+ing \T1/zi4/m/n/10 unit(x,"units")\T1/ptm/m/n/10 ). 
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+[]\T1/ptm/m/it/10 Embed a graph into a UMAP, Uni-form Man-i-fold Ap-
+
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+\T1/ptm/m/it/10 prox-i-ma-tion and Pro-jec-tion for Di-men-sion Re-duc-tion,
+
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 694--695
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[14]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 704--705
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Underfull \hbox (badness 5771) in paragraph at lines 720--720
+[]\T1/ptm/m/it/10 Embed a k-nearest neigh-bor (kNN) graph within a UMAP.
+
+Underfull \hbox (badness 2799) in paragraph at lines 720--720
+\T1/ptm/m/it/10 Used within em-bed-Gra-phUmap(). Please see McInnes et al
+[15]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 758--759
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Overfull \hbox (19.37749pt too wide) in paragraph at lines 762--763
+[]\T1/ptm/m/n/10 numeric Di-men-sions for 'n_components' in uwot::umap(n_compon
+ents=target.dims)
+[16] [17] [18] [19]
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 983--984
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[20]
+Underfull \hbox (badness 2205) in paragraph at lines 1026--1026
+[]\T1/ptm/m/it/10 Jensen^^UShannon dis-tance met-ric (i.e. the square root of t
+he
+[21]
+Overfull \hbox (37.67719pt too wide) in paragraph at lines 1110--1111
+[]\T1/ptm/m/n/10 boolean If TRUE, take (cl$memberships[1,]). Oth-er-wise, uses 
+as.integer(membership(cl))
+[22] [23]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1226--1227
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[24] [25]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1317--1318
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[26]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1401--1402
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[27] [28] [29]
+Overfull \hbox (14.17809pt too wide) in paragraph at lines 1521--1522
+[]\T1/ptm/m/n/10 boolean If TRUE, re-la-bel axes with gg-plot2::labs(x='Compone
+nt 1', y='Component
+[30]
+Overfull \hbox (5.31758pt too wide) in paragraph at lines 1574--1575
+\T1/ptm/m/n/10 gra-di-ent will match the span of the range of the data (af-ter 
+gra-di-ent.range.quantile) 
+No file Rd2.ind.
+[31]
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.aux) )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.borders} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.set.seed} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes.Rul.} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggrepel::geom.Rul.label.Rul.repel} has been ref
+erenced but does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2020basic/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/loca
+l/texlive/2020basic/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/lo
+cal/texlive/2020basic/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4
+r.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.
+pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><
+/usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/
+local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local
+/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (31 pages, 139245 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2020] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (47 entries accepted, 0 rejected).
+Sorting entries....done (255 comparisons).
+Generating output file Rd2.ind....done (92 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-06-18>
+(./Rd2.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/textcomp.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/fontenc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/iftex/iftex.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/infwarerr/infwarerr.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.
+sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdfescape/pdfescape.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty)
+ (/usr/local/texlive/2020basic/texmf-dist/tex/latex/auxhook/auxhook.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/kvoptions/kvoptions.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/etexcmds/etexcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bitset/bitset.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)
+) (/usr/local/texlive/2020basic/texmf-dist/tex/generic/atbegshi/atbegshi.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/atveryend/atveryend.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/rerunfilecheck/rerunfilechec
+k.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/uniquecounter/uniquecounte
+r.sty)))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.
+def)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.aux)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/refcount/refcount.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/gettitlestring/gettitlestr
+ing.sty))
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.out)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.out)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.toc [1{/usr/local/texlive/2020basic/texmf-var/fonts/map/pdftex/up
+dmap/pdftex.map}]) [2] [3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+[]\T1/ptm/m/it/10 Collapse graph us-ing PAGA 1.2 al-go-rithm,
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 Wolf et al 2019, Genome Bi-ol-ogy (2019)
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 <https://genomebiology.biomedcentral.com/articles/10.1186/s1305
+9-
+
+Overfull \hbox (214.775pt too wide) in paragraph at lines 186--187
+[]\T1/ptm/m/n/10 Collapse graph us-ing PAGA 1.2 al-go-rithm, Wolf et al 2019, G
+enome Bi-ol-ogy (2019) <https://genomebiology.biomedcentral.com/articles/10.118
+6/s13059-
+[5]
+Overfull \hbox (8.65796pt too wide) in paragraph at lines 230--231
+[]\T1/ptm/m/n/10 boolean Whether to re-cal-cu-late edge weight as ob-served/exp
+ected (de-fault=TRUE) 
+
+Overfull \hbox (33.76555pt too wide) in paragraph at lines 241--241
+ []\T1/zi4/m/n/9 collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph
+), linearize=TRUE, winsorize=FALSE)[] 
+[6] [7] [8]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 408--409
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 414--415
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[9]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 459--460
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[10]
+Overfull \hbox (6.31776pt too wide) in paragraph at lines 527--528
+[]\T1/ptm/m/n/10 subset of 'groups', se-lect-ing the cells for plot (de-fault=N
+ULL). Ig-nored if 'groups'
+
+Overfull \hbox (21.94772pt too wide) in paragraph at lines 529--530
+[]\T1/ptm/m/n/10 boolean whether to plot points, for which groups / col-ors are
+ missed (de-fault=FALSE).
+[11] [12]
+Overfull \hbox (17.79836pt too wide) in paragraph at lines 595--598
+\T1/ptm/m/n/10 fault unit is lines, but other units can be spec-i-fied by pass-
+ing \T1/zi4/m/n/10 unit(x,"units")\T1/ptm/m/n/10 ). 
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+[]\T1/ptm/m/it/10 Embed a graph into a UMAP, Uni-form Man-i-fold Ap-
+
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+\T1/ptm/m/it/10 prox-i-ma-tion and Pro-jec-tion for Di-men-sion Re-duc-tion,
+
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 694--695
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[14]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 704--705
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Underfull \hbox (badness 5771) in paragraph at lines 720--720
+[]\T1/ptm/m/it/10 Embed a k-nearest neigh-bor (kNN) graph within a UMAP.
+
+Underfull \hbox (badness 2799) in paragraph at lines 720--720
+\T1/ptm/m/it/10 Used within em-bed-Gra-phUmap(). Please see McInnes et al
+[15]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 758--759
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Overfull \hbox (19.37749pt too wide) in paragraph at lines 762--763
+[]\T1/ptm/m/n/10 numeric Di-men-sions for 'n_components' in uwot::umap(n_compon
+ents=target.dims)
+[16] [17] [18] [19]
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 983--984
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[20]
+Underfull \hbox (badness 2205) in paragraph at lines 1026--1026
+[]\T1/ptm/m/it/10 Jensen^^UShannon dis-tance met-ric (i.e. the square root of t
+he
+[21]
+Overfull \hbox (37.67719pt too wide) in paragraph at lines 1110--1111
+[]\T1/ptm/m/n/10 boolean If TRUE, take (cl$memberships[1,]). Oth-er-wise, uses 
+as.integer(membership(cl))
+[22] [23]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1226--1227
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[24] [25]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1317--1318
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[26]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1401--1402
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[27] [28] [29]
+Overfull \hbox (14.17809pt too wide) in paragraph at lines 1521--1522
+[]\T1/ptm/m/n/10 boolean If TRUE, re-la-bel axes with gg-plot2::labs(x='Compone
+nt 1', y='Component
+[30]
+Overfull \hbox (5.31758pt too wide) in paragraph at lines 1574--1575
+\T1/ptm/m/n/10 gra-di-ent will match the span of the range of the data (af-ter 
+gra-di-ent.range.quantile) 
+
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.ind [31] [32])
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.borders} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.set.seed} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes.Rul.} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggrepel::geom.Rul.label.Rul.repel} has been ref
+erenced but does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2020basic/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/loca
+l/texlive/2020basic/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/lo
+cal/texlive/2020basic/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4
+r.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msy10.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/helvetic/uhv
+r8a.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmb8a.p
+fb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
+usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/l
+ocal/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (32 pages, 149460 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2020] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (47 entries accepted, 0 rejected).
+Sorting entries....done (255 comparisons).
+Generating output file Rd2.ind....done (92 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+LaTeX2e <2020-02-02> patch level 5
+L3 programming layer <2020-06-18>
+(./Rd2.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/bk10.clo))
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/longtable.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/bm.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/alltt.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/verbatim.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/url/url.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/textcomp.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/fontenc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/zi4.sty
+`inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/keyval.tex)))))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics/color.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-cfg/color.cfg)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-def/pdftex.def))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/iftex/iftex.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/infwarerr/infwarerr.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.
+sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdfescape/pdfescape.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hycolor/hycolor.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty)
+ (/usr/local/texlive/2020basic/texmf-dist/tex/latex/auxhook/auxhook.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/kvoptions/kvoptions.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/intcalc/intcalc.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/etexcmds/etexcmds.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bitset/bitset.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty)
+) (/usr/local/texlive/2020basic/texmf-dist/tex/generic/atbegshi/atbegshi.sty))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/atveryend/atveryend.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/rerunfilecheck/rerunfilechec
+k.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/uniquecounter/uniquecounte
+r.sty)))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/makeidx.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/inputenc.sty)
+Writing index file Rd2.idx
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.
+def)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.aux)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/refcount/refcount.sty)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/gettitlestring/gettitlestr
+ing.sty))
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.out)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.out)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/ts1ptm.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/t1zi4.fd)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1phv.fd)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.toc [1{/usr/local/texlive/2020basic/texmf-var/fonts/map/pdftex/up
+dmap/pdftex.map}]) [2] [3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+[]\T1/ptm/m/it/10 Collapse graph us-ing PAGA 1.2 al-go-rithm,
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 Wolf et al 2019, Genome Bi-ol-ogy (2019)
+
+Underfull \hbox (badness 10000) in paragraph at lines 183--183
+\T1/ptm/m/it/10 <https://genomebiology.biomedcentral.com/articles/10.1186/s1305
+9-
+
+Overfull \hbox (214.775pt too wide) in paragraph at lines 186--187
+[]\T1/ptm/m/n/10 Collapse graph us-ing PAGA 1.2 al-go-rithm, Wolf et al 2019, G
+enome Bi-ol-ogy (2019) <https://genomebiology.biomedcentral.com/articles/10.118
+6/s13059-
+[5]
+Overfull \hbox (8.65796pt too wide) in paragraph at lines 230--231
+[]\T1/ptm/m/n/10 boolean Whether to re-cal-cu-late edge weight as ob-served/exp
+ected (de-fault=TRUE) 
+
+Overfull \hbox (33.76555pt too wide) in paragraph at lines 241--241
+ []\T1/zi4/m/n/9 collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph
+), linearize=TRUE, winsorize=FALSE)[] 
+[6] [7] [8]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 408--409
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 414--415
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[9]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 455--456
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 459--460
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+[10]
+Overfull \hbox (6.31776pt too wide) in paragraph at lines 527--528
+[]\T1/ptm/m/n/10 subset of 'groups', se-lect-ing the cells for plot (de-fault=N
+ULL). Ig-nored if 'groups'
+
+Overfull \hbox (21.94772pt too wide) in paragraph at lines 529--530
+[]\T1/ptm/m/n/10 boolean whether to plot points, for which groups / col-ors are
+ missed (de-fault=FALSE).
+[11] [12]
+Overfull \hbox (17.79836pt too wide) in paragraph at lines 595--598
+\T1/ptm/m/n/10 fault unit is lines, but other units can be spec-i-fied by pass-
+ing \T1/zi4/m/n/10 unit(x,"units")\T1/ptm/m/n/10 ). 
+[13]
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+[]\T1/ptm/m/it/10 Embed a graph into a UMAP, Uni-form Man-i-fold Ap-
+
+Underfull \hbox (badness 10000) in paragraph at lines 654--654
+\T1/ptm/m/it/10 prox-i-ma-tion and Pro-jec-tion for Di-men-sion Re-duc-tion,
+
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 694--695
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[14]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 704--705
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Underfull \hbox (badness 5771) in paragraph at lines 720--720
+[]\T1/ptm/m/it/10 Embed a k-nearest neigh-bor (kNN) graph within a UMAP.
+
+Underfull \hbox (badness 2799) in paragraph at lines 720--720
+\T1/ptm/m/it/10 Used within em-bed-Gra-phUmap(). Please see McInnes et al
+[15]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 758--759
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+
+Overfull \hbox (19.37749pt too wide) in paragraph at lines 762--763
+[]\T1/ptm/m/n/10 numeric Di-men-sions for 'n_components' in uwot::umap(n_compon
+ents=target.dims)
+[16] [17] [18] [19]
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 983--984
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+[20]
+Underfull \hbox (badness 2205) in paragraph at lines 1026--1026
+[]\T1/ptm/m/it/10 Jensen^^UShannon dis-tance met-ric (i.e. the square root of t
+he
+[21]
+Overfull \hbox (37.67719pt too wide) in paragraph at lines 1110--1111
+[]\T1/ptm/m/n/10 boolean If TRUE, take (cl$memberships[1,]). Oth-er-wise, uses 
+as.integer(membership(cl))
+[22] [23]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1226--1227
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[24] [25]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1317--1318
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[26]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1401--1402
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+[27] [28] [29]
+Overfull \hbox (14.17809pt too wide) in paragraph at lines 1521--1522
+[]\T1/ptm/m/n/10 boolean If TRUE, re-la-bel axes with gg-plot2::labs(x='Compone
+nt 1', y='Component
+[30]
+Overfull \hbox (5.31758pt too wide) in paragraph at lines 1574--1575
+\T1/ptm/m/n/10 gra-di-ent will match the span of the range of the data (af-ter 
+gra-di-ent.range.quantile) 
+
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.ind [31] [32])
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmpXUGi7W/Rd2pdf16d1
+c4e036e70/Rd2.aux) )
+(see the transcript file for additional information)pdfTeX warning (dest): name
+{Rfn.borders} has been referenced but does not exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.set.seed} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes.Rul.} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggrepel::geom.Rul.label.Rul.repel} has been ref
+erenced but does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2020basic/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/loca
+l/texlive/2020basic/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</usr/lo
+cal/texlive/2020basic/texmf-dist/fonts/type1/public/inconsolata/Inconsolata-zi4
+r.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+msy10.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/helvetic/uhv
+r8a.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmb8a.p
+fb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></
+usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/l
+ocal/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (32 pages, 150235 bytes).
+Transcript written on Rd2.log.
+Saving output to ‘sccore-manual.pdf’ ...
+Done
+You may want to clean up by 'rm -Rf /var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T//RtmpXUGi7W/Rd2pdf16d1c4e036e70'
