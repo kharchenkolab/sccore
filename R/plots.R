@@ -112,11 +112,19 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 
   ## Symmetrize the range for vectors that span 0.
   ## Vectors that are squarely in the positive or negative territory are not symmetrized.
-  if(length(color.range)==1 && color.range=='symmetric') {
-    if(prod(zlim)<0) {
-      zlim <- c(-1,1)*max(abs(zlim))
+  if (length(color.range) == 1) {
+    if (!(color.range %in% c('symmetric', 'all')))
+      stop("Can't parse color.range: ", color.range)
+
+    if((color.range == 'symmetric') && (prod(zlim) < 0)) {
+      zlim <- c(-1, 1) * max(abs(zlim))
     }
+  } else if (length(color.range) == 2) {
+    zlim <- color.range
+  } else {
+    stop("Can't parse color.range: ", color.range)
   }
+
   if(is.null(midpoint)){
     midpoint <- sum(zlim)/2
   }
