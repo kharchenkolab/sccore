@@ -169,7 +169,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @param ... Additional arguments passed to ggplot2::geom_label_repel()
 #' @return ggplot2 object
-embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
+embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, plot.na, ...) {
 
   groups <- as.factor(groups)
 
@@ -184,8 +184,17 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   na.plot.df <- plot.df %>% dplyr::filter(is.na(Group))
   plot.df <- plot.df %>% dplyr::filter(!is.na(Group))
 
-  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
-    geom_point_w(ggplot2::aes(col=.data$Group))
+  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
+
+  if (plot.na & (plot.na < 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
+
+  gg <- gg + geom_point_w(ggplot2::aes(col=.data$Group))
+
+  if (plot.na & (plot.na > 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
 
   if (mark.groups) {
     labels.data <- plot.df %>% dplyr::group_by(Group) %>%
@@ -219,7 +228,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   gg <- gg + ggplot2::scale_color_manual(name=legend.title, values=color.vals, labels=levels(groups), drop=FALSE) +
     ggplot2::guides(color=ggplot2::guide_legend(override.aes=list(alpha=1.0)))
 
-  return(list(gg=gg, na.plot.df=na.plot.df))
+  return(gg)
 }
 
 #' Set colors for embedding plot. Used primarily in embeddingPlot().
@@ -228,7 +237,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 #' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @return ggplot2 object
-embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
+embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL, plot.na=TRUE) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[.data$CellName])
   if(!is.null(groups)) {
     plot.df$Color[!plot.df$CellName %in% names(groups)] <- NA
@@ -237,17 +246,26 @@ embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplo
   plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Color))
 
   gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
+
+  if (plot.na & (plot.na < 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
+
   if(is.character(colors)) {
     gg <- gg + geom_point_w(color=plot.df$Color)
   } else {
     gg <- gg + geom_point_w(ggplot2::aes(col=.data$Color)) + val2ggcol(plot.df$Color, gradient.range.quantile=gradient.range.quantile, palette=palette, color.range=color.range)
   }
 
+  if (plot.na & (plot.na > 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
+
   if (!is.null(legend.title)) {
     gg <- gg + ggplot2::guides(color=ggplot2::guide_colorbar(title=legend.title))
   }
 
-  return(list(gg=gg, na.plot.df=na.plot.df))
+  return(gg)
 }
 
 #' Set plot.theme, legend, ticks for embedding plot. Used primarily in embeddingPlot().
@@ -360,18 +378,13 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
   }
 
   if (!is.null(groups) && is.null(colors)) {
-    plot.info <- embeddingGroupPlot(plot.df, groups, geom_point_w, min.cluster.size, mark.groups,
-                                    font.size, legend.title, shuffle.colors, palette, ...)
+    gg <- embeddingGroupPlot(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size,
+                             legend.title, shuffle.colors, palette, plot.na=plot.na, ...)
   } else if (!is.null(colors)) {
-    plot.info <- embeddingColorsPlot(plot.df, colors, groups, geom_point_w, gradient.range.quantile,
-                                     color.range, legend.title, palette)
+    gg <- embeddingColorsPlot(plot.df, colors, groups, geom_point_w, gradient.range.quantile,
+                              color.range, legend.title, palette, plot.na=plot.na)
   } else {
-    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) + geom_point_w(alpha=alpha, size=size))
-  }
-
-  gg <- plot.info$gg
-  if (plot.na && !is.null(plot.info$na.plot.df)) {
-    gg <- gg + geom_point_w(data=plot.info$na.plot.df, color='black', shape=4)
+    gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) + geom_point_w()
   }
 
   if(keep.limits) {
