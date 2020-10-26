@@ -10,6 +10,7 @@ if(getRversion() >= "2.15.1"){
   utils::globalVariables(c(".", "n", "Size", "Group", "x", "y"))
 }
 
+
 #' Utility function to translate a factor into colors
 #'
 #' @param x input factor
@@ -169,7 +170,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @param ... Additional arguments passed to ggplot2::geom_label_repel()
 #' @return ggplot2 object
-embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, plot.na, ...) {
+embeddingGroupPlot <- function(plot.df, geom_point_w, groups, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, plot.na, ...) {
 
   groups <- as.factor(groups)
 
@@ -186,13 +187,15 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 
   gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
 
+  ## If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. 
+  ## Otherwise they’re plotted above the cells.
   if (plot.na & (plot.na < 0)) {
     gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
   }
 
   gg <- gg + geom_point_w(ggplot2::aes(col=.data$Group))
 
-  if (plot.na & (plot.na > 0)) {
+  if (plot.na & (plot.na >= 0)) {
     gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
   }
 
@@ -257,7 +260,7 @@ embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplo
     gg <- gg + geom_point_w(ggplot2::aes(col=.data$Color)) + val2ggcol(plot.df$Color, gradient.range.quantile=gradient.range.quantile, palette=palette, color.range=color.range)
   }
 
-  if (plot.na & (plot.na > 0)) {
+  if (plot.na & (plot.na >= 0)) {
     gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
   }
 
@@ -320,7 +323,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param groups vector of cluster labels, names contain cell names (default=NULL)
 #' @param colors vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.
 #' @param subgroups subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL
-#' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE). This argument is FALSE if 'subgroups' is NULL
+#' @param plot.na boolean/numeric Whether to plot points, for which groups / colors are missed (default=FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL
 #' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided
 #' @param mark.groups plot cluster labels above points (default=TRUE)
 #' @param show.legend show legend (default=FALSE)

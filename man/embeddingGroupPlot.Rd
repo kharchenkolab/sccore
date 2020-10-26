@@ -6,23 +6,24 @@
 \usage{
 embeddingGroupPlot(
   plot.df,
-  groups,
   geom_point_w,
+  groups,
   min.cluster.size,
   mark.groups,
   font.size,
   legend.title,
   shuffle.colors,
   palette,
+  plot.na,
   ...
 )
 }
 \arguments{
 \item{plot.df}{data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().}
 
-\item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
-
 \item{geom_point_w}{function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)}
+
+\item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
 
 \item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided}
 
@@ -35,6 +36,8 @@ embeddingGroupPlot(
 \item{shuffle.colors}{shuffle colors (default=FALSE)}
 
 \item{palette}{function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
+
+\item{plot.na}{boolean/numeric Whether to plot points, for which groups / colors are missed (default=FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL}
 
 \item{...}{Additional arguments passed to ggplot2::geom_label_repel()}
 }

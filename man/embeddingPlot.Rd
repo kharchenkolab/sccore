@@ -41,7 +41,7 @@ embeddingPlot(
 
 \item{subgroups}{subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL}
 
-\item{plot.na}{boolean whether to plot points, for which groups / colors are missed (default=FALSE). This argument is FALSE if 'subgroups' is NULL}
+\item{plot.na}{boolean/numeric Whether to plot points, for which groups / colors are missed (default=FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL}
 
 \item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided}
 
