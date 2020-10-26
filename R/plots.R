@@ -426,10 +426,10 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' library(dplyr)
 #' # Create merged count matrix
 #' # In this example, cms is a list of count matrices from, e.g., Cellranger count, where cells are in columns and genes in rows
-#' # cm <- sccore:::mergeCountMatrices(cms, transposed = F) %>% Matrix::t()
+#' # cm <- sccore:::mergeCountMatrices(cms, transposed = FALSE) %>% Matrix::t()
 #'
 #' # If coming from Conos, this can be extracted like so
-#' # cm <- conos.obj$getJointCountMatrix(raw = F) # Either normalized or raw values can be used
+#' # cm <- conos.obj$getJointCountMatrix(raw = FALSE) # Either normalized or raw values can be used
 #'
 #' # Here, we create a random sparse matrix
 #' cm <- Matrix::rsparsematrix(30,3,0.5) %>% abs(.) %>% `dimnames<-`(list(1:30,c("gene1","gene2","gene3")))
@@ -487,7 +487,7 @@ dotPlot <- function (markers,
     message("Extracting gene expression... ")
   }
 
-  if(class(cell.groups != "factor")) {
+  if (class(cell.groups) != "factor") {
     message("Treating 'cell.groups' as a factor.")
     cell.groups %<>% factor()
   }
