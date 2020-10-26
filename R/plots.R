@@ -170,7 +170,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @param ... Additional arguments passed to ggplot2::geom_label_repel()
 #' @return ggplot2 object
-embeddingGroupPlot <- function(plot.df, geom_point_w, groups, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, plot.na, ...) {
+embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, plot.na, ...) {
 
   groups <- as.factor(groups)
 
