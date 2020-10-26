@@ -323,7 +323,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param groups vector of cluster labels, names contain cell names (default=NULL)
 #' @param colors vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.
 #' @param subgroups subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL
-#' @param plot.na boolean/numeric Whether to plot points, for which groups / colors are missed (default=FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL
+#' @param plot.na boolean/numeric Whether to plot points, for which groups / colors are missed (default=is.null(subgroups), i.e. FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL
 #' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided
 #' @param mark.groups plot cluster labels above points (default=TRUE)
 #' @param show.legend show legend (default=FALSE)
@@ -423,6 +423,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param ... Additional inputs passed to sccore::plapply(), see man for description.
 #' @return ggplot2 object
 #' @examples
+#' library(dplyr)
 #' # Create merged count matrix
 #' # In this example, cms is a list of count matrices from, e.g., Cellranger count, where cells are in columns and genes in rows
 #' # cm <- sccore:::mergeCountMatrices(cms, transposed = F) %>% Matrix::t()

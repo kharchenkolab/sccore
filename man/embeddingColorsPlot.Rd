@@ -33,7 +33,7 @@ embeddingColorsPlot(
 
 \item{palette}{function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
 
-\item{plot.na}{boolean/numeric Whether to plot points, for which groups / colors are missed (default=FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL}
+\item{plot.na}{boolean/numeric Whether to plot points, for which groups / colors are missed (default=is.null(subgroups), i.e. FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL}
 }
 \value{
 ggplot2 object

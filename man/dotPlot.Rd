@@ -75,6 +75,7 @@ ggplot2 object
 Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 }
 \examples{
+library(dplyr)
 # Create merged count matrix
 # In this example, cms is a list of count matrices from, e.g., Cellranger count, where cells are in columns and genes in rows
 # cm <- sccore:::mergeCountMatrices(cms, transposed = F) \%>\% Matrix::t()
