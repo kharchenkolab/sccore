@@ -187,7 +187,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 
   gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
 
-  ## If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. 
+  ## If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells.
   ## Otherwise they’re plotted above the cells.
   if (plot.na & (plot.na < 0)) {
     gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
@@ -488,8 +488,10 @@ dotPlot <- function (markers,
   }
 
   if (class(cell.groups) != "factor") {
-    message("Treating 'cell.groups' as a factor.")
-    cell.groups %<>% factor()
+    tryCatch({
+      if(verbose) message("Treating 'cell.groups' as a factor.")
+      cell.groups %<>% as.factor()
+    }, error=function(e) stop("Could not convert 'cell.groups' to a factor\n", e)))
   }
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
   p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
