@@ -489,9 +489,11 @@ dotPlot <- function (markers,
 
   if (class(cell.groups) != "factor") {
     tryCatch({
-      if(verbose) message("Treating 'cell.groups' as a factor.")
+      if(verbose){
+        message("Treating 'cell.groups' as a factor.")
+      }
       cell.groups %<>% as.factor()
-    }, error=function(e) stop("Could not convert 'cell.groups' to a factor\n", e)))
+    }, error=function(e) stop("Could not convert 'cell.groups' to a factor\n", e))
   }
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
   p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
