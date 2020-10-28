@@ -101,7 +101,7 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
 #' @param oob function to determine what to do with the values outside of the range (default =scales::squish). Refer to 'oob' parameter in ggplot
 #' @param return.fill boolean Whether to return fill gradients instead of color (default=FALSE)
 #' @param ... additional arguments are passed to ggplot2::scale_color_gradient* functions, i.e. scale_color_gradient(), scale_color_gradient2(), scale_color_gradientn()
-#' @return ggplot2::scale_colour_gradient* object
+#' @return ggplot2::scale_colour_gradient object
 val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric', palette=NULL, midpoint=NULL, oob=scales::squish, return.fill=FALSE, ...) {
   if(length(gradient.range.quantile)>1) { # min/max quantile is given
     zlim <- as.numeric(quantile(values, p=gradient.range.quantile, na.rm=TRUE))
@@ -114,11 +114,12 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
   ## Symmetrize the range for vectors that span 0.
   ## Vectors that are squarely in the positive or negative territory are not symmetrized.
   if (length(color.range) == 1) {
-    if (!(color.range %in% c('symmetric', 'all')))
+    if (!(color.range %in% c('symmetric', 'all'))) {
       stop("Can't parse color.range: ", color.range)
+    }
 
     if((color.range == 'symmetric') && (prod(zlim) < 0)) {
-      zlim <- c(-1, 1) * max(abs(zlim))
+      zlim <- c(-1, 1)*max(abs(zlim))
     }
   } else if (length(color.range) == 2) {
     zlim <- color.range
@@ -424,28 +425,35 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @return ggplot2 object
 #' @examples
 #' library(dplyr)
-#' # Create merged count matrix
-#' # In this example, cms is a list of count matrices from, e.g., Cellranger count, where cells are in columns and genes in rows
-#' # cm <- sccore:::mergeCountMatrices(cms, transposed = FALSE) %>% Matrix::t()
+#' ## Create merged count matrix
+#' ## In this example, cms is a list of count matrices from, e.g., Cellranger count, 
+#' ## where cells are in columns and genes in rows
+#' ## cm <- sccore:::mergeCountMatrices(cms, transposed = FALSE) %>% Matrix::t()
 #'
-#' # If coming from Conos, this can be extracted like so
-#' # cm <- conos.obj$getJointCountMatrix(raw = FALSE) # Either normalized or raw values can be used
+#' ## If coming from Conos, this can be extracted like so
+#' ## cm <- conos.obj$getJointCountMatrix(raw = FALSE) # Either normalized or raw values can be used
 #'
-#' # Here, we create a random sparse matrix
-#' cm <- Matrix::rsparsematrix(30,3,0.5) %>% abs(.) %>% `dimnames<-`(list(1:30,c("gene1","gene2","gene3")))
+#' ## Here, we create a random sparse matrix
+#' cm <- Matrix::rsparsematrix(30,3,0.5) %>% abs(.) %>% 
+#'             `dimnames<-`(list(1:30,c("gene1","gene2","gene3")))
 #'
-#' # Create marker vector
+#' ## Create marker vector
 #' markers <- c("gene1","gene2","gene3")
 #'
-#' # Additionally, color vectors can be included. These should have the same length as the input (markers, cell groups), otherwise they are recycled
+#' ## Additionally, color vectors can be included. 
+#' ## These should have the same length as the input (markers, cell groups) 
+#' ## Otherwise, they are recycled
 #' col.markers <- c("black","black","red") # or c(1,1,2)
 #' col.clusters <- c("black","red","black") # or c(1,2,1)
 #'
-#' # Create annotation vector
-#' annotation <- c(rep("cluster1",10),rep("cluster2",10),rep("cluster3",10)) %>% factor() %>% setNames(1:30)
+#' ## Create annotation vector
+#' annotation <- c(rep("cluster1",10),rep("cluster2",10),rep("cluster3",10)) %>% 
+#'     factor() %>% setNames(1:30)
 #'
-#' # Plot. Here, the expression colours range from gray (low expression) to purple (high expression)
-#' sccore:::dotPlot(markers = markers, count.matrix = cm, cell.groups = annotation, marker.colour = col.markers, cluster.colour = col.clusters, cols=c("gray","purple"))
+#' ## Plot. Here, the expression colours range from gray (low expression) to purple (high expression)
+#' sccore:::dotPlot(markers = markers, count.matrix = cm, cell.groups = annotation, 
+#'     marker.colour = col.markers, cluster.colour = col.clusters, cols=c("gray","purple"))
+#'
 #' @export
 dotPlot <- function (markers,
                      count.matrix,

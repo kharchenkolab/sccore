@@ -34,7 +34,7 @@ val2ggcol(
 \item{...}{additional arguments are passed to ggplot2::scale_color_gradient* functions, i.e. scale_color_gradient(), scale_color_gradient2(), scale_color_gradientn()}
 }
 \value{
-ggplot2::scale_colour_gradient* object
+ggplot2::scale_colour_gradient object
 }
 \description{
 Helper function to return a ggplot color gradient for a numeric vector
