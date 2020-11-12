@@ -9,9 +9,12 @@ NULL
 #' Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 #'
 #' @param ... Additional arguments passed to mclapply(), lapply(), or pbapply::pblapply()
-#' @param progress Show progress bar via pbapply (default=FALSE)
+#' @param progress Show progress bar via pbapply::pblapply() (default=FALSE). Note: we've noticed performance issues with pbapply::pblapply(). 
+#'     The function splits the tasks into batches (containing n items, where n is equal to the number of threads), and then waits until the entire batch is complete before running the next batch.
 #' @param n.cores Number of cores to use (default=parallel::detectCores())
-#' @param mc.preschedule See ?parallel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.
+#' @param mc.preschedule See ?parallel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) 
+#'     as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. 
+#'     If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.
 #' @return list, as returned by lapply
 #' @examples
 #' square = function(x){ x**2 }
