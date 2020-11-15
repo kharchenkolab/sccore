@@ -11,8 +11,8 @@ NULL
 #' @param ... Additional arguments passed to mclapply(), lapply(), or pbapply::pblapply()
 #' @param progress Show progress bar via pbapply::pblapply() (default=FALSE). Note: we've noticed performance issues with pbapply::pblapply(). 
 #'     The function splits the tasks into batches corresponding to the steps of the progress bar, and waits for all the tasks in each batch to complete before scheduling additional ones. For variable-sized tasks this results in low degree of parallelism and increased overall runtime.
-#' @param fail.on.error whether to fail and report and error (using stop()) as long as any of the individual tasks has failed (default: FALSE)
-#' @param n.cores Number of cores to use (default=parallel::detectCores()); When n.cores=1, regular lapply() is used; (doesn't work when progress=T)
+#' @param fail.on.error boolean Whether to fail and report and error (using stop()) as long as any of the individual tasks has failed (default =FALSE)
+#' @param n.cores Number of cores to use (default=parallel::detectCores()). When n.cores=1, regular lapply() is used. Note: doesn't work when progress=TRUE
 #' @param mc.preschedule See ?parallel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) 
 #'     as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. 
 #'     If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.
