@@ -61,6 +61,52 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
   }
 }
 
+#' Utility function to translate values into colors.
+#'
+#' @param x input values
+#' @param gradientPalette gradient palette (default=NULL). If NULL, use colorRampPalette(c('gray90','red'), space = "Lab")(1024) if the values are non-negative; otherwise colorRampPalette(c("blue", "grey90", "red"), space = "Lab")(1024) is used
+#' @param zlim a two-value vector specifying limits of the values that should correspond to the extremes of the color gradient
+#' @param gradient.range.quantile extreme quantiles of values that should be trimmed prior to color mapping (default=0.95)
+#' @examples
+#' colors <- val2col( rnorm(10) )
+#' 
+#' @export
+val2col <- function(x, gradientPalette=NULL, zlim=NULL, gradient.range.quantile=0.95) {
+  nx <- names(x);
+  if (all(sign(x)>=0)) {
+    if(is.null(gradientPalette)) {
+      gradientPalette <- colorRampPalette(c('gray90','red'), space = "Lab")(1024)
+    }
+    if (is.null(zlim)) {
+      zlim <- as.numeric(quantile(na.omit(x),p=c(1-gradient.range.quantile,gradient.range.quantile)))
+      if(diff(zlim)==0) {
+        zlim <- as.numeric(range(na.omit(x)))
+      }
+    }
+    x[x<zlim[1]] <- zlim[1]; x[x>zlim[2]] <- zlim[2];
+    x <- (x-zlim[1])/(zlim[2]-zlim[1])
+
+  } else {
+    if(is.null(gradientPalette)) {
+      gradientPalette <- colorRampPalette(c("blue", "grey90", "red"), space = "Lab")(1024)
+    }
+    if(is.null(zlim)) {
+      zlim <- c(-1,1)*as.numeric(quantile(na.omit(abs(x)),p=gradient.range.quantile))
+      if(diff(zlim)==0) {
+        zlim <- c(-1,1)*as.numeric(na.omit(max(abs(x))))
+      }
+    }
+    x[x<zlim[1]] <- zlim[1]; x[x>zlim[2]] <- zlim[2];
+    x <- (x-zlim[1])/(zlim[2]-zlim[1])
+
+  }
+
+  col <- gradientPalette[x*(length(gradientPalette)-1)+1]
+  names(col) <- nx
+  return(col)
+}
+
+
 #' Encodes logic of how to handle named-vector and functional palettes. Used primarily within embeddingGroupPlot()
 #'
 #' @param groups vector of cluster labels, names contain cell names
