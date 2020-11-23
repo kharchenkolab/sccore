@@ -3,6 +3,7 @@
 ### Added
 
 - `val2col` function that translates values into colors
+- added `smoothSignalOnGraph` function that re-implements graph filtering from the [pygsp](https://github.com/epfl-lts2/pygsp/) package
 
 ### Changed
 

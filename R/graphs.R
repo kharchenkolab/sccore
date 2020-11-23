@@ -1,7 +1,7 @@
 #' @importFrom magrittr %>% %<>% %$%
 #' @import igraph
 #' @importFrom methods as is
-#' @importFrom rlang .data 
+#' @importFrom rlang .data
 NULL
 
 ## for magrittr and dplyr functions below
@@ -10,13 +10,13 @@ if(getRversion() >= "2.15.1"){
 }
 
 #' Collapse graph using PAGA 1.2 algorithm, Wolf et al 2019, Genome Biology (2019) <https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x>
-#' 
+#'
 #' @param graph igraph graph object Graph to be collapsed
 #' @param groups factor on vertices describing cluster assignment (can specify integer vertex ids, or character vertex names which will be matched)
 #' @param linearize should normally be always TRUE (default=TRUE)
 #' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
-#'   but in this case there is no way to distinguish level of connectivity for highly connected groups. 
-#' @return collapsed graph 
+#'   but in this case there is no way to distinguish level of connectivity for highly connected groups.
+#' @return collapsed graph
 #' @export
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
@@ -84,7 +84,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 #' @inheritParams collapseGraphPaga
 #' @param normalize boolean Whether to recalculate edge weight as observed/expected (default=TRUE)
 #' @return collapsed graph
-#' @examples 
+#' @examples
 #' \donttest{
 #' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 #' }
@@ -118,7 +118,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' @param plot boolean Whether to show collapsed graph plot (default=FALSE)
 #' @param node.scale numeric Scaling to control value of 'vertex.size' in plot.igraph() (default=50)
 #' @param edge.scale numeric Scaling to control value of 'edge.width' in plot.igraph() (default=50)
-#' @param edge.alpha numeric Scaling to control value of 'alpha.f' in adjustcolor() within plot.igraph() (default=0.3) 
+#' @param edge.alpha numeric Scaling to control value of 'alpha.f' in adjustcolor() within plot.igraph() (default=0.3)
 #' @param seed numeric Set seed via set.seed() for plotting (default=1)
 #' @param ... arguments passed to collapseGraphSum()
 #' @return collapsed graph
@@ -128,7 +128,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' }
 #' @export
 getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=50, edge.scale=50, edge.alpha=0.3, seed=1,...) {
-  
+
   V(graph)$num <- 1
 
   if (is.integer(groups) && is.null(names(groups))) {
@@ -175,8 +175,8 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
 
   if (plot) {
     set.seed(seed)
-    withr::with_par(mar = rep(0.1, 4), 
-      plot.igraph(gcon, layout=layout_with_fr(gcon), vertex.size=V(gcon)$num/(sum(V(gcon)$num)/node.scale), 
+    withr::with_par(mar = rep(0.1, 4),
+      plot.igraph(gcon, layout=layout_with_fr(gcon), vertex.size=V(gcon)$num/(sum(V(gcon)$num)/node.scale),
         edge.width=E(gcon)$weight/sum(E(gcon)$weight/edge.scale), adjustcolor('black', alpha.f=edge.alpha))
     )
   }
@@ -186,13 +186,13 @@ getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=
 
 #' Estimate labeling distribution for each vertex, based on provided labels.
 #'
-#' @param graph igraph graph object 
+#' @param graph igraph graph object
 #' @param labels vector of factor or character labels, named by cell names, used in propagateLabelsSolver() and propagateLabelsDiffusion()
 #' @param method string Type of propagation. Either 'diffusion' or 'solver'. (default='diffusion') 'solver' gives better result
-#'  but has bad asymptotics, so it is inappropriate for datasets > 20k cells. 
+#'  but has bad asymptotics, so it is inappropriate for datasets > 20k cells.
 #' @param ... additional arguments passed to either propagateLabelsSolver() or propagateLabelsDiffusion()
 #' @return matrix with distribution of label probabilities for each vertex by rows.
-#' @examples 
+#' @examples
 #' propagateLabels(conosGraph, labels=cellAnnotations)
 #'
 #' @export
@@ -214,12 +214,12 @@ propagateLabels = function(graph, labels, method="diffusion", ...) {
 }
 
 #' Propagate labels using Zhu, Ghahramani, Lafferty (2003) algorithm, "Semi-Supervised Learning Using Gaussian Fields and Harmonic Functions" <http://mlg.eng.cam.ac.uk/zoubin/papers/zgl.pdf>
-#' 
-#' @param graph igraph graph object Graph input 
+#'
+#' @param graph igraph graph object Graph input
 #' @param labels vector of factor or character labels, named by cell names
 #' @param solver Method of solver to use (default="mumps"), either "Matrix" or "mumps" (i.e. "rmumps::Rmumps")
 #' @return result from Matrix::solve() or rmumps::Rmumps
-#' @examples 
+#' @examples
 #' \donttest{
 #' propagateLabelsSolver(conosGraph, labels=cellAnnotations)
 #' }
@@ -263,7 +263,7 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 
 #' Estimate labeling distribution for each vertex, based on provided labels using a Random Walk on graph
 #'
-#' @param graph igraph graph object Graph input 
+#' @param graph igraph graph object Graph input
 #' @param labels vector of factor or character labels, named by cell names
 #' @param max.iters integer Maximal number of iterations (default=100)
 #' @param diffusion.fading numeric Constant used for diffusion on the graph, exp(-diffusion.fading * (edge_length + diffusion.fading.const)) (default=10.0)
@@ -272,7 +272,7 @@ propagateLabelsSolver <- function(graph, labels, solver="mumps") {
 #' @param fixed.initial.labels boolean Prohibit changes of initial labels during diffusion (default=TRUE)
 #' @param verbose boolean Verbose mode (default=TRUE)
 #' @return matrix from input graph, with labels propagated
-#' @examples 
+#' @examples
 #' propagateLabelsDiffusion(conosGraph, labels=cellAnnotations)
 #'
 #' @export
@@ -289,3 +289,98 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
                                          tol=tol, fixed_initial_labels=fixed.initial.labels)
   return(label.distribution)
 }
+
+### Graph Smoothing (re-implementation of the pygsp package)
+### https://github.com/epfl-lts2/pygsp/
+
+#' Heat Filter
+#' @description Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
+#' @param x values to be filtered. Normally, these are graph laplacian engenvalues.
+#' @param l.max maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)
+#' @param offset mean kernel value (\eqn{a} in the equation), must be in [0; 1]. Default: 0.
+#' @param order parameter \eqn{b} in the equation. Larger values correspond to the sharper kernel form. The values should be positive. Default: 1.
+#' @param beta  parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing. Default: 30.
+#' @return smoothed values for `x`
+#' @family graph smoothing
+heatFilter <- function(x, l.max, order=1, offset=0, beta=30) {
+  exp(-beta * abs(x / l.max - offset) ** order)
+}
+
+#' Compute Chebyshev Coefficients
+#' @param filt graph filter function
+#' @param l.max maximum eigenvalue of the graph
+#' @param m maximum order of Chebyshev coeff to compute
+#' @param n grid order used to compute quadrature (default: m+1)
+#' @return vector of Chebyshev coefficients
+computeChebyshevCoeffs <- function(filt, l.max, m=30, n=m+1) {
+  a <- l.max / 2
+  tmp.n <- 0:(n-1)
+  num <- cos(pi * (tmp.n + 0.5) / n)
+  coeffs <- sapply(0:m, function(i) 2 / n * (filt(a * (num + 1)) %*% cos(pi * i * (tmp.n + 0.5) / n)))
+  return(coeffs)
+}
+
+smoothChebyshevInner <- function(fac, signal, coeffs, twf.cur) {
+  twf.old <- signal
+  r <- 0.5 * coeffs[1] * twf.old + coeffs[2] * twf.cur
+
+  for (k in 3:length(coeffs)) {
+    twf.new <- fac %*% twf.cur - twf.old
+    r <- r + coeffs[k] * twf.new
+
+    twf.old <- twf.cur
+    twf.cur <- twf.new
+  }
+
+  return(r)
+}
+
+#' Smooth with Chebyshev Polynomials
+#' @param lap graph laplacian
+#' @param coeffs Chebyshev coefficients for a filter
+#' @param signal signal to smooth. Matrix or vector
+#' @param l.max maximal eigenvalue of the graph
+#' @param n.cores number of cores for parallel run. Default: 1.
+#' @param progress.chunks number of chunks per core for estimating progress. Large values are not suggested, as it may bring overhead. Default: 5.
+#' @param progress flag on whether progress must be shown. Default: `progress.chunks > 1`
+#' @return smoothed signal
+#' @family graph smoothing
+smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chunks=5, progress=(progress.chunks > 1)) {
+  m <- length(coeffs)
+  if (m < 2)
+    stop("coeffs have an invalid length")
+
+  a <- l.max / 2
+  twf.cur <- (lap %*% signal) / a - signal
+  fac <- 2 * (lap / a - Matrix::Diagonal(ncol(lap)))
+
+  if (!is.null(ncol(signal)) & (ncol(signal) > 1) & ((n.cores > 1) || (progress.chunks > 1))) {
+    n.chunks <- min(progress.chunks * n.cores, ncol(signal))
+    r <- 1:ncol(signal) %>% split(ceiling(seq_along(.) / (length(.) / n.chunks))) %>%
+      plapply(function(ids) smoothChebyshevInner(fac, signal[,ids,drop=FALSE], coeffs, twf.cur[,ids,drop=FALSE]),
+              n.cores=n.cores, mc.preschedule=TRUE, progress=TRUE) %>%
+      Reduce(cbind, .)
+  } else {
+    r <- smoothChebyshevInner(fac, signal, coeffs, twf.cur)
+  }
+
+  return(r)
+}
+
+#' Smooth Signal on Graph
+#' @param signal signal to be smoothed
+#' @param graph igraph object with the graph
+#' @param filter function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \link{heatFilter} as an example.
+#' @inheritParams computeChebyshevCoeffs
+#' @inheritDotParams smoothChebyshev n.cores progress.chunks progress
+#' @export
+#' @family graph smoothing
+smoothSignalOnGraph <- function(signal, graph, filter, m=50, ...) {
+  l.max <- igraph::embed_laplacian_matrix(graph, 1)$D
+  lap <- igraph::laplacian_matrix(graph, sparse=T)
+  coeffs <- computeChebyshevCoeffs(function(x) filter(x, l.max), m=m, l.max)
+  sig.smoothed <- smoothChebyshev(lap, coeffs, signal, l.max, ...)
+
+  return(sig.smoothed)
+}
+
