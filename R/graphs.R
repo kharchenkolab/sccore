@@ -320,7 +320,8 @@ computeChebyshevCoeffs <- function(filt, l.max, m=30, n=m+1) {
   return(coeffs)
 }
 
-smoothChebyshevInner <- function(fac, signal, coeffs, twf.cur) {
+smoothChebyshevInner <- function(lap.norm, fac, signal, coeffs) {
+  twf.cur <- (lap.norm %*% signal) - signal
   twf.old <- signal
   r <- 0.5 * coeffs[1] * twf.old + coeffs[2] * twf.cur
 
@@ -350,19 +351,21 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
   if (m < 2)
     stop("coeffs have an invalid length")
 
-  a <- l.max / 2
-  twf.cur <- (lap %*% signal) / a - signal
-  fac <- 2 * (lap / a - Matrix::Diagonal(ncol(lap)))
+  lap.norm <- lap / (l.max / 2)
+  fac <- 2 * (lap.norm - Matrix::Diagonal(ncol(lap)))
 
-  if (!is.null(ncol(signal)) & (ncol(signal) > 1) & ((n.cores > 1) || (progress.chunks > 1))) {
+  if ((!is.null(ncol(signal))) && (ncol(signal) > 1) && ((n.cores > 1) || (progress.chunks > 1))) {
     n.chunks <- min(progress.chunks * n.cores, ncol(signal))
     r <- 1:ncol(signal) %>% split(ceiling(seq_along(.) / (length(.) / n.chunks))) %>%
-      plapply(function(ids) smoothChebyshevInner(fac, signal[,ids,drop=FALSE], coeffs, twf.cur[,ids,drop=FALSE]),
+      plapply(function(ids) smoothChebyshevInner(lap.norm, fac, signal[,ids,drop=FALSE], coeffs),
               n.cores=n.cores, mc.preschedule=TRUE, progress=TRUE) %>%
       Reduce(cbind, .)
   } else {
-    r <- smoothChebyshevInner(fac, signal, coeffs, twf.cur)
+    r <- smoothChebyshevInner(lap.norm, fac, signal, coeffs)
   }
+
+  if (is.null(ncol(signal)))
+    return(r[,1])
 
   return(r)
 }
@@ -376,6 +379,12 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
 #' @export
 #' @family graph smoothing
 smoothSignalOnGraph <- function(signal, graph, filter, m=50, ...) {
+  if (is.null(dim(signal))) {
+    signal <- signal[igraph::V(graph)$name]
+  } else {
+    signal <- signal[igraph::V(graph)$name,,drop=FALSE]
+  }
+
   l.max <- igraph::embed_laplacian_matrix(graph, 1)$D
   lap <- igraph::laplacian_matrix(graph, sparse=T)
   coeffs <- computeChebyshevCoeffs(function(x) filter(x, l.max), m=m, l.max)
