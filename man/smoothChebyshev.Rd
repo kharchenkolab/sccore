@@ -17,17 +17,17 @@ smoothChebyshev(
 \arguments{
 \item{lap}{graph laplacian}
 
-\item{coeffs}{Chebyshev coefficients for a filter}
+\item{coeffs}{numeric vector Chebyshev coefficients for a filter}
 
-\item{signal}{signal to smooth. Matrix or vector}
+\item{signal}{Matrix or vector Signal to smooth}
 
-\item{l.max}{maximal eigenvalue of the graph}
+\item{l.max}{numeric maximal eigenvalue of the graph}
 
-\item{n.cores}{number of cores for parallel run. Default: 1.}
+\item{n.cores}{numeric Number of cores for parallel run (default=1)}
 
-\item{progress.chunks}{number of chunks per core for estimating progress. Large values are not suggested, as it may bring overhead. Default: 5.}
+\item{progress.chunks}{numeric Number of chunks per core for estimating progress (default=5). Large values are not suggested, as it may bring overhead.}
 
-\item{progress}{flag on whether progress must be shown. Default: `progress.chunks > 1`}
+\item{progress}{boolean Flag on whether progress must be shown (default=TRUE, i.e. 'progress.chunks > 1')}
 }
 \value{
 smoothed signal

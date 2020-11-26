@@ -294,12 +294,13 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
 ### https://github.com/epfl-lts2/pygsp/
 
 #' Heat Filter
+#'
 #' @description Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
-#' @param x values to be filtered. Normally, these are graph laplacian engenvalues.
-#' @param l.max maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)
-#' @param offset mean kernel value (\eqn{a} in the equation), must be in [0; 1]. Default: 0.
-#' @param order parameter \eqn{b} in the equation. Larger values correspond to the sharper kernel form. The values should be positive. Default: 1.
-#' @param beta  parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing. Default: 30.
+#' @param x numeric Values to be filtered. Normally, these are graph laplacian engenvalues.
+#' @param l.max numeric Maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)
+#' @param offset numeric Mean kernel value (\eqn{a} in the equation), must be in [0:1] (default=0)
+#' @param order numeric Parameter \eqn{b} in the equation. Larger values correspond to the sharper kernel form (default=1). The values should be positive.
+#' @param beta  numeric Parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing (default=30).
 #' @return smoothed values for `x`
 #' @family graph smoothing
 heatFilter <- function(x, l.max, order=1, offset=0, beta=30) {
@@ -307,10 +308,11 @@ heatFilter <- function(x, l.max, order=1, offset=0, beta=30) {
 }
 
 #' Compute Chebyshev Coefficients
+#'
 #' @param filt graph filter function
-#' @param l.max maximum eigenvalue of the graph
-#' @param m maximum order of Chebyshev coeff to compute
-#' @param n grid order used to compute quadrature (default: m+1)
+#' @param l.max Maximum eigenvalue of the graph
+#' @param m numeric Maximum order of Chebyshev coeff to compute (default=30)
+#' @param n numeric grid order used to compute quadrature (default=m+1)
 #' @return vector of Chebyshev coefficients
 computeChebyshevCoeffs <- function(filt, l.max, m=30, n=m+1) {
   a <- l.max / 2
@@ -320,39 +322,42 @@ computeChebyshevCoeffs <- function(filt, l.max, m=30, n=m+1) {
   return(coeffs)
 }
 
-smoothChebyshevInner <- function(lap.norm, fac, signal, coeffs) {
-  twf.cur <- (lap.norm %*% signal) - signal
-  twf.old <- signal
-  r <- 0.5 * coeffs[1] * twf.old + coeffs[2] * twf.cur
-
-  for (k in 3:length(coeffs)) {
-    twf.new <- fac %*% twf.cur - twf.old
-    r <- r + coeffs[k] * twf.new
-
-    twf.old <- twf.cur
-    twf.cur <- twf.new
-  }
-
-  return(r)
-}
 
 #' Smooth with Chebyshev Polynomials
+#'
 #' @param lap graph laplacian
-#' @param coeffs Chebyshev coefficients for a filter
-#' @param signal signal to smooth. Matrix or vector
-#' @param l.max maximal eigenvalue of the graph
-#' @param n.cores number of cores for parallel run. Default: 1.
-#' @param progress.chunks number of chunks per core for estimating progress. Large values are not suggested, as it may bring overhead. Default: 5.
-#' @param progress flag on whether progress must be shown. Default: `progress.chunks > 1`
+#' @param coeffs numeric vector Chebyshev coefficients for a filter
+#' @param signal Matrix or vector Signal to smooth
+#' @param l.max numeric maximal eigenvalue of the graph
+#' @param n.cores numeric Number of cores for parallel run (default=1)
+#' @param progress.chunks numeric Number of chunks per core for estimating progress (default=5). Large values are not suggested, as it may bring overhead.
+#' @param progress boolean Flag on whether progress must be shown (default=TRUE, i.e. 'progress.chunks > 1')
 #' @return smoothed signal
 #' @family graph smoothing
 smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chunks=5, progress=(progress.chunks > 1)) {
   m <- length(coeffs)
-  if (m < 2)
-    stop("coeffs have an invalid length")
+  if (m < 2){
+    stop("Parameter 'coeffs' has an invalid length")
+  }
 
   lap.norm <- lap / (l.max / 2)
   fac <- 2 * (lap.norm - Matrix::Diagonal(ncol(lap)))
+
+  smoothChebyshevInner <- function(lap.norm, fac, signal, coeffs) {
+    twf.cur <- (lap.norm %*% signal) - signal
+    twf.old <- signal
+    r <- 0.5 * coeffs[1] * twf.old + coeffs[2] * twf.cur
+
+    for (k in 3:length(coeffs)) {
+      twf.new <- fac %*% twf.cur - twf.old
+      r <- r + coeffs[k] * twf.new
+
+      twf.old <- twf.cur
+      twf.cur <- twf.new
+    }
+
+    return(r)
+  }
 
   if ((!is.null(ncol(signal))) && (ncol(signal) > 1) && ((n.cores > 1) || (progress.chunks > 1))) {
     n.chunks <- min(progress.chunks * n.cores, ncol(signal))
@@ -364,16 +369,19 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
     r <- smoothChebyshevInner(lap.norm, fac, signal, coeffs)
   }
 
-  if (is.null(ncol(signal)))
+  if (is.null(ncol(signal))){
     return(r[,1])
+  }
 
   return(r)
 }
 
 #' Smooth Signal on Graph
+#'
 #' @param signal signal to be smoothed
 #' @param graph igraph object with the graph
 #' @param filter function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \link{heatFilter} as an example.
+#' @param m numeric Maximum order of Chebyshev coeff to compute (default=50)
 #' @inheritParams computeChebyshevCoeffs
 #' @inheritDotParams smoothChebyshev n.cores progress.chunks progress
 #' @export
@@ -386,7 +394,7 @@ smoothSignalOnGraph <- function(signal, graph, filter, m=50, ...) {
   }
 
   l.max <- igraph::embed_laplacian_matrix(graph, 1)$D
-  lap <- igraph::laplacian_matrix(graph, sparse=T)
+  lap <- igraph::laplacian_matrix(graph, sparse=TRUE)
   coeffs <- computeChebyshevCoeffs(function(x) filter(x, l.max), m=m, l.max)
   sig.smoothed <- smoothChebyshev(lap, coeffs, signal, l.max, ...)
 

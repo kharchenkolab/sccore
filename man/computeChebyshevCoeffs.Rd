@@ -9,11 +9,11 @@ computeChebyshevCoeffs(filt, l.max, m = 30, n = m + 1)
 \arguments{
 \item{filt}{graph filter function}
 
-\item{l.max}{maximum eigenvalue of the graph}
+\item{l.max}{Maximum eigenvalue of the graph}
 
-\item{m}{maximum order of Chebyshev coeff to compute}
+\item{m}{numeric Maximum order of Chebyshev coeff to compute (default=30)}
 
-\item{n}{grid order used to compute quadrature (default: m+1)}
+\item{n}{numeric grid order used to compute quadrature (default=m+1)}
 }
 \value{
 vector of Chebyshev coefficients

@@ -7,15 +7,15 @@
 heatFilter(x, l.max, order = 1, offset = 0, beta = 30)
 }
 \arguments{
-\item{x}{values to be filtered. Normally, these are graph laplacian engenvalues.}
+\item{x}{numeric Values to be filtered. Normally, these are graph laplacian engenvalues.}
 
-\item{l.max}{maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)}
+\item{l.max}{numeric Maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)}
 
-\item{order}{parameter \eqn{b} in the equation. Larger values correspond to the sharper kernel form. The values should be positive. Default: 1.}
+\item{order}{numeric Parameter \eqn{b} in the equation. Larger values correspond to the sharper kernel form (default=1). The values should be positive.}
 
-\item{offset}{mean kernel value (\eqn{a} in the equation), must be in [0; 1]. Default: 0.}
+\item{offset}{numeric Mean kernel value (\eqn{a} in the equation), must be in [0:1] (default=0)}
 
-\item{beta}{parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing. Default: 30.}
+\item{beta}{numeric Parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing (default=30).}
 }
 \value{
 smoothed values for `x`

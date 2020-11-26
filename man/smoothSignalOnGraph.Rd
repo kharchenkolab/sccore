@@ -13,14 +13,14 @@ smoothSignalOnGraph(signal, graph, filter, m = 50, ...)
 
 \item{filter}{function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \link{heatFilter} as an example.}
 
-\item{m}{maximum order of Chebyshev coeff to compute}
+\item{m}{numeric Maximum order of Chebyshev coeff to compute (default=50)}
 
 \item{...}{
   Arguments passed on to \code{\link[=smoothChebyshev]{smoothChebyshev}}
   \describe{
-    \item{\code{n.cores}}{number of cores for parallel run. Default: 1.}
-    \item{\code{progress.chunks}}{number of chunks per core for estimating progress. Large values are not suggested, as it may bring overhead. Default: 5.}
-    \item{\code{progress}}{flag on whether progress must be shown. Default: `progress.chunks > 1`}
+    \item{\code{n.cores}}{numeric Number of cores for parallel run (default=1)}
+    \item{\code{progress.chunks}}{numeric Number of chunks per core for estimating progress (default=5). Large values are not suggested, as it may bring overhead.}
+    \item{\code{progress}}{boolean Flag on whether progress must be shown (default=TRUE, i.e. 'progress.chunks > 1')}
   }}
 }
 \description{
