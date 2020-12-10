@@ -16,8 +16,9 @@ Imports:
     magrittr,
     Matrix,
     methods,
-    pROC, 
     parallel,
+    pbmcapply,
+    pROC,
     Rcpp,
     rlang,
     scales,
@@ -29,7 +30,6 @@ Depends:
     R (>= 3.5.0)
 Suggests: 
     ggrastr (>= 0.1.7),
-    pbapply, 
     rmumps,
     testthat
 RoxygenNote: 7.1.1
