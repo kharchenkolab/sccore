@@ -380,21 +380,27 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
 #'
 #' @param signal signal to be smoothed
 #' @param graph igraph object with the graph
+#' @param lap graph laplacian. Default: estimated from graph.
+#' @param l.max maximal eigenvalue of `lap`. Default: estimated from `lap`.
 #' @param filter function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \link{heatFilter} as an example.
 #' @param m numeric Maximum order of Chebyshev coeff to compute (default=50)
 #' @inheritParams computeChebyshevCoeffs
 #' @inheritDotParams smoothChebyshev n.cores progress.chunks progress
 #' @export
 #' @family graph smoothing
-smoothSignalOnGraph <- function(signal, graph, filter, m=50, ...) {
-  if (is.null(dim(signal))) {
-    signal <- signal[igraph::V(graph)$name]
-  } else {
-    signal <- signal[igraph::V(graph)$name,,drop=FALSE]
+smoothSignalOnGraph <- function(signal, graph=NULL, filter, lap=NULL, l.max=NULL, m=50, ...) {
+  if (is.null(lap)) {
+    if (is.null(graph)) stop("Either graph or lap must be provided")
+    lap <- igraph::laplacian_matrix(graph, sparse=TRUE)
   }
 
-  l.max <- igraph::embed_laplacian_matrix(graph, 1)$D
-  lap <- igraph::laplacian_matrix(graph, sparse=TRUE)
+  if (is.null(dim(signal))) {
+    signal <- signal[colnames(lap)]
+  } else {
+    signal <- signal[colnames(lap),,drop=FALSE]
+  }
+
+  l.max <- irlba::partial_eigen(lap, n=1)$values
   coeffs <- computeChebyshevCoeffs(function(x) filter(x, l.max), m=m, l.max)
   sig.smoothed <- smoothChebyshev(lap, coeffs, signal, l.max, ...)
 

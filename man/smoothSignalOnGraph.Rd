@@ -4,7 +4,15 @@
 \alias{smoothSignalOnGraph}
 \title{Smooth Signal on Graph}
 \usage{
-smoothSignalOnGraph(signal, graph, filter, m = 50, ...)
+smoothSignalOnGraph(
+  signal,
+  graph = NULL,
+  filter,
+  lap = NULL,
+  l.max = NULL,
+  m = 50,
+  ...
+)
 }
 \arguments{
 \item{signal}{signal to be smoothed}
@@ -12,6 +20,10 @@ smoothSignalOnGraph(signal, graph, filter, m = 50, ...)
 \item{graph}{igraph object with the graph}
 
 \item{filter}{function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \link{heatFilter} as an example.}
+
+\item{lap}{graph laplacian. Default: estimated from graph.}
+
+\item{l.max}{maximal eigenvalue of `lap`. Default: estimated from `lap`.}
 
 \item{m}{numeric Maximum order of Chebyshev coeff to compute (default=50)}
 
