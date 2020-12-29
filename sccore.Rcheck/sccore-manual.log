@@ -1,0 +1,635 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.6.29)  29 DEC 2020 18:10
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**\nonstopmode \input ./Rd2.tex \input ./Rd2.tex \input ./Rd2.tex \input ./Rd2.
+tex
+(./Rd2.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2019/12/20 v1.4l Standard LaTeX document class
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2019/12/20 v1.4l Standard LaTeX file (size option)
+)
+\c@part=\count167
+\c@chapter=\count168
+\c@section=\count169
+\c@subsection=\count170
+\c@subsubsection=\count171
+\c@paragraph=\count172
+\c@subparagraph=\count173
+\c@figure=\count174
+\c@table=\count175
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen134
+)
+(/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Rd.sty
+Package: Rd 
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
+\LTleft=\skip49
+\LTright=\skip50
+\LTpre=\skip51
+\LTpost=\skip52
+\LTchunksize=\count176
+\LTcapwidth=\dimen135
+\LT@head=\box45
+\LT@firsthead=\box46
+\LT@foot=\box47
+\LT@lastfoot=\box48
+\LT@cols=\count177
+\LT@rows=\count178
+\c@LT@tables=\count179
+\c@LT@chunks=\count180
+\LT@p@ftn=\toks15
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2019/07/24 v1.2d Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 209.
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2019/11/10 v1.5r LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks16
+\verbatim@line=\toks17
+\verbatim@in@stream=\read2
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)
+\ldescriptionwidth=\skip53
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/zi4.sty
+Package: zi4 2019/05/17 v1.12
+
+`inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks18
+\XKV@tempa@toks=\toks19
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/xkeyval/keyval.tex))
+\XKV@depth=\count181
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\zifour@ocount=\count182
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2019/11/23 v1.2a Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2019/12/15 v1.24 LaTeX kernel commands for general use (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.
+sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
+)
+\@linkdim=\dimen136
+\Hy@linkcounter=\count183
+\Hy@pagecounter=\count184
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count185
+Package hyperref Info: Hyper figures OFF on input line 4464.
+Package hyperref Info: Link nesting OFF on input line 4469.
+Package hyperref Info: Hyper index ON on input line 4472.
+Package hyperref Info: Plain pages OFF on input line 4479.
+Package hyperref Info: Backreferencing OFF on input line 4484.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4717.
+\c@Hy@tempcnt=\count186
+LaTeX Info: Redefining \url on input line 5076.
+\XeTeXLinkMargin=\dimen137
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count187
+\Field@Width=\dimen138
+\Fld@charsize=\dimen139
+Package hyperref Info: Hyper figures OFF on input line 6347.
+Package hyperref Info: Link nesting OFF on input line 6352.
+Package hyperref Info: Hyper index ON on input line 6355.
+Package hyperref Info: backreferencing OFF on input line 6362.
+Package hyperref Info: Link coloring OFF on input line 6367.
+Package hyperref Info: Link coloring with OCG OFF on input line 6372.
+Package hyperref Info: PDF/A mode OFF on input line 6377.
+LaTeX Info: Redefining \ref on input line 6417.
+LaTeX Info: Redefining \pageref on input line 6421.
+ (/usr/local/texlive/2020basic/texmf-dist/tex/generic/atbegshi/atbegshi.sty
+Package: atbegshi 2019/12/05 v1.19 At begin shipout hook (HO)
+)
+\Hy@abspage=\count188
+\c@Item=\count189
+\c@Hfootnote=\count190
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2020-05-15 v7.00e Hyperref driver for pdfTeX
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/atveryend/atveryend.sty
+Package: atveryend 2019-12-11 v1.11 Hooks at the very end of document (HO)
+Package atveryend Info: \enddocument detected (standard20110627).
+)
+\Fld@listcount=\count191
+\c@bookmark@seq@number=\count192
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/rerunfilecheck/rerunfilechec
+k.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/uniquecounter/uniquecounte
+r.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip54
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `colorlinks' set `true' on input line 377.
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `linktocpage' set `true' on input line 377.
+Package hyperref Info: Option `plainpages' set `false' on input line 377.
+) (/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2018/08/11 v1.3c Input encoding file
+\inpenc@prehook=\toks20
+\inpenc@posthook=\toks21
+)
+\@indexfile=\write3
+\openout3 = `Rd2.idx'.
+
+
+Writing index file Rd2.idx
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.
+def
+File: l3backend-pdfmode.def 2020-06-23 L3 backend support: PDF mode
+\l__kernel_color_stack_int=\count193
+\l__pdf_internal_box=\box49
+)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmplZn3Sk/Rd2pdf1768
+5f47588d/Rd2.aux)
+\openout1 = `Rd2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 8.
+
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count194
+\scratchdimen=\dimen140
+\scratchbox=\box50
+\nofMPsegments=\count195
+\nofMParguments=\count196
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count197
+\MPscratchDim=\dimen141
+\MPnumerator=\count198
+\makeMPintoPDFobject=\count199
+\everyMPtoPDFconversion=\toks23
+)
+\AtBeginShipoutBox=\box51
+Package hyperref Info: Link coloring ON on input line 8.
+ (/usr/local/texlive/2020basic/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/usr/local/texlive/2020basic/texmf-dist/tex/generic/gettitlestring/gettitlestr
+ing.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count266
+)
+LaTeX Info: Redefining \ref on input line 8.
+LaTeX Info: Redefining \pageref on input line 8.
+LaTeX Info: Redefining \nameref on input line 8.
+
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmplZn3Sk/Rd2pdf1768
+5f47588d/Rd2.out)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmplZn3Sk/Rd2pdf1768
+5f47588d/Rd2.out)
+\@outlinefile=\write4
+\openout4 = `Rd2.out'.
+
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 1
+9.
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 32
+.
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/inconsolata/t1zi4.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 32.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 32.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 32.
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 37
+.
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
+)
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmplZn3Sk/Rd2pdf1768
+5f47588d/Rd2.toc [1
+
+
+{/usr/local/texlive/2020basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}])
+\tf@toc=\write5
+\openout5 = `Rd2.toc'.
+
+ [2]
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 62.
+ [3] [4]
+Underfull \hbox (badness 10000) in paragraph at lines 184--184
+[]\T1/ptm/m/it/10 Collapse graph us-ing PAGA 1.2 al-go-rithm,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--184
+\T1/ptm/m/it/10 Wolf et al 2019, Genome Bi-ol-ogy (2019)
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 184--184
+\T1/ptm/m/it/10 <https://genomebiology.biomedcentral.com/articles/10.1186/s1305
+9-
+ []
+
+
+Overfull \hbox (214.775pt too wide) in paragraph at lines 187--188
+[]\T1/ptm/m/n/10 Collapse graph us-ing PAGA 1.2 al-go-rithm, Wolf et al 2019, G
+enome Bi-ol-ogy (2019) <https://genomebiology.biomedcentral.com/articles/10.118
+6/s13059-
+ []
+
+[5]
+Overfull \hbox (8.65796pt too wide) in paragraph at lines 231--232
+[]\T1/ptm/m/n/10 boolean Whether to re-cal-cu-late edge weight as ob-served/exp
+ected (de-fault=TRUE) 
+ []
+
+
+Overfull \hbox (33.76555pt too wide) in paragraph at lines 242--242
+ []\T1/zi4/m/n/9 collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph
+), linearize=TRUE, winsorize=FALSE)[] 
+ []
+
+[6] [7] [8]
+Overfull \hbox (20.23795pt too wide) in paragraph at lines 423--423
+ []\T1/zi4/m/n/9 ## cm <- conos.obj$getJointCountMatrix(raw = FALSE) # Either n
+ormalized or raw values can be used[] 
+ []
+
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family zi4 in TS1 encoding.
+(textcomp)             Default family used instead on input line 427.
+LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 4
+27.
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
+427.
+
+(/usr/local/texlive/2020basic/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family zi4 in TS1 encoding.
+(textcomp)             Default family used instead on input line 427.
+ [9]
+Overfull \hbox (24.73795pt too wide) in paragraph at lines 442--442
+ []\T1/zi4/m/n/9 ## Plot. Here, the expression colours range from gray (low exp
+ression) to purple (high expression)[] 
+ []
+
+
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 473--474
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+ []
+
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 479--480
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+ []
+
+[10]
+Overfull \hbox (61.88663pt too wide) in paragraph at lines 523--524
+[]\T1/ptm/m/n/10 data.frame for plot-ting. In em-bed-ding-Plot(), this is a tib
+-ble from tib-ble::rownames_to_column(). 
+ []
+
+
+Overfull \hbox (18.22789pt too wide) in paragraph at lines 527--528
+[]\T1/ptm/m/n/10 function to work with geom_point layer from gg-plot2 (de-fault
+=ggplot2::geom_point) 
+ []
+
+[11] [12]
+Overfull \hbox (6.31776pt too wide) in paragraph at lines 597--598
+[]\T1/ptm/m/n/10 subset of 'groups', se-lect-ing the cells for plot (de-fault=N
+ULL). Ig-nored if 'groups'
+ []
+
+[13]
+Overfull \hbox (17.79836pt too wide) in paragraph at lines 665--668
+\T1/ptm/m/n/10 fault unit is lines, but other units can be spec-i-fied by pass-
+ing \T1/zi4/m/n/10 unit(x,"units")\T1/ptm/m/n/10 ). 
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 721--721
+[]\T1/ptm/m/it/10 Embed a graph into a UMAP, Uni-form Man-i-fold Ap-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 721--721
+\T1/ptm/m/it/10 prox-i-ma-tion and Pro-jec-tion for Di-men-sion Re-duc-tion,
+ []
+
+[15]
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 761--762
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+ []
+
+
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 771--772
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+ []
+
+
+Underfull \hbox (badness 5771) in paragraph at lines 787--787
+[]\T1/ptm/m/it/10 Embed a k-nearest neigh-bor (kNN) graph within a UMAP.
+ []
+
+
+Underfull \hbox (badness 2799) in paragraph at lines 787--787
+\T1/ptm/m/it/10 Used within em-bed-Gra-phUmap(). Please see McInnes et al
+ []
+
+[16]
+Overfull \hbox (15.40765pt too wide) in paragraph at lines 825--826
+[]\T1/ptm/m/n/10 numeric The ef-fec-tive min-i-mum dis-tance be-tween em-bed-de
+d points (de-fault=0.001).
+ []
+
+
+Overfull \hbox (19.37749pt too wide) in paragraph at lines 829--830
+[]\T1/ptm/m/n/10 numeric Di-men-sions for 'n_components' in uwot::umap(n_compon
+ents=target.dims)
+ []
+
+[17] [18] [19] [20]
+Overfull \hbox (1.30753pt too wide) in paragraph at lines 1050--1051
+[]\T1/ptm/m/n/10 numeric Max-i-mum ad-ja-cen-cies for cal-cu-lat-ing com-mute t
+ime per neigh-bor, com-
+ []
+
+[21] [22]
+Underfull \hbox (badness 2205) in paragraph at lines 1130--1130
+[]\T1/ptm/m/it/10 Jensen^^UShannon dis-tance met-ric (i.e. the square root of t
+he
+ []
+
+[23]
+Overfull \hbox (37.67719pt too wide) in paragraph at lines 1214--1215
+[]\T1/ptm/m/n/10 boolean If TRUE, take (cl$memberships[1,]). Oth-er-wise, uses 
+as.integer(membership(cl))
+ []
+
+[24]
+Overfull \hbox (7.03764pt too wide) in paragraph at lines 1244--1245
+[]\T1/ptm/m/n/10 Additional ar-gu-ments passed to mclap-ply(), lap-ply(), or pb
+m-cap-ply::pbmclapply() 
+ []
+
+[25] [26]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1340--1341
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+ []
+
+[27]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1431--1432
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+ []
+
+[28] [29]
+Overfull \hbox (27.43814pt too wide) in paragraph at lines 1514--1515
+[]\T1/ptm/m/n/10 boolean Flag on whether progress must be shown (de-fault=TRUE,
+ i.e. 'progress.chunks
+ []
+
+[30] [31]
+Overfull \hbox (24.80824pt too wide) in paragraph at lines 1618--1619
+[]\T1/ptm/m/n/10 numeric Con-stant used for dif-fu-sion on the graph, exp(-diff
+usion.fading * (edge_length
+ []
+
+[32] [33]
+Overfull \hbox (14.17809pt too wide) in paragraph at lines 1738--1739
+[]\T1/ptm/m/n/10 boolean If TRUE, re-la-bel axes with gg-plot2::labs(x='Compone
+nt 1', y='Component
+ []
+
+
+Overfull \hbox (14.75769pt too wide) in paragraph at lines 1779--1780
+[]\T1/ptm/m/n/10 gradient palette (de-fault=NULL). If NULL, use col-or-Ramp-Pal
+ette(c('gray90','red'),
+ []
+
+[34]
+Overfull \hbox (5.31758pt too wide) in paragraph at lines 1822--1823
+\T1/ptm/m/n/10 gra-di-ent will match the span of the range of the data (af-ter 
+gra-di-ent.range.quantile) 
+ []
+
+[35]
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmplZn3Sk/Rd2pdf1768
+5f47588d/Rd2.ind [36] [37
+
+])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1840.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1840.
+
+(/private/var/folders/pt/x80rw07n57q7h9tdwt97nvfh0000gn/T/RtmplZn3Sk/Rd2pdf1768
+5f47588d/Rd2.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1840.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1840.
+
+Package rerunfilecheck Info: File `Rd2.out' has not changed.
+(rerunfilecheck)             Checksum: 40100BD0682EDC2979073FA23E4CCA1B;2678.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1840.
+ ) 
+Here is how much of TeX's memory you used:
+ 6397 strings out of 481919
+ 98445 string characters out of 5933465
+ 352342 words of memory out of 5000000
+ 21760 multiletter control sequences out of 15000+600000
+ 567511 words of font info for 60 fonts, out of 8000000 for 9000
+ 319 hyphenation exceptions out of 8191
+ 47i,6n,40p,659b,603s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{Rfn.borders} has been referenced but does not exi
+st, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.set.seed} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.arrow} has been referenced but does not exist, 
+replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes.Rul.} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{Rfn.aes} has been referenced but does not exist, re
+placed by a fixed one
+
+pdfTeX warning (dest): name{Rfn.ggrepel::geom.Rul.label.Rul.repel} has been ref
+erenced but does not exist, replaced by a fixed one
+
+{/usr/local/texlive/2020basic/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.
+enc}{/usr/local/texlive/2020basic/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/
+local/texlive/2020basic/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc}</us
+r/local/texlive/2020basic/texmf-dist/fonts/type1/public/inconsolata/Inconsolata
+-zi4r.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmi7.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr10.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/pu
+blic/cm-super/sftt0900.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1
+/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/u
+rw/times/utmb8a.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/ti
+mes/utmr8a.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/u
+tmr8a.pfb></usr/local/texlive/2020basic/texmf-dist/fonts/type1/urw/times/utmri8
+a.pfb>
+Output written on Rd2.pdf (37 pages, 200618 bytes).
+PDF statistics:
+ 811 PDF objects out of 1000 (max. 8388607)
+ 753 compressed objects within 8 object streams
+ 315 named destinations out of 1000 (max. 500000)
+ 345 words of extra memory for PDF output out of 10000 (max. 10000000)
+
