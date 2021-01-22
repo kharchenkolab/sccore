@@ -26,7 +26,7 @@ devtools::install_github('kharchenkolab/sccore')
 If you find `sccore` useful for your publication, please cite:
 
 ```
-Peter Kharchenko, Viktor Petukhov, Ramus Rydbirk and Evan Biederstedt
+Viktor Petukhov, Ramus Rydbirk, Peter Kharchenko and Evan Biederstedt
 (2020). sccore: Core Utilities for Single-Cell RNA-Seq. R package
 version 0.1.1. https://github.com/kharchenkolab/sccore
 ```
