@@ -17,6 +17,7 @@ if(getRversion() >= "2.15.1"){
 #' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups.
 #' @return collapsed graph
+#' 
 #' @export
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
@@ -88,6 +89,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 #' \donttest{
 #' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 #' }
+#' 
 #' @export
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 
@@ -126,6 +128,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' \donttest{
 #' cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
 #' }
+#' 
 #' @export
 getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=50, edge.scale=50, edge.alpha=0.3, seed=1,...) {
 
@@ -293,9 +296,8 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
 ### Graph Smoothing (re-implementation of the pygsp package)
 ### https://github.com/epfl-lts2/pygsp/
 
-#' Heat Filter
-#'
-#' @description Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
+#' Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
+#' 
 #' @param x numeric Values to be filtered. Normally, these are graph laplacian engenvalues.
 #' @param l.max numeric Maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)
 #' @param offset numeric Mean kernel value (\eqn{a} in the equation), must be in [0:1] (default=0)
@@ -303,6 +305,8 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
 #' @param beta  numeric Parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing (default=30).
 #' @return smoothed values for `x`
 #' @family graph smoothing
+#'
+#' @keywords internal
 heatFilter <- function(x, l.max, order=1, offset=0, beta=30) {
   exp(-beta * abs(x / l.max - offset) ** order)
 }
@@ -314,6 +318,9 @@ heatFilter <- function(x, l.max, order=1, offset=0, beta=30) {
 #' @param m numeric Maximum order of Chebyshev coeff to compute (default=30)
 #' @param n numeric grid order used to compute quadrature (default=m+1)
 #' @return vector of Chebyshev coefficients
+#' @family graph smoothing
+#'
+#' @keywords internal
 computeChebyshevCoeffs <- function(filt, l.max, m=30, n=m+1) {
   a <- l.max / 2
   tmp.n <- 0:(n-1)
@@ -334,6 +341,8 @@ computeChebyshevCoeffs <- function(filt, l.max, m=30, n=m+1) {
 #' @param progress boolean Flag on whether progress must be shown (default=TRUE, i.e. 'progress.chunks > 1')
 #' @return smoothed signal
 #' @family graph smoothing
+#'
+#' @keywords internal
 smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chunks=5, progress=(progress.chunks > 1)) {
   m <- length(coeffs)
   if (m < 2){
@@ -378,19 +387,23 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
 
 #' Smooth Signal on Graph
 #'
-#' @param signal signal to be smoothed
-#' @param graph igraph object with the graph
-#' @param lap graph laplacian. Default: estimated from graph.
-#' @param l.max maximal eigenvalue of `lap`. Default: estimated from `lap`.
-#' @param filter function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \link{heatFilter} as an example.
-#' @param m numeric Maximum order of Chebyshev coeff to compute (default=50)
 #' @inheritParams computeChebyshevCoeffs
 #' @inheritDotParams smoothChebyshev n.cores progress.chunks progress
-#' @export
+#' @param signal signal to be smoothed
+#' @param filter function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \code{\link{heatFilter}} as an example.
+#' @param graph igraph object with the graph (default=NULL)
+#' @param lap graph laplacian (default=NULL). If NULL, `lap` estimated from graph.
+#' @param l.max maximal eigenvalue of `lap` (default=NULL). If NULL, estimated from `lap`.
+#' @param m numeric Maximum order of Chebyshev coeff to compute (default=50)
 #' @family graph smoothing
-smoothSignalOnGraph <- function(signal, graph=NULL, filter, lap=NULL, l.max=NULL, m=50, ...) {
+#' @export
+#'
+#' @keywords internal
+smoothSignalOnGraph <- function(signal, filter, graph=NULL, lap=NULL, l.max=NULL, m=50, ...) {
   if (is.null(lap)) {
-    if (is.null(graph)) stop("Either graph or lap must be provided")
+    if (is.null(graph)){
+      stop("Either graph or lap must be provided")
+    }
     lap <- igraph::laplacian_matrix(graph, sparse=TRUE)
   }
 

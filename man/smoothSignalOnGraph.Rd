@@ -6,8 +6,8 @@
 \usage{
 smoothSignalOnGraph(
   signal,
-  graph = NULL,
   filter,
+  graph = NULL,
   lap = NULL,
   l.max = NULL,
   m = 50,
@@ -17,13 +17,13 @@ smoothSignalOnGraph(
 \arguments{
 \item{signal}{signal to be smoothed}
 
-\item{graph}{igraph object with the graph}
+\item{filter}{function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \code{\link{heatFilter}} as an example.}
 
-\item{filter}{function that accepts signal `x` and the maximal Laplacian eigenvalue `l.max`. See \link{heatFilter} as an example.}
+\item{graph}{igraph object with the graph (default=NULL)}
 
-\item{lap}{graph laplacian. Default: estimated from graph.}
+\item{lap}{graph laplacian (default=NULL). If NULL, `lap` estimated from graph.}
 
-\item{l.max}{maximal eigenvalue of `lap`. Default: estimated from `lap`.}
+\item{l.max}{maximal eigenvalue of `lap` (default=NULL). If NULL, estimated from `lap`.}
 
 \item{m}{numeric Maximum order of Chebyshev coeff to compute (default=50)}
 
@@ -40,7 +40,9 @@ Smooth Signal on Graph
 }
 \seealso{
 Other graph smoothing: 
+\code{\link{computeChebyshevCoeffs}()},
 \code{\link{heatFilter}()},
 \code{\link{smoothChebyshev}()}
 }
 \concept{graph smoothing}
+\keyword{internal}

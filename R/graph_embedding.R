@@ -65,6 +65,7 @@ graphToAdjList <- function(graph) {
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... arguments passed to uwot::umap()
 #' @return resulting kNN graph embedding within a UMAP
+#' 
 #' @export
 embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.epochs=1000, spread=15, min.dist=0.001, n.sgd.cores=n.cores, target.dims=2, verbose=TRUE, ...) {
   min.n.neighbors <- sapply(commute.times$idx, length) %>% min()
@@ -102,6 +103,7 @@ embedKnnGraph <- function(commute.times, n.neighbors, names=NULL, n.cores=1, n.e
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... Additional arguments passed to embedKnnGraph()
 #' @return resulting UMAP embedding
+#' 
 #' @export
 embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores=1,
                            max.hitting.nn.num=0, max.commute.nn.num=0, min.prob.lower=1e-7,
@@ -118,7 +120,7 @@ embedGraphUmap <- function(graph, min.prob=1e-3, min.visited.verts=1000, n.cores
   }
 
   if (verbose) message("Convert graph to adjacency list...")
-  adj.info <- graphToAdjList(graph);
+  adj.info <- graphToAdjList(graph)
   if (verbose) message("Done")
 
   if (verbose) message("Estimate nearest neighbors and commute times...")

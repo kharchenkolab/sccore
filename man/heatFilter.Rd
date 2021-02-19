@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphs.R
 \name{heatFilter}
 \alias{heatFilter}
-\title{Heat Filter}
+\title{Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}}
 \usage{
 heatFilter(x, l.max, order = 1, offset = 0, beta = 30)
 }
@@ -25,7 +25,9 @@ Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b
 }
 \seealso{
 Other graph smoothing: 
+\code{\link{computeChebyshevCoeffs}()},
 \code{\link{smoothChebyshev}()},
 \code{\link{smoothSignalOnGraph}()}
 }
 \concept{graph smoothing}
+\keyword{internal}

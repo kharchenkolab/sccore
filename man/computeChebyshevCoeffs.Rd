@@ -21,3 +21,11 @@ vector of Chebyshev coefficients
 \description{
 Compute Chebyshev Coefficients
 }
+\seealso{
+Other graph smoothing: 
+\code{\link{heatFilter}()},
+\code{\link{smoothChebyshev}()},
+\code{\link{smoothSignalOnGraph}()}
+}
+\concept{graph smoothing}
+\keyword{internal}

@@ -7,6 +7,7 @@
 #' @param low.expression.threshold numeric Threshold to remove expression values (default=0). Values under this threshold are discarded. 
 #' @param append.auc boolean If TRUE, append AUC values (default=FALSE)
 #' @return data.frame of differential expression values with metrics attached
+#' 
 #' @export
 appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts, low.expression.threshold=0, append.auc=FALSE) {
   

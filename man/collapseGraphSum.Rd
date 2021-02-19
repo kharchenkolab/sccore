@@ -23,4 +23,5 @@ Collapse Graph By Sum
 \donttest{
 collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 }
+
 }

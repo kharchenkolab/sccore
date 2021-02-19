@@ -37,7 +37,9 @@ Smooth with Chebyshev Polynomials
 }
 \seealso{
 Other graph smoothing: 
+\code{\link{computeChebyshevCoeffs}()},
 \code{\link{heatFilter}()},
 \code{\link{smoothSignalOnGraph}()}
 }
 \concept{graph smoothing}
+\keyword{internal}
