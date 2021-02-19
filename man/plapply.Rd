@@ -8,17 +8,27 @@ plapply(
   ...,
   progress = FALSE,
   n.cores = parallel::detectCores(),
-  mc.preschedule = FALSE
+  mc.preschedule = FALSE,
+  fail.on.error = FALSE
 )
 }
 \arguments{
-\item{...}{Additional arguments passed to mclapply(), lapply(), or pbapply::pblapply()}
+\item{...}{Additional arguments passed to mclapply(), lapply(), or pbmcapply::pbmclapply()}
 
-\item{progress}{Show progress bar via pbapply (default=FALSE)}
+\item{progress}{Show progress bar via pbmcapply::pbmclapply() (default=FALSE).}
 
-\item{n.cores}{Number of cores to use (default=parallel::detectCores())}
+\item{n.cores}{Number of cores to use (default=parallel::detectCores()). When n.cores=1, regular lapply() is used. Note: doesn't work when progress=TRUE}
 
-\item{mc.preschedule}{See ?parallel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.}
+\item{mc.preschedule}{if set to \code{TRUE} then the computation is
+    first divided to (at most) as many jobs are there are cores and then
+    the jobs are started, each job possibly covering more than one
+    value.  If set to \code{FALSE} then one job is forked for each value
+    of \code{X}.  The former is better for short computations or large
+    number of values in \code{X}, the latter is better for jobs that
+    have high variance of completion time and not too many values of
+    \code{X} compared to \code{mc.cores}.}
+
+\item{fail.on.error}{boolean Whether to fail and report and error (using stop()) as long as any of the individual tasks has failed (default =FALSE)}
 }
 \value{
 list, as returned by lapply

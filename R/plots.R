@@ -1,15 +1,16 @@
-#' @importFrom magrittr %>% %<>% %$%
 #' @import ggplot2
-#' @importFrom grDevices adjustcolor rainbow
 #' @importFrom graphics par
-#' @importFrom rlang .data 
-#' @importFrom scales squish
+#' @importFrom grDevices adjustcolor rainbow colorRampPalette
+#' @importFrom magrittr %>% %<>% %$%
+#' @importFrom rlang .data
+#' @import scales
 NULL
 
 ## for magrittr and dplyr functions below
 if(getRversion() >= "2.15.1"){
   utils::globalVariables(c(".", "n", "Size", "Group", "x", "y"))
 }
+
 
 #' Utility function to translate a factor into colors
 #'
@@ -61,12 +62,58 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
   }
 }
 
-#' Encodes logic of how to handle named-vector and functional palettes. Used primarily within embeddingGroupPlot()
+#' Utility function to translate values into colors.
+#'
+#' @param x input values
+#' @param gradientPalette gradient palette (default=NULL). If NULL, use colorRampPalette(c('gray90','red'), space = "Lab")(1024) if the values are non-negative; otherwise colorRampPalette(c("blue", "grey90", "red"), space = "Lab")(1024) is used
+#' @param zlim a two-value vector specifying limits of the values that should correspond to the extremes of the color gradient
+#' @param gradient.range.quantile extreme quantiles of values that should be trimmed prior to color mapping (default=0.95)
+#' @examples
+#' colors <- val2col( rnorm(10) )
 #' 
-#' @param groups vector of cluster labels, names contain cell names 
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') 
+#' @export
+val2col <- function(x, gradientPalette=NULL, zlim=NULL, gradient.range.quantile=0.95) {
+  nx <- names(x);
+  if (all(sign(x)>=0)) {
+    if(is.null(gradientPalette)) {
+      gradientPalette <- colorRampPalette(c('gray90','red'), space = "Lab")(1024)
+    }
+    if (is.null(zlim)) {
+      zlim <- as.numeric(quantile(na.omit(x),p=c(1-gradient.range.quantile,gradient.range.quantile)))
+      if(diff(zlim)==0) {
+        zlim <- as.numeric(range(na.omit(x)))
+      }
+    }
+    x[x<zlim[1]] <- zlim[1]; x[x>zlim[2]] <- zlim[2];
+    x <- (x-zlim[1])/(zlim[2]-zlim[1])
+
+  } else {
+    if(is.null(gradientPalette)) {
+      gradientPalette <- colorRampPalette(c("blue", "grey90", "red"), space = "Lab")(1024)
+    }
+    if(is.null(zlim)) {
+      zlim <- c(-1,1)*as.numeric(quantile(na.omit(abs(x)),p=gradient.range.quantile))
+      if(diff(zlim)==0) {
+        zlim <- c(-1,1)*as.numeric(na.omit(max(abs(x))))
+      }
+    }
+    x[x<zlim[1]] <- zlim[1]; x[x>zlim[2]] <- zlim[2];
+    x <- (x-zlim[1])/(zlim[2]-zlim[1])
+
+  }
+
+  col <- gradientPalette[x*(length(gradientPalette)-1)+1]
+  names(col) <- nx
+  return(col)
+}
+
+
+#' Encodes logic of how to handle named-vector and functional palettes. Used primarily within embeddingGroupPlot()
+#'
+#' @param groups vector of cluster labels, names contain cell names
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette')
 #' @param unclassified.cell.color Color for unclassified cells (default='gray50')
-#' @return vector or palette 
+#' @return vector or palette
 fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   groups <- as.factor(groups)
 
@@ -74,8 +121,8 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
     return(palette(length(levels(groups))))
   }
 
-  if (is.list(palette)) { 
-    palette <- stats::setNames(unlist(palette),names(palette)) 
+  if (is.list(palette)) {
+    palette <- stats::setNames(unlist(palette),names(palette))
   }
   if (is.vector(palette)) {
     if (any(levels(groups) %in% names(palette))) {
@@ -101,7 +148,7 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
 #' @param oob function to determine what to do with the values outside of the range (default =scales::squish). Refer to 'oob' parameter in ggplot
 #' @param return.fill boolean Whether to return fill gradients instead of color (default=FALSE)
 #' @param ... additional arguments are passed to ggplot2::scale_color_gradient* functions, i.e. scale_color_gradient(), scale_color_gradient2(), scale_color_gradientn()
-#' @return ggplot2::scale_colour_gradient* object
+#' @return ggplot2::scale_colour_gradient object
 val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric', palette=NULL, midpoint=NULL, oob=scales::squish, return.fill=FALSE, ...) {
   if(length(gradient.range.quantile)>1) { # min/max quantile is given
     zlim <- as.numeric(quantile(values, p=gradient.range.quantile, na.rm=TRUE))
@@ -113,11 +160,20 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 
   ## Symmetrize the range for vectors that span 0.
   ## Vectors that are squarely in the positive or negative territory are not symmetrized.
-  if(length(color.range)==1 && color.range=='symmetric') {
-    if(prod(zlim)<0) {
-      zlim <- c(-1,1)*max(abs(zlim))
+  if (length(color.range) == 1) {
+    if (!(color.range %in% c('symmetric', 'all'))) {
+      stop("Can't parse color.range: ", color.range)
     }
+
+    if((color.range == 'symmetric') && (prod(zlim) < 0)) {
+      zlim <- c(-1, 1)*max(abs(zlim))
+    }
+  } else if (length(color.range) == 2) {
+    zlim <- color.range
+  } else {
+    stop("Can't parse color.range: ", color.range)
   }
+
   if(is.null(midpoint)){
     midpoint <- sum(zlim)/2
   }
@@ -127,7 +183,7 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
     if (max(abs(zlim))==0) {
       ## if gene counts all 0, then simply plot all cells as "gray90"
       ggplot2::scale_color_gradient(low="gray90", high="gray90", limits=zlim, ...)
-    } else if(zlim[2]<0) { 
+    } else if(zlim[2]<0) {
       if(return.fill) {
         ggplot2::scale_fill_gradient(low="blue", high="gray90", limits=zlim, oob=oob, ...)
       } else {
@@ -156,14 +212,14 @@ val2ggcol <- function(values, gradient.range.quantile=1, color.range='symmetric'
 }
 
 #' Plotting function for cluster labels, names contain cell names. Used primarily in embeddingPlot().
-#' 
+#'
 #' @inheritParams embeddingPlot
 #' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @param ... Additional arguments passed to ggplot2::geom_label_repel()
 #' @return ggplot2 object
-embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, ...) {
-  
+embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size, legend.title, shuffle.colors, palette, plot.na, ...) {
+
   groups <- as.factor(groups)
 
   plot.df$Group <- factor(NA, levels=levels(groups))
@@ -177,8 +233,19 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   na.plot.df <- plot.df %>% dplyr::filter(is.na(Group))
   plot.df <- plot.df %>% dplyr::filter(!is.na(Group))
 
-  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) +
-    geom_point_w(ggplot2::aes(col=.data$Group))
+  gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
+
+  ## If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells.
+  ## Otherwise they’re plotted above the cells.
+  if (plot.na & (plot.na < 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
+
+  gg <- gg + geom_point_w(ggplot2::aes(col=.data$Group))
+
+  if (plot.na & (plot.na >= 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
 
   if (mark.groups) {
     labels.data <- plot.df %>% dplyr::group_by(Group) %>%
@@ -212,16 +279,16 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
   gg <- gg + ggplot2::scale_color_manual(name=legend.title, values=color.vals, labels=levels(groups), drop=FALSE) +
     ggplot2::guides(color=ggplot2::guide_legend(override.aes=list(alpha=1.0)))
 
-  return(list(gg=gg, na.plot.df=na.plot.df))
+  return(gg)
 }
 
 #' Set colors for embedding plot. Used primarily in embeddingPlot().
-#' 
+#'
 #' @inheritParams embeddingPlot
 #' @param plot.df data.frame for plotting. In embeddingPlot(), this is a tibble from tibble::rownames_to_column().
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @return ggplot2 object
-embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL) {
+embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL, plot.na=TRUE) {
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[.data$CellName])
   if(!is.null(groups)) {
     plot.df$Color[!plot.df$CellName %in% names(groups)] <- NA
@@ -230,17 +297,26 @@ embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplo
   plot.df <- plot.df %>% dplyr::filter(!is.na(.data$Color))
 
   gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y))
+
+  if (plot.na & (plot.na < 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
+
   if(is.character(colors)) {
     gg <- gg + geom_point_w(color=plot.df$Color)
   } else {
     gg <- gg + geom_point_w(ggplot2::aes(col=.data$Color)) + val2ggcol(plot.df$Color, gradient.range.quantile=gradient.range.quantile, palette=palette, color.range=color.range)
   }
 
+  if (plot.na & (plot.na >= 0)) {
+    gg <- gg + geom_point_w(data=na.plot.df, color='black', shape=4)
+  }
+
   if (!is.null(legend.title)) {
     gg <- gg + ggplot2::guides(color=ggplot2::guide_colorbar(title=legend.title))
   }
 
-  return(list(gg=gg, na.plot.df=na.plot.df))
+  return(gg)
 }
 
 #' Set plot.theme, legend, ticks for embedding plot. Used primarily in embeddingPlot().
@@ -295,15 +371,15 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param groups vector of cluster labels, names contain cell names (default=NULL)
 #' @param colors vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.
 #' @param subgroups subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL
-#' @param plot.na boolean whether to plot points, for which groups / colors are missed (default=FALSE). This argument is FALSE if 'subgroups' is NULL
+#' @param plot.na boolean/numeric Whether to plot points, for which groups / colors are missed (default=is.null(subgroups), i.e. FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL
 #' @param min.cluster.size labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided
-#' @param mark.groups plot cluster labels above points (default=TRUE) 
+#' @param mark.groups plot cluster labels above points (default=TRUE)
 #' @param show.legend show legend (default=FALSE)
-#' @param alpha opacity level [0, 1] (default=0.4) 
-#' @param size point size (default=0.8) 
-#' @param title plot title (default=NULL) 
-#' @param plot.theme theme for the plot (default=NULL) 
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL) 
+#' @param alpha opacity level [0, 1] (default=0.4)
+#' @param size point size (default=0.8)
+#' @param title plot title (default=NULL)
+#' @param plot.theme theme for the plot (default=NULL)
+#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)
 #' @param color.range controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
 #' @param font.size font size for cluster labels (default=c(3, 7)). It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
 #' @param show.ticks show ticks and tick labels (default=FALSE)
@@ -316,7 +392,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param shuffle.colors shuffle colors (default=FALSE)
 #' @param keep.limits Keep axis limits from original plot (default=!is.null(subgroups)). Useful when plotting subgroups, only meaningful it plot.na=FALSE
 #' @return ggplot2 object
-#' @examples 
+#' @examples
 #' library(sccore)
 #' embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
 #'
@@ -353,18 +429,13 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
   }
 
   if (!is.null(groups) && is.null(colors)) {
-    plot.info <- embeddingGroupPlot(plot.df, groups, geom_point_w, min.cluster.size, mark.groups,
-                                    font.size, legend.title, shuffle.colors, palette, ...)
+    gg <- embeddingGroupPlot(plot.df, groups, geom_point_w, min.cluster.size, mark.groups, font.size,
+                             legend.title, shuffle.colors, palette, plot.na=plot.na, ...)
   } else if (!is.null(colors)) {
-    plot.info <- embeddingColorsPlot(plot.df, colors, groups, geom_point_w, gradient.range.quantile,
-                                     color.range, legend.title, palette)
+    gg <- embeddingColorsPlot(plot.df, colors, groups, geom_point_w, gradient.range.quantile,
+                              color.range, legend.title, palette, plot.na=plot.na)
   } else {
-    plot.info <- list(gg=ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) + geom_point_w(alpha=alpha, size=size))
-  }
-
-  gg <- plot.info$gg
-  if (plot.na && !is.null(plot.info$na.plot.df)) {
-    gg <- gg + geom_point_w(data=plot.info$na.plot.df, color='black', shape=4)
+    gg <- ggplot2::ggplot(plot.df, ggplot2::aes(x=x, y=y)) + geom_point_w()
   }
 
   if(keep.limits) {
@@ -379,8 +450,8 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 #'
 #' @param markers Vector of gene markers to plot
-#' @param count.matrix Merged count matrix
-#' @param cell.groups Named factor containing cell groups (clusters) and cell names
+#' @param count.matrix Merged count matrix, cells in rows and genes in columns
+#' @param cell.groups Named factor containing cell groups (clusters) and cell names as names
 #' @param marker.colour Character or numeric vector (default="black")
 #' @param cluster.colour Character or numeric vector (default="black")
 #' @param xlab string X-axis title (default="Marker")
@@ -399,6 +470,37 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param verbose boolean Verbose output (default=TRUE)
 #' @param ... Additional inputs passed to sccore::plapply(), see man for description.
 #' @return ggplot2 object
+#' @examples
+#' library(dplyr)
+#' ## Create merged count matrix
+#' ## In this example, cms is a list of count matrices from, e.g., Cellranger count, 
+#' ## where cells are in columns and genes in rows
+#' ## cm <- sccore:::mergeCountMatrices(cms, transposed = FALSE) %>% Matrix::t()
+#'
+#' ## If coming from Conos, this can be extracted like so
+#' ## cm <- conos.obj$getJointCountMatrix(raw = FALSE) # Either normalized or raw values can be used
+#'
+#' ## Here, we create a random sparse matrix
+#' cm <- Matrix::rsparsematrix(30,3,0.5) %>% abs(.) %>% 
+#'             `dimnames<-`(list(1:30,c("gene1","gene2","gene3")))
+#'
+#' ## Create marker vector
+#' markers <- c("gene1","gene2","gene3")
+#'
+#' ## Additionally, color vectors can be included. 
+#' ## These should have the same length as the input (markers, cell groups) 
+#' ## Otherwise, they are recycled
+#' col.markers <- c("black","black","red") # or c(1,1,2)
+#' col.clusters <- c("black","red","black") # or c(1,2,1)
+#'
+#' ## Create annotation vector
+#' annotation <- c(rep("cluster1",10),rep("cluster2",10),rep("cluster3",10)) %>% 
+#'     factor() %>% setNames(1:30)
+#'
+#' ## Plot. Here, the expression colours range from gray (low expression) to purple (high expression)
+#' sccore:::dotPlot(markers = markers, count.matrix = cm, cell.groups = annotation, 
+#'     marker.colour = col.markers, cluster.colour = col.clusters, cols=c("gray","purple"))
+#'
 #' @export
 dotPlot <- function (markers,
                      count.matrix,
@@ -420,7 +522,7 @@ dotPlot <- function (markers,
                      scale.max = NA,
                      verbose=TRUE,
                      ...) {
-  
+
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
   if (!is.character(markers)) {
     stop("'markers' must be a character vector.")
@@ -439,6 +541,15 @@ dotPlot <- function (markers,
   if (verbose) {
     message("Extracting gene expression... ")
   }
+
+  if (class(cell.groups) != "factor") {
+    tryCatch({
+      if(verbose){
+        message("Treating 'cell.groups' as a factor.")
+      }
+      cell.groups %<>% as.factor()
+    }, error=function(e) stop("Could not convert 'cell.groups' to a factor\n", e))
+  }
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
   p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
   if (is.logical(gene.order) && gene.order) {
@@ -452,7 +563,7 @@ dotPlot <- function (markers,
   }
 
   # Adapted from Seurat:::DotPlot
-  if (verbose) { 
+  if (verbose) {
     message("Calculating expression distributions... ")
   }
   data.plot <- levels(cell.groups) %>% plapply(function(t) {

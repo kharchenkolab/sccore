@@ -8,33 +8,37 @@ NULL
 
 #' Parallel, optionally verbose lapply. See ?parallel::mclapply for more info.
 #'
-#' @param ... Additional arguments passed to mclapply(), lapply(), or pbapply::pblapply()
-#' @param progress Show progress bar via pbapply (default=FALSE)
-#' @param n.cores Number of cores to use (default=parallel::detectCores())
-#' @param mc.preschedule See ?parallel::mclapply (default=FALSE) If TRUE then the computation is first divided to (at most) as many jobs are there are cores and then the jobs are started, each job possibly covering more than one value. If FALSE, then one job is forked for each value of X. The former is better for short computations or large number of values in X, the latter is better for jobs that have high variance of completion time and not too many values of X compared to mc.cores.
+#' @param ... Additional arguments passed to mclapply(), lapply(), or pbmcapply::pbmclapply()
+#' @param progress Show progress bar via pbmcapply::pbmclapply() (default=FALSE).
+#' @param fail.on.error boolean Whether to fail and report and error (using stop()) as long as any of the individual tasks has failed (default =FALSE)
+#' @param n.cores Number of cores to use (default=parallel::detectCores()). When n.cores=1, regular lapply() is used. Note: doesn't work when progress=TRUE
+#' @inheritParams parallel::mclapply
 #' @return list, as returned by lapply
 #' @examples
 #' square = function(x){ x**2 }
 #' plapply(1:10, square, n.cores=1, progress=TRUE)
 #'
 #' @export
-plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE) {
-  if (progress && requireNamespace("pbapply", quietly=TRUE)) {
-    result <- pbapply::pblapply(..., cl=n.cores)
-  } else if(n.cores>1) {
+plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE, fail.on.error=FALSE) {
+  if (progress) {
+    result <- pbmcapply::pbmclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule)
+  } else if(n.cores > 1) {
     result <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule)
   } else {
     # fall back on lapply
     result <- lapply(...)
   }
 
-  is.error <- (sapply(result, class) == "try-error")
-  if (any(is.error)) {
-    stop(paste("Errors in plapply:", result[is.error]))
+  if(fail.on.error) {
+    is.error <- (sapply(result, class) == "try-error")
+    if (any(is.error)) {
+      stop(paste("Errors in plapply:", result[is.error]))
+    }
   }
 
   return(result)
 }
+
 
 #' Set range for values in object. Changes values outside of range to min or max. Adapted from Seurat::MinMax
 #'
@@ -47,11 +51,9 @@ plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.pre
 #' setMinMax(example_matrix, 2, 4)
 #'
 #' @export
-setMinMax <- function(obj, min, max) {
-  obj[obj<min] <- min
-  obj[obj>max] <- max
-  return(obj)
-}
+setMinMax <- function(obj, min, max) { obj %>% pmax(min) %>% pmin(max) }
+
+
 
 #' Translate multilevel segmentation into a dendrogram, with the lowest level of the dendrogram listing the cells
 #'
@@ -97,14 +99,14 @@ multi2dend <- function(cl, counts, deep=FALSE, dist='cor') {
 
 #' Set names equal to values, a stats::setNames wrapper function
 #'
-#' @param x an object for which names attribute will be meaningful 
+#' @param x an object for which names attribute will be meaningful
 #' @return An object with names assigned equal to values
 #' @examples
 #' vec = c(1, 2, 3, 4)
 #' sn(vec)
 #'
 #' @export
-sn <- function(x) { 
+sn <- function(x) {
   names(x) <- x
   return(x)
 }
@@ -118,7 +120,7 @@ sn <- function(x) {
 #' library(dplyr)
 #' geneUnion <- lapply(conosClusterList, colnames) %>% Reduce(union, .)
 #' extendMatrix(conosClusterList[[1]], col.names=geneUnion)
-#' 
+#'
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))

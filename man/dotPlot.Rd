@@ -30,9 +30,9 @@ dotPlot(
 \arguments{
 \item{markers}{Vector of gene markers to plot}
 
-\item{count.matrix}{Merged count matrix}
+\item{count.matrix}{Merged count matrix, cells in rows and genes in columns}
 
-\item{cell.groups}{Named factor containing cell groups (clusters) and cell names}
+\item{cell.groups}{Named factor containing cell groups (clusters) and cell names as names}
 
 \item{marker.colour}{Character or numeric vector (default="black")}
 
@@ -73,4 +73,36 @@ ggplot2 object
 }
 \description{
 Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
+}
+\examples{
+library(dplyr)
+## Create merged count matrix
+## In this example, cms is a list of count matrices from, e.g., Cellranger count, 
+## where cells are in columns and genes in rows
+## cm <- sccore:::mergeCountMatrices(cms, transposed = FALSE) \%>\% Matrix::t()
+
+## If coming from Conos, this can be extracted like so
+## cm <- conos.obj$getJointCountMatrix(raw = FALSE) # Either normalized or raw values can be used
+
+## Here, we create a random sparse matrix
+cm <- Matrix::rsparsematrix(30,3,0.5) \%>\% abs(.) \%>\% 
+            `dimnames<-`(list(1:30,c("gene1","gene2","gene3")))
+
+## Create marker vector
+markers <- c("gene1","gene2","gene3")
+
+## Additionally, color vectors can be included. 
+## These should have the same length as the input (markers, cell groups) 
+## Otherwise, they are recycled
+col.markers <- c("black","black","red") # or c(1,1,2)
+col.clusters <- c("black","red","black") # or c(1,2,1)
+
+## Create annotation vector
+annotation <- c(rep("cluster1",10),rep("cluster2",10),rep("cluster3",10)) \%>\% 
+    factor() \%>\% setNames(1:30)
+
+## Plot. Here, the expression colours range from gray (low expression) to purple (high expression)
+sccore:::dotPlot(markers = markers, count.matrix = cm, cell.groups = annotation, 
+    marker.colour = col.markers, cluster.colour = col.clusters, cols=c("gray","purple"))
+
 }

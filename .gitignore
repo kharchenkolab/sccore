@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 sccore*.tar.gz
+
+*.o
+*.so
