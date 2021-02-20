@@ -1,12 +1,10 @@
-### Upcoming
+## Upcoming
 
 ### Added
 
 ### Changed
 
 ## [0.1.2] - February 19 2021
-
-### Upcoming
 
 ### Added
 
