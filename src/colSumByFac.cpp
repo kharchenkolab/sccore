@@ -9,6 +9,7 @@
 #include <vector>
 #include <queue>
 #include <list>
+
 #ifdef _OPENMP
   #include <omp.h>
 #endif

@@ -203,7 +203,7 @@ std::pair<std::vector<std::vector<int>>, std::vector<std::vector<double>>>
   Progress p(n_verts, verbose);
 
 #ifdef _OPENMP
-#pragma omp parallel for schedule(dynamic)
+  #pragma omp parallel for schedule(dynamic)
 #endif
   for (int v1 = 0; v1 < n_verts; ++v1) {
     if (Progress::check_abort())
@@ -214,7 +214,7 @@ std::pair<std::vector<std::vector<int>>, std::vector<std::vector<double>>>
     p.increment();
 
 #ifdef _OPENMP
-#pragma omp critical
+  #pragma omp critical
 #endif
 {
   res_times.at(v1) = cur_res.first;
@@ -250,7 +250,7 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
     Progress p_hash(adjacency_list.size(), verbose);
 
 #ifdef _OPENMP
-#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
 #endif
     for (int v1 = 0; v1 < adjacency_list.size(); ++v1) {
       if (Progress::check_abort())
@@ -279,7 +279,7 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
     }
 
 #ifdef _OPENMP
-#pragma omp parallel for schedule(static)
+  #pragma omp parallel for schedule(static)
 #endif
     for (int v1 = 0; v1 < hitting_times_map.size(); ++v1) {
       if (Progress::check_abort())
@@ -314,7 +314,7 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
   }
 
 #ifdef _OPENMP
-#pragma omp barrier
+  #pragma omp barrier
 #endif
 
   return Rcpp::List::create(Rcpp::_["idx"]=Rcpp::wrap(commute_time_idx),
