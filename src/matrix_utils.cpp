@@ -6,14 +6,13 @@ using namespace Rcpp;
 //' Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m
 //'
 //' @param m Input matrix
-//' @param ncores integer Number of cores (default=1)
 //' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
 //' @examples
 //' ex = matrix(1:9, nrow = 3, ncol = 3)
 //' jsDist(ex)
 //'
 // [[Rcpp::export]]
-arma::mat jsDist(const arma::mat& m, int ncores=1) {
+arma::mat jsDist(const arma::mat& m) {
   //arma::vec d(m.n_cols*(m.n_cols-1)/2);
   arma::mat d(m.n_cols, m.n_cols, arma::fill::zeros);
   for(int i=0; i<(m.n_cols-1); i++) {

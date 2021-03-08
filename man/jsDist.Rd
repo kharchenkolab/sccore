@@ -4,12 +4,10 @@
 \alias{jsDist}
 \title{Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m}
 \usage{
-jsDist(m, ncores = 1L)
+jsDist(m)
 }
 \arguments{
 \item{m}{Input matrix}
-
-\item{ncores}{integer Number of cores (default=1)}
 }
 \value{
 Vectorized version of the lower triangle as an R distance object, stats::dist()
