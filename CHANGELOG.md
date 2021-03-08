@@ -2,9 +2,11 @@
 
 ### Added
 
+- `collapseCellsByType` from Conos
+
 ### Changed
 
-- colSumByFactor now requires factor input and returns a named matrix
+- `colSumByFactor` now requires factor input and returns a named matrix
 
 ## [0.1.2] - February 19 2021
 
