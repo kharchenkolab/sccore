@@ -37,7 +37,7 @@ arma::mat jsDist(const arma::mat& m, int ncores=1) {
 //' @param rowSel integer factor. Note that the 0-th column will return sums for any NA values; 0 or negative values will be omitted
 //' @return Matrix
 // [[Rcpp::export]]
-arma::mat colSumByFac(SEXP sY,  SEXP rowSel) {
+NumericMatrix colSumByFactor(SEXP sY,  IntegerVector rowSel) {
   // note: trailing levels that are not mentioned in the vector will be omitted, resulting in a smaller matrix
   // need to do this as SEXP, modify the slots on the fly
   S4 mat(sY);
@@ -46,17 +46,20 @@ arma::mat colSumByFac(SEXP sY,  SEXP rowSel) {
   const arma::ivec p(INTEGER(mat.slot("p")),LENGTH(mat.slot("p")),false,true);
   arma::vec Y(REAL(mat.slot("x")),LENGTH(mat.slot("x")),false,true);
 
+  List dimnames(mat.slot("Dimnames"));
+  CharacterVector geneNames(dimnames[1]);
+
+
+  CharacterVector factorLevels = rowSel.attr("levels");
+  int nlevels=factorLevels.size();
+  CharacterVector expandedFactorLevels(nlevels+1);
+  expandedFactorLevels[0]="NA";
+  for(int i=0;i<nlevels;i++) { expandedFactorLevels[i+1]=factorLevels[i]; }
   const arma::ivec rs=arma::ivec(INTEGER(rowSel),LENGTH(rowSel),false,true);
 
   int ncols=p.size()-1;
-  int nlevels=0;
-  for(int j=0;j<rs.size();j++) {
-    if(rs[j]!=NA_INTEGER) {
-      if(rs[j]>nlevels) { nlevels=rs[j]; }
-    }
-  }
-  if(nlevels==0) { stop("colSumByFac(): supplied factor doesn't have any levels!"); }
-  arma::mat sumM(nlevels+1,ncols,arma::fill::zeros);
+  if(nlevels==0) { stop("colSumByFactor(): supplied factor doesn't have any levels!"); }
+  NumericMatrix sumM(nlevels+1, ncols);
 
   // for each gene
   for(int g=0;g<ncols;g++) {
@@ -72,5 +75,8 @@ arma::mat colSumByFac(SEXP sY,  SEXP rowSel) {
       }
     }
   }
+
+  colnames(sumM) = geneNames;
+  rownames(sumM) = expandedFactorLevels;
   return sumM;
 }

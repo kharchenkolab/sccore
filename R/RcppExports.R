@@ -44,8 +44,8 @@ jsDist <- function(m, ncores = 1L) {
 #' @param sY sparse matrix (dgCmatrix)
 #' @param rowSel integer factor. Note that the 0-th column will return sums for any NA values; 0 or negative values will be omitted
 #' @return Matrix
-colSumByFac <- function(sY, rowSel) {
-    .Call('_sccore_colSumByFac', PACKAGE = 'sccore', sY, rowSel)
+colSumByFactor <- function(sY, rowSel) {
+    .Call('_sccore_colSumByFactor', PACKAGE = 'sccore', sY, rowSel)
 }
 
 #' Label propagation
