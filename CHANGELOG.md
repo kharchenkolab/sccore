@@ -7,6 +7,7 @@
 ### Changed
 
 - `colSumByFactor` now requires factor input and returns a named matrix
+- Parallel cpp functions can now be accessed from other cpp packages by including `sccore_par.hpp`
 
 ## [0.1.2] - February 19 2021
 
