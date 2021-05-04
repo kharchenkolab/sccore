@@ -28,5 +28,5 @@ If you find `sccore` useful for your publication, please cite:
 ```
 Viktor Petukhov, Ramus Rydbirk, Peter Kharchenko and Evan Biederstedt
 (2021). sccore: Core Utilities for Single-Cell RNA-Seq. R package
-version 0.1.2. https://github.com/kharchenkolab/sccore
+version 0.1.3. https://github.com/kharchenkolab/sccore
 ```
