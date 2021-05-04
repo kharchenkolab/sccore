@@ -1,5 +1,7 @@
 ## Upcoming
 
+## [0.1.3] - May 4 2021
+
 ### Added
 
 - `collapseCellsByType` from Conos
