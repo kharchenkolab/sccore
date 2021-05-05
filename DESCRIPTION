@@ -1,6 +1,6 @@
 Package: sccore
 Title: Core Utilities for Single-Cell RNA-Seq
-Version: 0.1.2
+Version: 0.1.3
 Authors@R: c(person("Viktor","Petukhov", email="viktor.s.petuhov@ya.ru", role="aut"), person("Ramus","Rydbirk", email="rasmus.rydbirk@bric.ku.dk", role="aut"), person("Peter", "Kharchenko", email = "peter_kharchenko@hms.harvard.edu", role = "aut"), person("Evan","Biederstedt", email="evan.biederstedt@gmail.com", role=c("aut", "cre")))
 Description: Core utilities for single-cell RNA-seq data analysis. Contained within are utility functions for working with differential expression (DE) matrices and count matrices, a collection of functions for manipulating and plotting data via 'ggplot2', and functions to work with cell graphs and cell embeddings. Graph-based methods include embedding kNN cell graphs into a UMAP <doi:10.21105/joss.00861>, collapsing vertices of each cluster in the graph, and propagating graph labels.
 License: GPL-3 

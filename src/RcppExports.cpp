@@ -7,18 +7,6 @@
 
 using namespace Rcpp;
 
-// colSumByFac
-arma::mat colSumByFac(SEXP sY, SEXP rowSel);
-RcppExport SEXP _sccore_colSumByFac(SEXP sYSEXP, SEXP rowSelSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP >::type sY(sYSEXP);
-    Rcpp::traits::input_parameter< SEXP >::type rowSel(rowSelSEXP);
-    rcpp_result_gen = Rcpp::wrap(colSumByFac(sY, rowSel));
-    return rcpp_result_gen;
-END_RCPP
-}
 // as_factor
 Rcpp::List as_factor(const std::vector<std::string>& vals);
 RcppExport SEXP _sccore_as_factor(SEXP valsSEXP) {
@@ -51,14 +39,25 @@ BEGIN_RCPP
 END_RCPP
 }
 // jsDist
-arma::mat jsDist(const arma::mat& m, int ncores);
-RcppExport SEXP _sccore_jsDist(SEXP mSEXP, SEXP ncoresSEXP) {
+arma::mat jsDist(const arma::mat& m);
+RcppExport SEXP _sccore_jsDist(SEXP mSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const arma::mat& >::type m(mSEXP);
-    Rcpp::traits::input_parameter< int >::type ncores(ncoresSEXP);
-    rcpp_result_gen = Rcpp::wrap(jsDist(m, ncores));
+    rcpp_result_gen = Rcpp::wrap(jsDist(m));
+    return rcpp_result_gen;
+END_RCPP
+}
+// colSumByFactor
+NumericMatrix colSumByFactor(SEXP sY, IntegerVector rowSel);
+RcppExport SEXP _sccore_colSumByFactor(SEXP sYSEXP, SEXP rowSelSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type sY(sYSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type rowSel(rowSelSEXP);
+    rcpp_result_gen = Rcpp::wrap(colSumByFactor(sY, rowSel));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -126,10 +125,10 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_sccore_colSumByFac", (DL_FUNC) &_sccore_colSumByFac, 2},
     {"_sccore_as_factor", (DL_FUNC) &_sccore_as_factor, 1},
     {"_sccore_get_nearest_neighbors", (DL_FUNC) &_sccore_get_nearest_neighbors, 10},
-    {"_sccore_jsDist", (DL_FUNC) &_sccore_jsDist, 2},
+    {"_sccore_jsDist", (DL_FUNC) &_sccore_jsDist, 1},
+    {"_sccore_colSumByFactor", (DL_FUNC) &_sccore_colSumByFactor, 2},
     {"_sccore_propagate_labels", (DL_FUNC) &_sccore_propagate_labels, 9},
     {"_sccore_smooth_count_matrix", (DL_FUNC) &_sccore_smooth_count_matrix, 10},
     {"_sccore_adjacentVertices", (DL_FUNC) &_sccore_adjacentVertices, 1},
