@@ -8,7 +8,7 @@ Core utilities for single-cell RNA-seq data analysis. Contained within are utili
 ## Installation
 
 
-To install the stable version from CRAN, use:
+To install the stable version from [CRAN](https://CRAN.R-project.org/package=sccore), use:
 
 ```r
 install.packages('sccore')
