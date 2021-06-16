@@ -2,7 +2,6 @@
 #define _sccore_parallel_HPP
 
 #include <Rcpp.h>
-#include <progress.hpp>
 
 #include <mutex>
 #include <thread>

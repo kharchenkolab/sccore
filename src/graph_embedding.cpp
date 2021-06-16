@@ -5,11 +5,7 @@
 #include <numeric>
 #include <Rcpp.h>
 
-#ifdef _OPENMP
-  #include <omp.h>
-#endif
-
-#include <progress.hpp>
+#include <sccore_par.hpp>
 
 void trace_time(const std::string &message, bool print_date=false)
 {
@@ -48,7 +44,7 @@ std::vector<T> reorder(const std::vector<T> &vec, const std::vector<size_t> inde
 }
 
 //' convert character vector into a factor with names "values" and "levels"
-//' 
+//'
 //' @param vals vector of values to evaluate
 //' @return factor with names "values" and "levels"
 // [[Rcpp::export]]
@@ -189,42 +185,22 @@ std::pair<std::vector<std::vector<int>>, std::vector<std::vector<double>>>
                              int min_visited_verts=1000, double min_prob_lower=1e-5,
                              int max_adj_num=0, bool verbose=true)
 {
-#ifdef _OPENMP
-  omp_set_num_threads(n_cores);
-#endif
-
   if (n_verts <= 0 || n_verts >= adjacency_list.size()) {
     n_verts = adjacency_list.size();
   }
-  // std::vector<Rcpp::NumericVector> res(n_verts);
+
   std::vector<std::vector<int>> res_idx(n_verts);
   std::vector<std::vector<double>> res_times(n_verts);
 
-  Progress p(n_verts, verbose);
+  auto task = [&adjacency_list, &transition_probabilities, &min_prob, &min_visited_verts, &min_prob_lower, &max_adj_num,
+               &res_times, &res_idx](int v1) {
+      auto const cur_res = hitting_time_per_neighbor(adjacency_list, transition_probabilities, v1,
+                                                     min_prob, min_visited_verts, min_prob_lower, max_adj_num);
 
-#ifdef _OPENMP
-  #pragma omp parallel for schedule(dynamic)
-#endif
-  for (int v1 = 0; v1 < n_verts; ++v1) {
-    if (Progress::check_abort())
-      continue;
-
-    auto const cur_res = hitting_time_per_neighbor(adjacency_list, transition_probabilities, v1,
-                                                   min_prob, min_visited_verts, min_prob_lower, max_adj_num);
-    p.increment();
-
-#ifdef _OPENMP
-  #pragma omp critical
-#endif
-{
-  res_times.at(v1) = cur_res.first;
-  res_idx.at(v1) = cur_res.second;
-}
-  }
-
-  if (Progress::check_abort())
-    Rcpp::stop("Aborted");
-
+      res_times.at(v1) = cur_res.first;
+      res_idx.at(v1) = cur_res.second;
+  };
+  sccore::runTaskParallelFor(0, n_verts, task, n_cores, verbose);
   return std::make_pair(res_idx, res_times);
 }
 
@@ -236,86 +212,42 @@ Rcpp::List commute_time_per_node(const std::vector<std::vector<int>> &adjacency_
   if (adjacency_list.size() != hitting_times.size())
     Rcpp::stop("Vectors must have the same length");
 
-#ifdef _OPENMP
-  omp_set_num_threads(n_cores);
-#endif
-
   std::vector<std::unordered_map<int, double>> hitting_times_map(adjacency_list.size());
 
   if (verbose) {
     trace_time("Hashing adjacency list");
   }
 
-  {
-    Progress p_hash(adjacency_list.size(), verbose);
+  auto task = [&hitting_times_map, &adjacency_list, &hitting_times](int v1) {
+    hitting_times_map[v1] = get_hitting_time_map(adjacency_list.at(v1), hitting_times.at(v1));
+  };
+  sccore::runTaskParallelFor(0, adjacency_list.size(), task, n_cores, verbose);
 
-#ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
-#endif
-    for (int v1 = 0; v1 < adjacency_list.size(); ++v1) {
-      if (Progress::check_abort())
-        continue;
-
-      p_hash.increment();
-      hitting_times_map[v1] = get_hitting_time_map(adjacency_list.at(v1), hitting_times.at(v1));
-    }
-
-    if (verbose) {
-      Rcpp::Rcout << "Done." << std::endl;
-    }
-
-    if (Progress::check_abort())
-      Rcpp::stop("Aborted");
+  if (verbose) {
+    trace_time("Estimating distances");
   }
 
   std::vector<std::vector<double>> commute_times(adjacency_list.size());
   std::vector<std::vector<int>> commute_time_idx(adjacency_list.size());
-
-  {
-    Progress p_dist(hitting_times_map.size(), verbose);
-
-    if (verbose) {
-      trace_time("Estimating distances");
-    }
-
-#ifdef _OPENMP
-  #pragma omp parallel for schedule(static)
-#endif
-    for (int v1 = 0; v1 < hitting_times_map.size(); ++v1) {
-      if (Progress::check_abort())
+  auto task2 = [&hitting_times_map, &commute_times, &commute_time_idx, &max_adj_num](int v1) {
+    std::vector<double> cur_times;
+    std::vector<int> cur_ids;
+    for (auto const &p2 : hitting_times_map.at(v1)) {
+      auto const &h2_map = hitting_times_map.at(p2.first);
+      auto const v1_iter = h2_map.find(v1);
+      if (v1_iter == h2_map.end())
         continue;
 
-      p_dist.increment();
-
-      std::vector<double> cur_times;
-      std::vector<int> cur_ids;
-      for (auto const &p2 : hitting_times_map.at(v1)) {
-        auto const &h2_map = hitting_times_map.at(p2.first);
-        auto const v1_iter = h2_map.find(v1);
-        if (v1_iter == h2_map.end())
-          continue;
-
-        cur_times.emplace_back(v1_iter->second + p2.second);
-        cur_ids.emplace_back(p2.first);
-      }
-
-      auto sorted_ids = sortperm(cur_times);
-
-      commute_times[v1] = reorder(cur_times, sorted_ids, max_adj_num);
-      commute_time_idx[v1] = reorder(cur_ids, sorted_ids, max_adj_num);
+      cur_times.emplace_back(v1_iter->second + p2.second);
+      cur_ids.emplace_back(p2.first);
     }
 
-    if (Progress::check_abort())
-      Rcpp::stop("Aborted");
-  }
+    auto sorted_ids = sortperm(cur_times);
 
-  if (verbose) {
-    Rcpp::Rcout << "Done" << std::endl;
-  }
-
-#ifdef _OPENMP
-  #pragma omp barrier
-#endif
+    commute_times[v1] = reorder(cur_times, sorted_ids, max_adj_num);
+    commute_time_idx[v1] = reorder(cur_ids, sorted_ids, max_adj_num);
+  };
+  sccore::runTaskParallelFor(0, hitting_times_map.size(), task2, n_cores, verbose);
 
   return Rcpp::List::create(Rcpp::_["idx"]=Rcpp::wrap(commute_time_idx),
                             Rcpp::_["dist"]=Rcpp::wrap(commute_times));
