@@ -1,5 +1,9 @@
 ## Upcoming
 
+### Changed
+
+- The package does not rely on OpenMP anymore, all function use C++11 threads
+
 ## [0.1.3] - May 4 2021
 
 ### Added
@@ -11,11 +15,8 @@
 - `colSumByFactor` now requires factor input and returns a named matrix
 - Parallel cpp functions can now be accessed from other cpp packages by including `sccore_par.hpp`
 
-<<<<<<< HEAD
 ## [0.1.2] - February 19 2021
 
-=======
->>>>>>> master
 ### Added
 
 - `val2col` function that translates values into colors
