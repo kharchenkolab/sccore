@@ -3,6 +3,7 @@
 ### Changed
 
 - The package does not rely on OpenMP anymore, all function use C++11 threads
+- Better processing of corner cases in `extendMatrix`
 
 ## [0.1.3] - May 4 2021
 
