@@ -17,7 +17,7 @@ if(getRversion() >= "2.15.1"){
 #' @param winsorize winsorize final connectivity statistics value (default=FALSE) Note: Original PAGA has it as always TRUE,
 #'   but in this case there is no way to distinguish level of connectivity for highly connected groups.
 #' @return collapsed graph
-#' 
+#'
 #' @export
 collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 
@@ -89,7 +89,7 @@ collapseGraphPaga <- function(graph, groups, linearize=TRUE, winsorize=FALSE) {
 #' \donttest{
 #' collapsed = collapseGraphPaga(conosGraph, igraph::V(conosGraph), linearize=TRUE, winsorize=FALSE)
 #' }
-#' 
+#'
 #' @export
 collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 
@@ -128,7 +128,7 @@ collapseGraphSum <- function(graph, groups, normalize=TRUE) {
 #' \donttest{
 #' cluster.graph = getClusterGraph(conosGraph, igraph::V(conosGraph))
 #' }
-#' 
+#'
 #' @export
 getClusterGraph <- function(graph, groups, method="sum", plot=FALSE, node.scale=50, edge.scale=50, edge.alpha=0.3, seed=1,...) {
 
@@ -297,7 +297,7 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
 ### https://github.com/epfl-lts2/pygsp/
 
 #' Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
-#' 
+#'
 #' @param x numeric Values to be filtered. Normally, these are graph laplacian engenvalues.
 #' @param l.max numeric Maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)
 #' @param offset numeric Mean kernel value (\eqn{a} in the equation), must be in [0:1] (default=0)
@@ -407,10 +407,16 @@ smoothSignalOnGraph <- function(signal, filter, graph=NULL, lap=NULL, l.max=NULL
     lap <- igraph::laplacian_matrix(graph, sparse=TRUE)
   }
 
-  if (is.null(dim(signal))) {
-    signal <- signal[colnames(lap)]
+  if (is.null(colnames(lap)) || (is.null(names(signal)) && is.null(rownames(signal)))) {
+    warning("Either graph vertices or signal have no names. Using the existing order.")
+    if ((length(signal) != ncol(lap)) && (length(signal) != length(lap)))
+      stop("signal must have the same length as the number of nodes in graph")
   } else {
-    signal <- signal[colnames(lap),,drop=FALSE]
+    if (is.null(dim(signal))) {
+      signal <- signal[colnames(lap)]
+    } else {
+      signal <- signal[colnames(lap),,drop=FALSE]
+    }
   }
 
   l.max <- irlba::partial_eigen(lap, n=1)$values
