@@ -2,6 +2,12 @@
 
 ### Changed
 
+- Fixed bug in `val2ggcol` with all color values <= 0: it now produces blue palette instead of read-blue
+
+## [1.0.0] - Aug 20 2021
+
+### Changed
+
 - The package does not rely on OpenMP anymore, all function use C++11 threads
 - Better processing of corner cases in `extendMatrix` and `smoothSignalOnGraph`
 
