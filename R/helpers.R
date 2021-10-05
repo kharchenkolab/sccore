@@ -126,7 +126,7 @@ extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
   ## if all col.names already included in matrix, don't extend
   if (identical(new.names, character(0))) {
-    return(mtx)
+    return(mtx[, col.names, drop=FALSE])
   }
   ext.mtx <- matrix(0, nrow=nrow(mtx), ncol=length(new.names))
   colnames(ext.mtx) <- new.names
