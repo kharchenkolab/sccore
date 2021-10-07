@@ -2,7 +2,7 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' convert character vector into a factor with names "values" and "levels"
-#' 
+#'
 #' @param vals vector of values to evaluate
 #' @return factor with names "values" and "levels"
 as_factor <- function(vals) {

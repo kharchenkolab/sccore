@@ -1,5 +1,16 @@
 ## Upcoming
 
+### Changed
+
+## [1.0.0] - 7 Oct 2021
+
+### Changed
+
+- The package does not rely on OpenMP anymore, all function use C++11 threads
+- Better processing of corner cases in `extendMatrix` and `smoothSignalOnGraph`
+- Fixed bug in `val2ggcol` with all color values <= 0: it now produces blue palette instead of read-blue
+- Fixed `extendMatrix()` so that always subsets on `col.names`
+
 ## [0.1.3] - May 4 2021
 
 ### Added
@@ -11,11 +22,8 @@
 - `colSumByFactor` now requires factor input and returns a named matrix
 - Parallel cpp functions can now be accessed from other cpp packages by including `sccore_par.hpp`
 
-<<<<<<< HEAD
 ## [0.1.2] - February 19 2021
 
-=======
->>>>>>> master
 ### Added
 
 - `val2col` function that translates values into colors
