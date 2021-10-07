@@ -7,3 +7,4 @@ CHANGELOG.md
 ^Meta$
 sccore*.tar.gz
 data-raw
+^\.circleci$
