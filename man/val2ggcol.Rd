@@ -23,7 +23,7 @@ val2ggcol(
 
 \item{color.range}{either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or string "symmetric" or "all" (default="symmetric"). "symmetric": range will fit data, but will be symmetrized around zeros, "all": gradient will match the span of the range of the data (after gradient.range.quantile)}
 
-\item{palette}{an optional palette fucntion (default=NULL). The default becomes blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used}
+\item{palette}{an optional palette (default=NULL). The default becomes blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used}
 
 \item{midpoint}{optional midpoint (default=NULL). Set for the center of the resulting range by default}
 

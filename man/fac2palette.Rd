@@ -9,7 +9,7 @@ fac2palette(groups, palette, unclassified.cell.color = "gray50")
 \arguments{
 \item{groups}{vector of cluster labels, names contain cell names}
 
-\item{palette}{function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette')}
+\item{palette}{vector or list or function (default=NULL). Accepts number of colors and return list of colors (i.e. see 'colorRampPalette')}
 
 \item{unclassified.cell.color}{Color for unclassified cells (default='gray50')}
 }

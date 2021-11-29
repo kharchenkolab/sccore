@@ -1,8 +1,13 @@
 ## Upcoming
 
+## [1.0.1]
+
+- Clarify roxygen2 documentation, `palette` arguments
+
+
 ### Changed
 
-## [1.0.0] - Oct 7 2021
+## [1.0.0] - October 7 2021
 
 ### Changed
 

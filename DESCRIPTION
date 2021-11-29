@@ -33,7 +33,7 @@ Suggests:
     ggrastr (>= 0.1.7),
     rmumps,
     testthat
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 LinkingTo: Rcpp, RcppArmadillo, RcppProgress, RcppEigen
 NeedsCompilation: yes
 SystemRequirements: C++11

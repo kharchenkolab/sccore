@@ -111,7 +111,7 @@ val2col <- function(x, gradientPalette=NULL, zlim=NULL, gradient.range.quantile=
 #' Encodes logic of how to handle named-vector and functional palettes. Used primarily within embeddingGroupPlot()
 #'
 #' @param groups vector of cluster labels, names contain cell names
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette')
+#' @param palette vector or list or function (default=NULL). Accepts number of colors and return list of colors (i.e. see 'colorRampPalette')
 #' @param unclassified.cell.color Color for unclassified cells (default='gray50')
 #' @return vector or palette
 fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
@@ -131,7 +131,9 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
       return(cols)
     } else {
       # just take first n?
-      if(length(palette)<length(levels(groups))) stop("provided palette does not have enough colors to show ",length(levels(groups))," levels")
+      if(length(palette)<length(levels(groups))) {
+        stop("provided palette does not have enough colors to show ",length(levels(groups))," levels")
+      }
       return(stats::setNames(palette[1:length(levels(groups))],levels(groups)))
     }
   }
@@ -143,7 +145,7 @@ fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
 #' @param values values by which the color gradient is determined
 #' @param gradient.range.quantile numeric Trimming quantile (default=1). Either a single number or two numbers - for lower and upper quantile.
 #' @param color.range either a vector of two values explicitly specifying the values corresponding to the start/end of the gradient, or string "symmetric" or "all" (default="symmetric"). "symmetric": range will fit data, but will be symmetrized around zeros, "all": gradient will match the span of the range of the data (after gradient.range.quantile)
-#' @param palette an optional palette fucntion (default=NULL). The default becomes blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used
+#' @param palette an optional palette (default=NULL). The default becomes blue-gray90-red; if the values do not straddle 0, then truncated gradients (blue-gray90 or gray90-red) will be used
 #' @param midpoint optional midpoint (default=NULL). Set for the center of the resulting range by default
 #' @param oob function to determine what to do with the values outside of the range (default =scales::squish). Refer to 'oob' parameter in ggplot
 #' @param return.fill boolean Whether to return fill gradients instead of color (default=FALSE)
@@ -379,7 +381,7 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
 #' @param size point size (default=0.8)
 #' @param title plot title (default=NULL)
 #' @param plot.theme theme for the plot (default=NULL)
-#' @param palette function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)
+#' @param palette vector or list or function (default=NULL). Accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)
 #' @param color.range controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.
 #' @param font.size font size for cluster labels (default=c(3, 7)). It can either be single number for constant font size or pair (min, max) for font size depending on cluster size
 #' @param show.ticks show ticks and tick labels (default=FALSE)

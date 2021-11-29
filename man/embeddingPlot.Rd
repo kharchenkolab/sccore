@@ -57,7 +57,7 @@ embeddingPlot(
 
 \item{plot.theme}{theme for the plot (default=NULL)}
 
-\item{palette}{function, which accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
+\item{palette}{vector or list or function (default=NULL). Accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
 
 \item{color.range}{controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
 
