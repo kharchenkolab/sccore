@@ -6,6 +6,7 @@
 
 - Clarify roxygen2 documentation, `palette` arguments
 - Fixed `l.max` parameter in `smoothSignalOnGraph`, added validation for graph connectivity
+- `extendMatrix` doesn't drop dimensions anymore
 
 
 ### Changed

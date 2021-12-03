@@ -126,7 +126,7 @@ extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
   ext.mtx <- matrix(0, nrow=nrow(mtx), ncol=length(new.names))
   colnames(ext.mtx) <- new.names
-  return(cbind(mtx, ext.mtx)[,col.names])
+  return(cbind(mtx, ext.mtx)[,col.names,drop=FALSE])
 }
 
 #' Merge list of count matrices into a common matrix, entering 0s for the missing entries
