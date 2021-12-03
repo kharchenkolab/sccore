@@ -118,13 +118,13 @@ sn <- function(x) {
 #' @return Matrix with new columns but rows retained
 #' @examples
 #' library(dplyr)
-#' geneUnion <- lapply(conosClusterList, colnames) %>% Reduce(union, .)
-#' extendMatrix(conosClusterList[[1]], col.names=geneUnion)
+#' gene.union <- lapply(conos.cluster.list, colnames) %>% Reduce(union, .)
+#' extendMatrix(conosClusterList[[1]], col.names=gene.union)
 #'
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
-  ext.mtx <- matrix(0, nrow=nrow(mtx), ncol=length(new.names))
+  ext.mtx <- sparseMatrix(i=NULL, j=NULL, x=integer(), dims=c(nrow(mtx), length(new.names))) 
   colnames(ext.mtx) <- new.names
   return(cbind(mtx, ext.mtx)[,col.names,drop=FALSE])
 }
