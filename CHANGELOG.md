@@ -2,7 +2,10 @@
 
 ## [1.0.1]
 
+### Changed
+
 - Clarify roxygen2 documentation, `palette` arguments
+- Fixed `l.max` parameter in `smoothSignalOnGraph`, added validation for graph connectivity
 
 
 ### Changed

@@ -419,7 +419,12 @@ smoothSignalOnGraph <- function(signal, filter, graph=NULL, lap=NULL, l.max=NULL
     }
   }
 
-  l.max <- irlba::partial_eigen(lap, n=1)$values
+  if (is.null(l.max)) {
+    if (!igraph::is_connected(graph))
+      stop("The provided graph is not connected. It has to be connected to estimate l.max.")
+
+    l.max <- irlba::partial_eigen(lap, n=1)$values
+  }
   coeffs <- computeChebyshevCoeffs(function(x) filter(x, l.max), m=m, l.max)
   sig.smoothed <- smoothChebyshev(lap, coeffs, signal, l.max, ...)
 
