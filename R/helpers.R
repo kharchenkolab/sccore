@@ -19,13 +19,12 @@ NULL
 #' plapply(1:10, square, n.cores=1, progress=TRUE)
 #'
 #' @export
-plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE, fail.on.error=FALSE) {
+plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE, mc.allow.recursive=FALSE, fail.on.error=FALSE) {
   if (progress) {
-    result <- pbmcapply::pbmclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule)
+    result <- pbmcapply::pbmclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
   } else if(n.cores > 1) {
-    result <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule)
+    result <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
   } else {
-    # fall back on lapply
     result <- lapply(...)
   }
 
