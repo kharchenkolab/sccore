@@ -123,7 +123,7 @@ sn <- function(x) {
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
-  ext.mtx <- sparseMatrix(i=NULL, j=NULL, x=integer(), dims=c(nrow(mtx), length(new.names))) 
+  ext.mtx <- Matrix::sparseMatrix(i=NULL, j=NULL, x=integer(), dims=c(nrow(mtx), length(new.names))) 
   colnames(ext.mtx) <- new.names
   return(cbind(mtx, ext.mtx)[,col.names,drop=FALSE])
 }
