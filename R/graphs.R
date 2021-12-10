@@ -306,7 +306,7 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
 #' @return smoothed values for `x`
 #' @family graph smoothing
 #'
-#' @keywords internal
+#' @export
 heatFilter <- function(x, l.max, order=1, offset=0, beta=30) {
   exp(-beta * abs(x / l.max - offset) ** order)
 }
@@ -396,9 +396,8 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
 #' @param l.max maximal eigenvalue of `lap` (default=NULL). If NULL, estimated from `lap`.
 #' @param m numeric Maximum order of Chebyshev coeff to compute (default=50)
 #' @family graph smoothing
+#' 
 #' @export
-#'
-#' @keywords internal
 smoothSignalOnGraph <- function(signal, filter, graph=NULL, lap=NULL, l.max=NULL, m=50, ...) {
   if (is.null(lap)) {
     if (is.null(graph)){

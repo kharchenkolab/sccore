@@ -45,4 +45,3 @@ Other graph smoothing:
 \code{\link{smoothChebyshev}()}
 }
 \concept{graph smoothing}
-\keyword{internal}
