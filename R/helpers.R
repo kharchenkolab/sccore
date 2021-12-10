@@ -117,7 +117,7 @@ sn <- function(x) {
 #' @return Matrix with new columns but rows retained
 #' @examples
 #' library(dplyr)
-#' gene.union <- lapply(conos.cluster.list, colnames) %>% Reduce(union, .)
+#' gene.union <- lapply(conosClusterList, colnames) %>% Reduce(union, .)
 #' extendMatrix(conosClusterList[[1]], col.names=gene.union)
 #'
 #' @export
