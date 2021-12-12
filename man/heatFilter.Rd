@@ -30,4 +30,3 @@ Other graph smoothing:
 \code{\link{smoothSignalOnGraph}()}
 }
 \concept{graph smoothing}
-\keyword{internal}

@@ -9,6 +9,7 @@ plapply(
   progress = FALSE,
   n.cores = parallel::detectCores(),
   mc.preschedule = FALSE,
+  mc.allow.recursive = FALSE,
   fail.on.error = FALSE
 )
 }
@@ -27,6 +28,9 @@ plapply(
     number of values in \code{X}, the latter is better for jobs that
     have high variance of completion time and not too many values of
     \code{X} compared to \code{mc.cores}.}
+
+\item{mc.allow.recursive}{Unless true, calling \code{mclapply} in a
+    child process will use the child and not fork again.}
 
 \item{fail.on.error}{boolean Whether to fail and report and error (using stop()) as long as any of the individual tasks has failed (default =FALSE)}
 }

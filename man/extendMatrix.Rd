@@ -19,7 +19,7 @@ Extend matrix to include new columns in matrix
 }
 \examples{
 library(dplyr)
-geneUnion <- lapply(conosClusterList, colnames) \%>\% Reduce(union, .)
-extendMatrix(conosClusterList[[1]], col.names=geneUnion)
+gene.union <- lapply(conosClusterList, colnames) \%>\% Reduce(union, .)
+extendMatrix(conosClusterList[[1]], col.names=gene.union)
 
 }

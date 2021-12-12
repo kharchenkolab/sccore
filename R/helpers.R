@@ -19,13 +19,12 @@ NULL
 #' plapply(1:10, square, n.cores=1, progress=TRUE)
 #'
 #' @export
-plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE, fail.on.error=FALSE) {
+plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE, mc.allow.recursive=FALSE, fail.on.error=FALSE) {
   if (progress) {
-    result <- pbmcapply::pbmclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule)
+    result <- pbmcapply::pbmclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
   } else if(n.cores > 1) {
-    result <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule)
+    result <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
   } else {
-    # fall back on lapply
     result <- lapply(...)
   }
 
@@ -118,15 +117,15 @@ sn <- function(x) {
 #' @return Matrix with new columns but rows retained
 #' @examples
 #' library(dplyr)
-#' geneUnion <- lapply(conosClusterList, colnames) %>% Reduce(union, .)
-#' extendMatrix(conosClusterList[[1]], col.names=geneUnion)
+#' gene.union <- lapply(conosClusterList, colnames) %>% Reduce(union, .)
+#' extendMatrix(conosClusterList[[1]], col.names=gene.union)
 #'
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
-  ext.mtx <- matrix(0, nrow=nrow(mtx), ncol=length(new.names))
+  ext.mtx <- Matrix::sparseMatrix(i=NULL, j=NULL, x=integer(), dims=c(nrow(mtx), length(new.names))) 
   colnames(ext.mtx) <- new.names
-  return(cbind(mtx, ext.mtx)[,col.names])
+  return(cbind(mtx, ext.mtx)[,col.names,drop=FALSE])
 }
 
 #' Merge list of count matrices into a common matrix, entering 0s for the missing entries

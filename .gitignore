@@ -6,3 +6,4 @@ sccore*.tar.gz
 sccore.Rcheck
 *.o
 *.so
+.idea

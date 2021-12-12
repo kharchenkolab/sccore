@@ -1,8 +1,17 @@
-## Upcoming
+# Changelog
+
+## [1.0.1] - December 11 2021
 
 ### Changed
 
-## [1.0.0] - Oct 7 2021
+- Clarify roxygen2 documentation, `palette` arguments
+- Fixed `l.max` parameter in `smoothSignalOnGraph`, added validation for graph connectivity
+- `extendMatrix` doesn't drop dimensions anymore
+- Fixed processing of `mc.allow.recursive` for `n.cores=1` in `plapply`
+- Export `heatFilter()`
+
+## [1.0.0] - October 7 2021
+
 
 ### Changed
 
