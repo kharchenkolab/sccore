@@ -22,6 +22,17 @@ NULL
 plapply <- function(..., progress=FALSE, n.cores=parallel::detectCores(), mc.preschedule=FALSE, mc.allow.recursive=FALSE, fail.on.error=FALSE) {
   if (progress) {
     result <- pbmcapply::pbmclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
+    iter <- list(...)[[1]]
+    if (!is.null(names(result)) && ("value" %in% names(result)) &&
+       (!("value" %in% names(iter)) || ((length(result) != length(iter)) && !("value" %in% names(result$value))))) {
+      # In some cases, pbmcapply changes the list structure, storing results in the result$value and warning in result$warning.
+      # There is no good way to check if it was changed, though.
+      if (!is.null(result$warning)) {
+        warning(result$warning)
+      }
+
+      result <- result$value
+    }
   } else if(n.cores > 1) {
     result <- parallel::mclapply(..., mc.cores=n.cores, mc.preschedule=mc.preschedule, mc.allow.recursive=mc.allow.recursive)
   } else {
@@ -123,7 +134,7 @@ sn <- function(x) {
 #' @export
 extendMatrix <- function(mtx, col.names) {
   new.names <- setdiff(col.names, colnames(mtx))
-  ext.mtx <- Matrix::sparseMatrix(i=NULL, j=NULL, x=integer(), dims=c(nrow(mtx), length(new.names))) 
+  ext.mtx <- Matrix::sparseMatrix(i=NULL, j=NULL, x=integer(), dims=c(nrow(mtx), length(new.names)))
   colnames(ext.mtx) <- new.names
   return(cbind(mtx, ext.mtx)[,col.names,drop=FALSE])
 }

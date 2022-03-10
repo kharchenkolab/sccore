@@ -1,5 +1,11 @@
 # Changelog
 
+## [Upcoming]
+
+### Changed
+
+- Fixed bug when `plapply` with multiple cores and `progress=TRUE` changed the data structure
+
 ## [1.0.1]
 
 ### Changed
