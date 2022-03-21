@@ -5,6 +5,7 @@
 ### Changed
 
 - Fixed bug when `plapply` with multiple cores and `progress=TRUE` changed the data structure
+- Fixed small bugs
 
 ## [1.0.1]
 
