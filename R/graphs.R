@@ -372,7 +372,7 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
     n.chunks <- min(progress.chunks * n.cores, ncol(signal))
     r <- 1:ncol(signal) %>% split(ceiling(seq_along(.) / (length(.) / n.chunks))) %>%
       plapply(function(ids) smoothChebyshevInner(lap.norm, fac, signal[,ids,drop=FALSE], coeffs),
-              n.cores=n.cores, mc.preschedule=TRUE, progress=TRUE) %>%
+              n.cores=n.cores, mc.preschedule=TRUE, progress=progress) %>%
       Reduce(cbind, .)
   } else {
     r <- smoothChebyshevInner(lap.norm, fac, signal, coeffs)
@@ -396,7 +396,7 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
 #' @param l.max maximal eigenvalue of `lap` (default=NULL). If NULL, estimated from `lap`.
 #' @param m numeric Maximum order of Chebyshev coeff to compute (default=50)
 #' @family graph smoothing
-#' 
+#'
 #' @export
 smoothSignalOnGraph <- function(signal, filter, graph=NULL, lap=NULL, l.max=NULL, m=50, ...) {
   if (is.null(lap)) {

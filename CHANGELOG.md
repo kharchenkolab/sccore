@@ -1,5 +1,6 @@
 # Changelog
 
+
 ## [1.0.2] - August 23 2022
 
 ### Changed
@@ -7,7 +8,7 @@
 - Fixed HTML5 validation issue requested by CRAN given R 4.2.0
 - Removed a few if conditionals with 'class()' 
 
-## [1.0.1] - December 12 2021
+## [1.0.1] - December 11 2021
 
 ### Changed
 
@@ -16,6 +17,7 @@
 - `extendMatrix` doesn't drop dimensions anymore
 - Fixed processing of `mc.allow.recursive` for `n.cores=1` in `plapply`
 - Export `heatFilter()`
+
 
 ## [1.0.0] - October 7 2021
 
