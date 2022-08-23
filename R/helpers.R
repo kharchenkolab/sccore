@@ -12,6 +12,7 @@ NULL
 #' @param progress Show progress bar via pbmcapply::pbmclapply() (default=FALSE).
 #' @param fail.on.error boolean Whether to fail and report and error (using stop()) as long as any of the individual tasks has failed (default =FALSE)
 #' @param n.cores Number of cores to use (default=parallel::detectCores()). When n.cores=1, regular lapply() is used. Note: doesn't work when progress=TRUE
+#' @param mc.allow.recursive boolean Unless true, calling mclapply in a child process will use the child and not fork again (default=TRUE)
 #' @inheritParams parallel::mclapply
 #' @return list, as returned by lapply
 #' @examples

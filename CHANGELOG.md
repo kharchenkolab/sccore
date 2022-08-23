@@ -7,6 +7,7 @@
 
 - Fixed HTML5 validation issue requested by CRAN given R 4.2.0
 - Removed a few if conditionals with 'class()' 
+- Set mc.allow.recursive=TRUE by default in 'plapply()'. (Explanation: "Somehow, without it multithreading is often disabled if `progress=TRUE`.Maybe, a bug in the library." https://github.com/kharchenkolab/sccore/commit/8566f3ded6b986592e683de1639649ea573cc36b)
 
 ## [1.0.1] - December 11 2021
 
