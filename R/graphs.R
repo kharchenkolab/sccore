@@ -296,14 +296,14 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
 ### Graph Smoothing (re-implementation of the pygsp package)
 ### https://github.com/epfl-lts2/pygsp/
 
-#' Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
+#' Graph filter with the heat kernel: \eqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
 #'
 #' @param x numeric Values to be filtered. Normally, these are graph laplacian engenvalues.
 #' @param l.max numeric Maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)
 #' @param offset numeric Mean kernel value (\eqn{a} in the equation), must be in [0:1] (default=0)
 #' @param order numeric Parameter \eqn{b} in the equation. Larger values correspond to the sharper kernel form (default=1). The values should be positive.
 #' @param beta  numeric Parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing (default=30).
-#' @return smoothed values for `x`
+#' @return smoothed values for 'x'
 #' @family graph smoothing
 #'
 #' @export
@@ -372,7 +372,7 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
     n.chunks <- min(progress.chunks * n.cores, ncol(signal))
     r <- 1:ncol(signal) %>% split(ceiling(seq_along(.) / (length(.) / n.chunks))) %>%
       plapply(function(ids) smoothChebyshevInner(lap.norm, fac, signal[,ids,drop=FALSE], coeffs),
-              n.cores=n.cores, mc.preschedule=TRUE, progress=TRUE) %>%
+              n.cores=n.cores, mc.preschedule=TRUE, progress=progress) %>%
       Reduce(cbind, .)
   } else {
     r <- smoothChebyshevInner(lap.norm, fac, signal, coeffs)
@@ -396,7 +396,7 @@ smoothChebyshev <- function(lap, coeffs, signal, l.max, n.cores=1, progress.chun
 #' @param l.max maximal eigenvalue of `lap` (default=NULL). If NULL, estimated from `lap`.
 #' @param m numeric Maximum order of Chebyshev coeff to compute (default=50)
 #' @family graph smoothing
-#' 
+#'
 #' @export
 smoothSignalOnGraph <- function(signal, filter, graph=NULL, lap=NULL, l.max=NULL, m=50, ...) {
   if (is.null(lap)) {

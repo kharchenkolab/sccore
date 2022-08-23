@@ -2,7 +2,7 @@
 % Please edit documentation in R/graphs.R
 \name{heatFilter}
 \alias{heatFilter}
-\title{Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}}
+\title{Graph filter with the heat kernel: \eqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}}
 \usage{
 heatFilter(x, l.max, order = 1, offset = 0, beta = 30)
 }
@@ -18,10 +18,10 @@ heatFilter(x, l.max, order = 1, offset = 0, beta = 30)
 \item{beta}{numeric Parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing (default=30).}
 }
 \value{
-smoothed values for `x`
+smoothed values for 'x'
 }
 \description{
-Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
+Graph filter with the heat kernel: \eqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
 }
 \seealso{
 Other graph smoothing: 

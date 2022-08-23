@@ -5,7 +5,7 @@
 \alias{conosGraph}
 \title{Conos graph}
 \format{
-An object of class \code{igraph} of length 10.
+An object of class \code{igraph} of length 100.
 }
 \usage{
 conosGraph
