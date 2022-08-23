@@ -296,14 +296,14 @@ propagateLabelsDiffusion <- function(graph, labels, max.iters=100, diffusion.fad
 ### Graph Smoothing (re-implementation of the pygsp package)
 ### https://github.com/epfl-lts2/pygsp/
 
-#' Graph filter with the heat kernel: \deqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
+#' Graph filter with the heat kernel: \eqn{f(x) = exp(-\beta |x / \lambda_m - a|^b)}
 #'
 #' @param x numeric Values to be filtered. Normally, these are graph laplacian engenvalues.
 #' @param l.max numeric Maximum eigenvalue on the graph (\eqn{\lambda_m} in the equation)
 #' @param offset numeric Mean kernel value (\eqn{a} in the equation), must be in [0:1] (default=0)
 #' @param order numeric Parameter \eqn{b} in the equation. Larger values correspond to the sharper kernel form (default=1). The values should be positive.
 #' @param beta  numeric Parameter \eqn{\beta} in the equation. Larger values provide stronger smoothing. \eqn{\beta=0} corresponds to no smoothing (default=30).
-#' @return smoothed values for `x`
+#' @return smoothed values for 'x'
 #' @family graph smoothing
 #'
 #' @export

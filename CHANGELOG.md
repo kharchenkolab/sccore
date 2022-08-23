@@ -1,6 +1,12 @@
 # Changelog
 
-## [1.0.1]
+## [1.0.2] - August 23 2022
+
+### Changed
+
+- Fixed HTML5 validation issue requested by CRAN given R 4.2.0
+
+## [1.0.1] - December 12 2021
 
 ### Changed
 
