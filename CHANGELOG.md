@@ -5,6 +5,7 @@
 ### Changed
 
 - Fixed HTML5 validation issue requested by CRAN given R 4.2.0
+- Removed a few if conditionals with 'class()' 
 
 ## [1.0.1] - December 12 2021
 

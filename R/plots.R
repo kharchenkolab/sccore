@@ -117,7 +117,7 @@ val2col <- function(x, gradientPalette=NULL, zlim=NULL, gradient.range.quantile=
 fac2palette <- function(groups, palette, unclassified.cell.color='gray50') {
   groups <- as.factor(groups)
 
-  if (class(palette)=='function') {
+  if (inherits(palette, 'function')) {
     return(palette(length(levels(groups))))
   }
 
@@ -544,7 +544,7 @@ dotPlot <- function (markers,
     message("Extracting gene expression... ")
   }
 
-  if (class(cell.groups) != "factor") {
+  if (inherits(cell.groups,"factor")) {
     tryCatch({
       if(verbose){
         message("Treating 'cell.groups' as a factor.")
