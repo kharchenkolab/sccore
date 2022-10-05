@@ -164,3 +164,40 @@ mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   }
   return(res)
 }
+
+#' Check for installed package(s)
+#'
+#' @description Check whether a package is installed and suggest how to install from either CRAN or Bioconductor
+#' @param pkgs character Package name(s)
+#' @param details character Helper text (default = "to run this function")
+#' @param install.help character Additional information on how to install package (default = NULL)
+#' @param bioc logical Package(s) is/are available from Bioconductor (default = FALSE)
+#' @param cran logical Package(s) is/are available from CRAN (default = FALSE)
+#' @examples
+#' checkPackageInstalled("sccore", cran = TRUE)
+#'
+#' @export
+checkPackageInstalled <- function(pkgs, details='to run this function', install.help=NULL, bioc=FALSE, cran=FALSE) {
+  pkgs <- pkgs[!sapply(pkgs, requireNamespace, quietly=TRUE)]
+  if (length(pkgs) == 0) {
+    return(NULL)
+  }
+
+  if (length(pkgs) > 1) {
+    pkgs <- paste0("c('", paste0(pkgs, collapse="', '"), "')")
+    error.text <- paste("Packages", pkgs, "must be installed", details)
+  } else {
+    pkgs <- paste0("'", pkgs, "'")
+    error.text <- paste(pkgs, "package must be installed", details)
+  }
+
+  if (!is.null(install.help)) {
+    error.text <- paste0(error.text, ". Please, run `", install.help, "` to do it.")
+  } else if (bioc) {
+    error.text <- paste0(error.text, ". Please, run `BiocManager::install(", pkgs, ")", "` to do it.")
+  } else if (cran) {
+    error.text <- paste0(error.text, ". Please, run `install.packages(", pkgs, ")", "` to do it.")
+  }
+
+  stop(error.text)
+}

@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+
+- Added checkPackageInstalled
 
 ## [1.0.2] - August 23 2022
 
