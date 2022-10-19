@@ -523,7 +523,7 @@ dotPlot <- function (markers,
                      scale.by = "radius",
                      scale.min = NA,
                      scale.max = NA,
-                     verbose=TRUE,
+                     verbose=FALSE,
                      ...) {
 
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
@@ -550,61 +550,76 @@ dotPlot <- function (markers,
       if(verbose){
         message("Treating 'cell.groups' as a factor.")
       }
-      cell.groups %<>% as.factor()
+      cell.groups %<>%
+        as.factor()
     }, error=function(e) stop("Could not convert 'cell.groups' to a factor\n", e))
   }
   # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
-  p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>% Reduce(rbind, .)
+  p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>%
+    bind_rows()
   if (is.logical(gene.order) && gene.order) {
     gene.order <- unique(markers)
-  } else {
-    gene.order <- NULL
   }
 
   if (!is.null(gene.order)) {
-    p.df %<>% dplyr::mutate(Gene = factor(as.character(.data$Gene), levels = gene.order))
+    p.df %<>%
+      mutate(Gene = factor(as.character(.data$Gene), levels = gene.order))
   }
 
   # Adapted from Seurat:::DotPlot
   if (verbose) {
     message("Calculating expression distributions... ")
   }
-  data.plot <- levels(cell.groups) %>% plapply(function(t) {
-    markers %>% lapply(function(g) {
-      df <- p.df %>% dplyr::filter(.data$Type==t, .data$Gene==g)
-      pct.exp <- sum(df$Expr>0)/dim(df)[1]*100
-      avg.exp <- mean(df$Expr[df$Expr>0])
-      res <- data.frame(gene=g,
-                        pct.exp=pct.exp,
-                        avg.exp=avg.exp)
-      return(res)
-    }) %>% Reduce(rbind, .)
+
+  data.plot <- levels(cell.groups) %>%
+    plapply(function(t) {
+      markers %>%
+        lapply(function(g) {
+          df <- p.df %>%
+            filter(Type==t, Gene==g)
+          pct.exp <- sum(df$Expr>0)/nrow(df)*100
+          avg.exp <- mean(df$Expr[df$Expr>0])
+          res <- data.frame(gene=g,
+                            pct.exp=pct.exp,
+                            avg.exp=avg.exp)
+          return(res)
+        }) %>%
+        bind_rows()
   }, n.cores=n.cores, progress=verbose, ...) %>%
-    stats::setNames(levels(cell.groups)) %>%
-    dplyr::bind_rows(., .id="cluster")
+    setNames(levels(cell.groups)) %>%
+    bind_rows(., .id="cluster")
 
-  data.plot$cluster %<>% factor(., levels=rev(unique(.)))
+  data.plot$cluster %<>%
+    factor(., levels=rev(unique(.)))
 
-  data.plot %<>% dplyr::arrange(.data$gene)
+  data.plot %<>%
+    arrange(gene)
 
-  data.plot$avg.exp.scaled <- data.plot$gene %>% unique %>% sapply(function(g) {
-    data.plot %>% .[.$gene == g, 'avg.exp'] %>%
-      scale %>%
-      setMinMax(min = col.min, max = col.max)
-  }) %>% unlist %>% as.numeric
+  data.plot$avg.exp.scaled <- data.plot$gene %>%
+    unique() %>%
+    sapply(function(g) {
+      data.plot %>%
+        filter(gene == g) %>%
+        select("avg.exp") %>%
+        scale() %>%
+        setMinMax(min = col.min, max = col.max)
+    }) %>%
+    unlist() %>%
+    as.numeric()
 
   data.plot$pct.exp[data.plot$pct.exp < dot.min] <- NA
 
-  cluster.colour %<>% rev
+  cluster.colour %<>%
+    rev()
 
-  plot <- ggplot(data.plot, aes_string("gene", "cluster")) +
+  if (!is.null(gene.order)) data.plot %<>% mutate(gene = gene %>% factor(levels = gene.order))
+
+  plot <- ggplot(data.plot, aes(gene, cluster)) +
     geom_point(aes_string(size = "pct.exp", color = "avg.exp.scaled")) +
     scale.func(range = c(0, dot.scale), limits = c(scale.min, scale.max)) +
+    theme_classic() +
     theme(axis.text.x = element_text(angle=text.angle, hjust = 1, colour=marker.colour),
-          axis.text.y = element_text(colour=cluster.colour),
-          panel.background = element_rect(fill = "white", colour = "black", size = 1, linetype = "solid"),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank()) +
+          axis.text.y = element_text(colour=cluster.colour)) +
     guides(size = guide_legend(title = 'Percent expressed'), color = guide_colorbar(title = 'Average expression')) +
     labs(x = xlab, y = ylab) +
     scale_color_gradient(low = cols[1], high = cols[2])
