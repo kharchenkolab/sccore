@@ -9,7 +9,7 @@ NULL
 
 ## for magrittr and dplyr functions below
 if(getRversion() >= "2.15.1"){
-  utils::globalVariables(c(".", "n", "Size", "Group", "x", "y"))
+  utils::globalVariables(c(".", "n", "Size", "Group", "x", "y", "Type", "Gene", "gene", "cluster"))
 }
 
 
