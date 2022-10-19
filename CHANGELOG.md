@@ -3,6 +3,8 @@
 ## Upcoming
 
 - Added checkPackageInstalled
+- Added saveDeAsJson
+- Bugfix for dotPlot
 
 ## [1.0.2] - August 23 2022
 
