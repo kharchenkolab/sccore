@@ -1,9 +1,10 @@
-#' @import ggplot2
+#' @import ggplot2 scales
+#' @importFrom dplyr bind_rows arrange filter select mutate
 #' @importFrom graphics par
 #' @importFrom grDevices adjustcolor rainbow colorRampPalette
 #' @importFrom magrittr %>% %<>% %$%
 #' @importFrom rlang .data
-#' @import scales
+#' @importFrom stats setNames
 NULL
 
 ## for magrittr and dplyr functions below
@@ -70,7 +71,7 @@ fac2col <- function(x, s=1, v=1, shuffle=FALSE, min.group.size=1,
 #' @param gradient.range.quantile extreme quantiles of values that should be trimmed prior to color mapping (default=0.95)
 #' @examples
 #' colors <- val2col( rnorm(10) )
-#' 
+#'
 #' @export
 val2col <- function(x, gradientPalette=NULL, zlim=NULL, gradient.range.quantile=0.95) {
   nx <- names(x);
