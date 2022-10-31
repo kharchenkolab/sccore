@@ -165,16 +165,17 @@ mergeCountMatrices <- function(cms, transposed=FALSE, ...) {
   return(res)
 }
 
-#' Check for installed package(s)
+#' Check whether a package is installed and suggest how to install from CRAN, Bioconductor, or other external source
 #'
-#' @description Check whether a package is installed and suggest how to install from either CRAN or Bioconductor
 #' @param pkgs character Package name(s)
 #' @param details character Helper text (default = "to run this function")
 #' @param install.help character Additional information on how to install package (default = NULL)
 #' @param bioc logical Package(s) is/are available from Bioconductor (default = FALSE)
 #' @param cran logical Package(s) is/are available from CRAN (default = FALSE)
 #' @examples
+#' \dontrun{
 #' checkPackageInstalled("sccore", cran = TRUE)
+#' }
 #'
 #' @export
 checkPackageInstalled <- function(pkgs, details='to run this function', install.help=NULL, bioc=FALSE, cran=FALSE) {

@@ -113,6 +113,8 @@ saveDeAsJson <- function(de.raw, sample.groups=NULL, saveprefix=NULL, dir.name="
   write(s, file=toc.file)
 
   # Copy viewer files
-  file.copy(from = c(paste(system.file(package="sccore"), "extdata/deview.2.html", sep ="/"),
-                     paste(system.file(package="sccore"), "extdata/deview.2.js", sep ="/")), to = paste0(dir.name), overwrite = TRUE)
+  file.copy(from = system.file("extdata", c("deview.2.html", "deview.2.js"), package="sccore"),
+            to = paste0(dir.name),
+            overwrite = TRUE)
+
 }
