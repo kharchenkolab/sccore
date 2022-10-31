@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{checkPackageInstalled}
 \alias{checkPackageInstalled}
-\title{Check for installed package(s)}
+\title{Check whether a package is installed and suggest how to install from CRAN, Bioconductor, or other external source}
 \usage{
 checkPackageInstalled(
   pkgs,
@@ -24,9 +24,11 @@ checkPackageInstalled(
 \item{cran}{logical Package(s) is/are available from CRAN (default = FALSE)}
 }
 \description{
-Check whether a package is installed and suggest how to install from either CRAN or Bioconductor
+Check whether a package is installed and suggest how to install from CRAN, Bioconductor, or other external source
 }
 \examples{
+\dontrun{
 checkPackageInstalled("sccore", cran = TRUE)
+}
 
 }
