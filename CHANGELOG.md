@@ -24,7 +24,6 @@
 - Fixed processing of `mc.allow.recursive` for `n.cores=1` in `plapply`
 - Export `heatFilter()`
 
-
 ## [1.0.0] - October 7 2021
 
 ### Changed
