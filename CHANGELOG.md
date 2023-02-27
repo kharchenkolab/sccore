@@ -2,6 +2,8 @@
 
 ## Upcoming
 
+## [1.0.3] - February 27 2023
+
 - Added checkPackageInstalled
 - Added saveDeAsJson
 - Bugfix for dotPlot
