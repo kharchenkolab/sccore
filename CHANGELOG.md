@@ -7,6 +7,7 @@
 - Added checkPackageInstalled
 - Added saveDeAsJson
 - Bugfix for dotPlot
+- Removed 'CXX_STD = CXX11' from the Makevars files, and removed 'SystemRequirements: C++11'
 
 ## [1.0.2] - August 23 2022
 
