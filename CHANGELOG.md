@@ -2,7 +2,7 @@
 
 ## Upcoming
 
-## [1.0.3] - February 27 2023
+## [1.0.3] - March 12 2023
 
 - Added checkPackageInstalled
 - Added saveDeAsJson
