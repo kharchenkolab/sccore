@@ -468,6 +468,7 @@ embeddingPlot <- function(embedding, groups=NULL, colors=NULL, subgroups=NULL, p
 #' @param dot.min numeric The fraction of cells at which to draw the smallest dot (default=0). All cell groups with less than this expressing the given gene will have no dot drawn.
 #' @param dot.scale numeric Scale the size of the points, similar to cex (default=6)
 #' @param scale.by  string Scale the size of the points by 'size' or by 'radius' (default="radius")
+#' @param scale.center boolean Center scaling, see `scale()` argument `center` (default=FALSE)
 #' @param scale.min numeric Set lower limit for scaling, use NA for default (default=NA)
 #' @param scale.max numeric Set upper limit for scaling, use NA for default (default=NA)
 #' @param verbose boolean Verbose output (default=TRUE)
@@ -521,6 +522,7 @@ dotPlot <- function (markers,
                      dot.min = 0,
                      dot.scale = 6,
                      scale.by = "radius",
+                     scale.center = FALSE,
                      scale.min = NA,
                      scale.max = NA,
                      verbose=FALSE,
@@ -601,7 +603,7 @@ dotPlot <- function (markers,
       data.plot %>%
         filter(gene == g) %>%
         select("avg.exp") %>%
-        scale() %>%
+        scale(center = scale.center) %>%
         setMinMax(min = col.min, max = col.max)
     }) %>%
     unlist() %>%

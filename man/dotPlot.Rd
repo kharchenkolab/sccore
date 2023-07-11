@@ -21,6 +21,7 @@ dotPlot(
   dot.min = 0,
   dot.scale = 6,
   scale.by = "radius",
+  scale.center = FALSE,
   scale.min = NA,
   scale.max = NA,
   verbose = FALSE,
@@ -59,6 +60,8 @@ dotPlot(
 \item{dot.scale}{numeric Scale the size of the points, similar to cex (default=6)}
 
 \item{scale.by}{string Scale the size of the points by 'size' or by 'radius' (default="radius")}
+
+\item{scale.center}{boolean Center scaling, see `scale()` argument `center` (default=FALSE)}
 
 \item{scale.min}{numeric Set lower limit for scaling, use NA for default (default=NA)}
 

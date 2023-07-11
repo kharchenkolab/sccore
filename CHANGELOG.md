@@ -2,6 +2,8 @@
 
 ## Upcoming
 
+- Added `scale.center` argument to `dotPlot()` to plot more intuitive and correct avg. expression levels. 
+
 ## [1.0.3] - March 12 2023
 
 - Added checkPackageInstalled
