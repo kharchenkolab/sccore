@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.5] - Feb 22 2024
+
+- Remove `/usr/lib` linking in Makevars files
+- Also remove `-L"." -lpthread -lstdc++ -lm`. Not necessary.
+
 ## [1.0.4] - July 11 2023
 
 - Added `scale.center` argument to `dotPlot()` to plot more intuitive and correct avg. expression levels. 
