@@ -35,7 +35,7 @@ Suggests:
     jsonlite,
     rmumps,
     testthat
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 LinkingTo: Rcpp, RcppArmadillo, RcppProgress, RcppEigen
 NeedsCompilation: yes
 URL: https://github.com/kharchenkolab/sccore
