@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.0.6] - April 3 2025
+
+- `embeddingPlot()` now accepts `Seurat` objects and works with their metadata and reductions
+
 ## [1.0.5] - Feb 22 2024
 
 - Remove `/usr/lib` linking in Makevars files
@@ -7,7 +11,7 @@
 
 ## [1.0.4] - July 11 2023
 
-- Added `scale.center` argument to `dotPlot()` to plot more intuitive and correct avg. expression levels. 
+- Added `scale.center` argument to `dotPlot()` to plot more intuitive and correct avg. expression levels.
 
 ## [1.0.3] - March 12 2023
 
@@ -21,7 +25,7 @@
 ### Changed
 
 - Fixed HTML5 validation issue requested by CRAN given R 4.2.0
-- Removed a few if conditionals with 'class()' 
+- Removed a few if conditionals with 'class()'
 - Set mc.allow.recursive=TRUE by default in 'plapply()'. (Explanation: "Somehow, without it multithreading is often disabled if `progress=TRUE`.Maybe, a bug in the library." https://github.com/kharchenkolab/sccore/commit/8566f3ded6b986592e683de1639649ea573cc36b)
 
 ## [1.0.1] - December 11 2021
