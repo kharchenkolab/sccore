@@ -161,9 +161,9 @@ Plot embedding from Seurat object
 library(sccore)
 embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
 
-# so = Seurat object
-# 
-# Call function as follows:
-# embeddingPlot(so, groups="seurat_clusters", reduction="umap")
+\dontrun{
+# so = example Seurat object
+embeddingPlot(so, groups="seurat_clusters", reduction="umap")
+}
 
 }
