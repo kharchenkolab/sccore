@@ -461,7 +461,10 @@ setMethod("embeddingPlot", "ANY", function(
 #' @param reduction Reduction to use for embedding (default=NULL)
 #' @return ggplot2 object
 #' @examples
-#' embeddingPlot(so, groups="seurat_clusters", reduction="umap")
+#' # so = Seurat object
+#' # 
+#' # Call function as follows:
+#' # embeddingPlot(so, groups="seurat_clusters", reduction="umap")
 #'
 #' @name embeddingPlot
 #' @rdname embeddingPlot
