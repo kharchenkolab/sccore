@@ -368,7 +368,17 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
   return(gg)
 }
 
+#' embeddingPlot generic
+#' Plot embedding with provided labels / colors using ggplot2
+#'
+#' @param object two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors
+#' @param ... Additional argument list, see 'embeddingPlot()' methods for details
+#'
+#' @docType methods
+#' @rdname embeddingPlot-methods
+#' @export
 setGeneric("embeddingPlot", function(object, ...) standardGeneric("embeddingPlot"))
+
 
 #' Plot embedding with provided labels / colors using ggplot2
 #'
@@ -402,9 +412,8 @@ setGeneric("embeddingPlot", function(object, ...) standardGeneric("embeddingPlot
 #' library(sccore)
 #' embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
 #'
-#' @name embeddingPlot
-#' @docType methods
-#' @rdname embeddingPlot
+#' @rdname embeddingPlot-methods
+#' @aliases embeddingPlot-methods,ANY
 #' @export
 setMethod("embeddingPlot", "ANY", function(
   object, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
@@ -470,8 +479,8 @@ setMethod("embeddingPlot", "ANY", function(
 #' embeddingPlot(so, groups="seurat_clusters", reduction="umap")
 #' }
 #'
-#' @rdname embeddingPlot
-#' @aliases embeddingPlot,Seurat
+#' @rdname embeddingPlot-methods
+#' @aliases embeddingPlot-methods,Seurat
 #' @export
 setMethod("embeddingPlot", signature("Seurat"), function(object, reduction=NULL, groups=NULL, colors=NULL, ...) {
   if (is.null(reduction)) {

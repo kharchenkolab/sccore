@@ -3,10 +3,15 @@
 \docType{methods}
 \name{embeddingPlot}
 \alias{embeddingPlot}
+\alias{embeddingPlot,ANY-method}
+\alias{embeddingPlot-methods,ANY}
 \alias{embeddingPlot,Seurat-method}
-\alias{embeddingPlot,Seurat}
-\title{Plot embedding with provided labels / colors using ggplot2}
+\alias{embeddingPlot-methods,Seurat}
+\title{embeddingPlot generic
+Plot embedding with provided labels / colors using ggplot2}
 \usage{
+embeddingPlot(object, ...)
+
 \S4method{embeddingPlot}{ANY}(
   object,
   groups = NULL,
@@ -39,52 +44,6 @@
 }
 \arguments{
 \item{object}{Seurat object}
-
-\item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
-
-\item{colors}{vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
-
-\item{subgroups}{subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL}
-
-\item{plot.na}{boolean/numeric Whether to plot points, for which groups / colors are missed (default=is.null(subgroups), i.e. FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL}
-
-\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided}
-
-\item{mark.groups}{plot cluster labels above points (default=TRUE)}
-
-\item{show.legend}{show legend (default=FALSE)}
-
-\item{alpha}{opacity level [0, 1] (default=0.4)}
-
-\item{size}{point size (default=0.8)}
-
-\item{title}{plot title (default=NULL)}
-
-\item{plot.theme}{theme for the plot (default=NULL)}
-
-\item{palette}{vector or list or function (default=NULL). Accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
-
-\item{color.range}{controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
-
-\item{font.size}{font size for cluster labels (default=c(3, 7)). It can either be single number for constant font size or pair (min, max) for font size depending on cluster size}
-
-\item{show.ticks}{show ticks and tick labels (default=FALSE)}
-
-\item{show.labels}{show labels (default=FALSE)}
-
-\item{legend.position}{vector with (x, y) positions of the legend (default=NULL)}
-
-\item{legend.title}{legend title (default=NULL)}
-
-\item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
-
-\item{raster}{boolean whether layer with the points be rasterized (default=FALSE). Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
-
-\item{raster.dpi}{dpi of the rasterized plot. (default=300). Ignored if raster == FALSE.}
-
-\item{shuffle.colors}{shuffle colors (default=FALSE)}
-
-\item{keep.limits}{Keep axis limits from original plot (default=!is.null(subgroups)). Useful when plotting subgroups, only meaningful it plot.na=FALSE}
 
 \item{...}{
   Arguments passed on to \code{\link[ggrepel:geom_text_repel]{ggrepel::geom_label_repel}}
@@ -149,6 +108,52 @@ that define both data and aesthetics and shouldn't inherit behaviour from
 the default plot specification, e.g. \code{\link[ggplot2]{borders}}.}
   }}
 
+\item{groups}{vector of cluster labels, names contain cell names (default=NULL)}
+
+\item{colors}{vector of numbers, which must be shown with point colors, names contain cell names (default=NULL). This argument is ignored if groups are provided.}
+
+\item{subgroups}{subset of 'groups', selecting the cells for plot (default=NULL). Ignored if 'groups' is NULL}
+
+\item{plot.na}{boolean/numeric Whether to plot points, for which groups / colors are missed (default=is.null(subgroups), i.e. FALSE). If plot.na passed a numeric value below 0, the NA symbols are plotted below the cells. Otherwise if values >=0, they’re plotted above the cells. Note that this argument is FALSE if 'subgroups' is NULL}
+
+\item{min.cluster.size}{labels for all groups with number of cells fewer than this parameter are considered as missed (default=0). This argument is ignored if groups aren't provided}
+
+\item{mark.groups}{plot cluster labels above points (default=TRUE)}
+
+\item{show.legend}{show legend (default=FALSE)}
+
+\item{alpha}{opacity level [0, 1] (default=0.4)}
+
+\item{size}{point size (default=0.8)}
+
+\item{title}{plot title (default=NULL)}
+
+\item{plot.theme}{theme for the plot (default=NULL)}
+
+\item{palette}{vector or list or function (default=NULL). Accepts number of colors and return list of colors (i.e. see 'colorRampPalette') (default=NULL)}
+
+\item{color.range}{controls range, in which colors are estimated (default="symmetric"). Pass "all" to estimate range based on all values of "colors", pass "data" to estimate it only based on colors, presented in the embedding. Alternatively you can pass vector of length 2 with (min, max) values.}
+
+\item{font.size}{font size for cluster labels (default=c(3, 7)). It can either be single number for constant font size or pair (min, max) for font size depending on cluster size}
+
+\item{show.ticks}{show ticks and tick labels (default=FALSE)}
+
+\item{show.labels}{show labels (default=FALSE)}
+
+\item{legend.position}{vector with (x, y) positions of the legend (default=NULL)}
+
+\item{legend.title}{legend title (default=NULL)}
+
+\item{gradient.range.quantile}{Winsorization quantile for the numeric colors and gene gradient (default=1)}
+
+\item{raster}{boolean whether layer with the points be rasterized (default=FALSE). Setting of this argument to TRUE is useful when you need to export a plot with large number of points}
+
+\item{raster.dpi}{dpi of the rasterized plot. (default=300). Ignored if raster == FALSE.}
+
+\item{shuffle.colors}{shuffle colors (default=FALSE)}
+
+\item{keep.limits}{Keep axis limits from original plot (default=!is.null(subgroups)). Useful when plotting subgroups, only meaningful it plot.na=FALSE}
+
 \item{reduction}{Reduction to use for embedding (default=NULL)}
 }
 \value{
@@ -157,6 +162,9 @@ ggplot2 object
 ggplot2 object
 }
 \description{
+embeddingPlot generic
+Plot embedding with provided labels / colors using ggplot2
+
 Plot embedding with provided labels / colors using ggplot2
 
 Plot embedding from Seurat object
