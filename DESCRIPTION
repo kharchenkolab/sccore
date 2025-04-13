@@ -23,6 +23,7 @@ Imports:
     Rcpp,
     rlang,
     scales,
+    Seurat,
     stats,
     tibble,
     utils,
