@@ -34,8 +34,8 @@ get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_ve
 #' ex = matrix(1:9, nrow = 3, ncol = 3)
 #' jsDist(ex)
 #'
-jsDist <- function(m) {
-    .Call('_sccore_jsDist', PACKAGE = 'sccore', m)
+jsDist <- function(m, ncores = 1L) {
+    .Call('_sccore_jsDist', PACKAGE = 'sccore', m, ncores)
 }
 
 #' Calculates factor-stratified sums for each column

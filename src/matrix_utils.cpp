@@ -12,22 +12,36 @@ using namespace Rcpp;
 //' jsDist(ex)
 //'
 // [[Rcpp::export]]
-arma::mat jsDist(const arma::mat& m) {
-  //arma::vec d(m.n_cols*(m.n_cols-1)/2);
-  arma::mat d(m.n_cols, m.n_cols, arma::fill::zeros);
-  for(int i=0; i<(m.n_cols-1); i++) {
-    arma::vec li = log(m.col(i));
-    for(int j=i+1; j<m.n_cols; j++) {
-      arma::vec lj=log(m.col(j));
-      arma::vec ji=m.col(j)+m.col(i);
-      ji=m.col(j)%lj + m.col(i)%li - ji%(log(ji)-log(2.0));
-      double v=arma::accu(ji.elem(arma::find_finite(ji)));
-      //d[m.n_cols*i - i*(i-1)/2 + j-i]=sqrt(v/2.0);
-      d(j,i)=d(i,j)=v;
+arma::mat jsDist(const arma::mat& m, int ncores=1) {
+  arma::mat x = m;                  
+  arma::rowvec s = arma::sum(x, 0); 
+  if (arma::any(s <= 0))                            
+    Rcpp::stop("All columns must have positive sum.");
+  x.each_row() /= s;
+
+  arma::mat d(x.n_cols, x.n_cols, arma::fill::zeros);
+  const double log2 = std::log(2.0);
+
+  for(int i=0; i<(x.n_cols-1); i++) {
+    arma::vec li = log(x.col(i));
+    li.elem(arma::find_nonfinite(li)).zeros();
+
+    for(int j=i+1; j<x.n_cols; j++) {
+      arma::vec lj = log(x.col(j));
+      lj.elem(arma::find_nonfinite(lj)).zeros();
+
+      arma::vec ji = x.col(j) + x.col(i);
+      arma::vec lji = log(ji);
+      lji.elem(arma::find_nonfinite(lji)).zeros();
+
+      ji = x.col(j)%lj + x.col(i)%li - ji%(lji - log2);
+      double v = arma::accu(ji);
+
+      d(j,i) = d(i,j) = std::sqrt(std::max(v, 0.0) / (2.0 * log2));
     }
   }
 
-  return(d);
+  return(d); 
 }
 
 //' Calculates factor-stratified sums for each column
