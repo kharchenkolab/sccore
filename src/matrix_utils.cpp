@@ -9,11 +9,28 @@ using namespace Rcpp;
 //' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
 //' @examples
 //' ex = matrix(1:9, nrow = 3, ncol = 3)
-//' # JS divergence calculated between columns of input matrix
+//' # JS distance calculated between columns of input matrix
 //' jsDist(ex)
 //'
-//' # JS divergence calculated between rows of matrix 'ex' may be calculated with the matrix transpose
-//' jsDist(t(ex))
+//'
+//' # To demonstrate how the above JS Distance to the JS Divergence, we use the third-party function 'philentropy::JSD()', which 
+//' # computes the JS divergence between rows of the input matrix. 
+//' # The following will give the same results as 'jsDist(ex)':
+//' sqrt(philentropy::JSD(t(ex), est.prob = "empirical"))
+//'
+//'
+//' # Conversely, we can use the column-normalized matrix, and ignore the argument 'est.prob = "empirical"' from 'philentropy::JSD()', which 
+//' # calculates the relative frequencies of each vector are computed internally). 
+//' # This again will give the same results as 'jsDist(ex)':
+//' ex_cnorm = t( t(ex)/colSums(ex) )
+//' sqrt(philentropy::JSD(t(ex_cnorm)))
+//'
+//'
+//' # Again obviously 'jsDist(ex)**2' will be the JS divergences, equaling 'philentropy::JSD(t(ex_cnorm))' and 'philentropy::JSD(t(ex), est.prob = "empirical")'
+//' jsDist(ex)**2 
+//' philentropy::JSD(t(ex_cnorm))
+//' philentropy::JSD(t(ex), est.prob = "empirical")
+//'
 //'
 // [[Rcpp::export]]
 arma::mat jsDist(const arma::mat& m, int ncores=1) {

@@ -33,6 +33,7 @@ Depends:
 Suggests:
     ggrastr (>= 0.1.7),
     jsonlite,
+    philentropy,
     rmumps,
     testthat
 RoxygenNote: 7.3.3
