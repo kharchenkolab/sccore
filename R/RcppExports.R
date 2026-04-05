@@ -29,6 +29,7 @@ get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_ve
 #' Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m
 #'
 #' @param m Input matrix
+#' @param ncores Number of threads to be set via omp_set_num_threads() for RcppArmadillo 
 #' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
 #' @examples
 #' ex = matrix(1:9, nrow = 3, ncol = 3)
@@ -36,20 +37,23 @@ get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_ve
 #' jsDist(ex)
 #'
 #'
-#' # To demonstrate how the above JS Distance to the JS Divergence, we use the third-party function 'philentropy::JSD()', which 
+#' # To demonstrate how the above JS Distance to the JS Divergence, 
+#' # we use the third-party function 'philentropy::JSD()', which 
 #' # computes the JS divergence between rows of the input matrix. 
 #' # The following will give the same results as 'jsDist(ex)':
 #' sqrt(philentropy::JSD(t(ex), est.prob = "empirical"))
 #'
 #'
-#' # Conversely, we can use the column-normalized matrix, and ignore the argument 'est.prob = "empirical"' from 'philentropy::JSD()', which 
-#' # calculates the relative frequencies of each vector are computed internally). 
+#' # Conversely, we can use the column-normalized matrix, 
+#' # and ignore the argument 'est.prob = "empirical"' from 'philentropy::JSD()', 
+#' # which calculates the relative frequencies of each vector are computed internally). 
 #' # This again will give the same results as 'jsDist(ex)':
 #' ex_cnorm = t( t(ex)/colSums(ex) )
 #' sqrt(philentropy::JSD(t(ex_cnorm)))
 #'
 #'
-#' # Again obviously 'jsDist(ex)**2' will be the JS divergence, equaling 'philentropy::JSD(t(ex_cnorm))' and 'philentropy::JSD(t(ex), est.prob = "empirical")'
+#' # Again obviously 'jsDist(ex)**2' will be the JS divergence, 
+#' # equaling 'philentropy::JSD(t(ex_cnorm))' and 'philentropy::JSD(t(ex), est.prob = "empirical")'
 #' jsDist(ex)**2 
 #' philentropy::JSD(t(ex_cnorm))
 #' philentropy::JSD(t(ex), est.prob = "empirical")

@@ -292,6 +292,7 @@ embeddingGroupPlot <- function(plot.df, groups, geom_point_w, min.cluster.size, 
 #' @param geom_point_w function to work with geom_point layer from ggplot2 (default=ggplot2::geom_point)
 #' @return ggplot2 object
 embeddingColorsPlot <- function(plot.df, colors, groups=NULL, geom_point_w=ggplot2::geom_point, gradient.range.quantile=1, color.range="symmetric", legend.title=NULL, palette=NULL, plot.na=TRUE) {
+  
   plot.df <- plot.df %>% dplyr::mutate(Color=colors[.data$CellName])
   if(!is.null(groups)) {
     plot.df$Color[!plot.df$CellName %in% names(groups)] <- NA
@@ -367,7 +368,17 @@ styleEmbeddingPlot <- function(gg, plot.theme=NULL, title=NULL, legend.position=
   return(gg)
 }
 
+#' embeddingPlot generic
+#' Plot embedding with provided labels / colors using ggplot2
+#'
+#' @param object two-column matrix with x and y coordinates of the embedding, rownames contain cell names and are used to match coordinates with groups or colors
+#' @param ... Additional argument list, see 'embeddingPlot()' methods for details
+#'
+#' @docType methods
+#' @rdname embeddingPlot-methods
+#' @export
 setGeneric("embeddingPlot", function(object, ...) standardGeneric("embeddingPlot"))
+
 
 #' Plot embedding with provided labels / colors using ggplot2
 #'
@@ -401,7 +412,8 @@ setGeneric("embeddingPlot", function(object, ...) standardGeneric("embeddingPlot
 #' library(sccore)
 #' embeddingPlot(umapEmbedding, show.ticks=TRUE, show.labels=TRUE, title="UMAP embedding")
 #'
-#' @rdname embeddingPlot
+#' @rdname embeddingPlot-methods
+#' @aliases embeddingPlot-methods,ANY
 #' @export
 setMethod("embeddingPlot", "ANY", function(
   object, groups=NULL, colors=NULL, subgroups=NULL, plot.na=is.null(subgroups), min.cluster.size=0, mark.groups=TRUE,
@@ -447,13 +459,14 @@ setMethod("embeddingPlot", "ANY", function(
   }
 
   if(keep.limits) {
-    gg <- gg + ggplot2::lims(x=range(embedding[,1]), y=range(embedding[,2]))
+    gg <- gg + ggplot2::lims(x=range(object[,1]), y=range(object[,2]))
   }
 
   gg <- styleEmbeddingPlot(gg, plot.theme=plot.theme, title=title, legend.position=legend.position,
                            show.legend=show.legend, show.ticks=show.ticks, show.labels=show.labels)
   return(gg)
 })
+
 
 #' Plot embedding from Seurat object
 #'
@@ -466,10 +479,15 @@ setMethod("embeddingPlot", "ANY", function(
 #' embeddingPlot(so, groups="seurat_clusters", reduction="umap")
 #' }
 #'
-#' @name embeddingPlot
-#' @rdname embeddingPlot
+#' @rdname embeddingPlot-methods
+#' @aliases embeddingPlot-methods,Seurat
 #' @export
 setMethod("embeddingPlot", signature("Seurat"), function(object, reduction=NULL, groups=NULL, colors=NULL, ...) {
+  
+  if (!requireNamespace("Seurat", quietly = TRUE)) {
+    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+  
   if (is.null(reduction)) {
     reduction <- Seurat::Reductions(object)[1]
   }
@@ -484,6 +502,7 @@ setMethod("embeddingPlot", signature("Seurat"), function(object, reduction=NULL,
 
   embeddingPlot(Seurat::Embeddings(object, reduction), groups=groups, colors=colors, ...)
 })
+
 
 #' Dot plot adapted from Seurat:::DotPlot, see ?Seurat:::DotPlot for details
 #'
