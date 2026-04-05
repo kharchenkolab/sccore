@@ -4,7 +4,7 @@
 \alias{jsDist}
 \title{Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m}
 \usage{
-jsDist(m)
+jsDist(m, ncores = 1L)
 }
 \arguments{
 \item{m}{Input matrix}
@@ -17,6 +17,10 @@ Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon d
 }
 \examples{
 ex = matrix(1:9, nrow = 3, ncol = 3)
+# JS divergence calculated between columns of input matrix
 jsDist(ex)
+
+# JS divergence calculated between rows of matrix 'ex' may be calculated with the matrix transpose
+jsDist(t(ex))
 
 }

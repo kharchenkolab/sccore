@@ -32,10 +32,14 @@ get_nearest_neighbors <- function(adjacency_list, transition_probabilities, n_ve
 #' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
 #' @examples
 #' ex = matrix(1:9, nrow = 3, ncol = 3)
+#' # JS divergence calculated between columns of input matrix
 #' jsDist(ex)
 #'
-jsDist <- function(m) {
-    .Call('_sccore_jsDist', PACKAGE = 'sccore', m)
+#' # JS divergence calculated between rows of matrix 'ex' may be calculated with the matrix transpose
+#' jsDist(t(ex))
+#'
+jsDist <- function(m, ncores = 1L) {
+    .Call('_sccore_jsDist', PACKAGE = 'sccore', m, ncores)
 }
 
 #' Calculates factor-stratified sums for each column
