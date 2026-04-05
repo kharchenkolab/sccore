@@ -26,7 +26,7 @@ using namespace Rcpp;
 //' sqrt(philentropy::JSD(t(ex_cnorm)))
 //'
 //'
-//' # Again obviously 'jsDist(ex)**2' will be the JS divergences, equaling 'philentropy::JSD(t(ex_cnorm))' and 'philentropy::JSD(t(ex), est.prob = "empirical")'
+//' # Again obviously 'jsDist(ex)**2' will be the JS divergence, equaling 'philentropy::JSD(t(ex_cnorm))' and 'philentropy::JSD(t(ex), est.prob = "empirical")'
 //' jsDist(ex)**2 
 //' philentropy::JSD(t(ex_cnorm))
 //' philentropy::JSD(t(ex), est.prob = "empirical")
