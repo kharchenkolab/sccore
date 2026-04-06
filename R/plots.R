@@ -483,6 +483,11 @@ setMethod("embeddingPlot", "ANY", function(
 #' @aliases embeddingPlot-methods,Seurat
 #' @export
 setMethod("embeddingPlot", signature("Seurat"), function(object, reduction=NULL, groups=NULL, colors=NULL, ...) {
+  
+  if (!requireNamespace("Seurat", quietly = TRUE)) {
+    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+  
   if (is.null(reduction)) {
     reduction <- Seurat::Reductions(object)[1]
   }

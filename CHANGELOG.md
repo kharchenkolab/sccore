@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.7] - April 5 2026
+
+- The function 'jsDist()' fixed (by Peter) to accurately compute the Jensen–Shannon distance metric between matrix columns. 
+- Add OpenMP support for RcppArmadillo if provided
+- Remove 'Rcpp:::LdFlags()' as no longer needed based on CRAN
+
 ## [1.0.6] - April 3 2025
 
 - `embeddingPlot()` now accepts `Seurat` objects and works with their metadata and reductions

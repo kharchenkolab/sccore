@@ -4,10 +4,12 @@
 \alias{jsDist}
 \title{Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m}
 \usage{
-jsDist(m)
+jsDist(m, ncores = 1L)
 }
 \arguments{
 \item{m}{Input matrix}
+
+\item{ncores}{Number of threads to be set via omp_set_num_threads() for RcppArmadillo}
 }
 \value{
 Vectorized version of the lower triangle as an R distance object, stats::dist()
@@ -17,6 +19,30 @@ Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon d
 }
 \examples{
 ex = matrix(1:9, nrow = 3, ncol = 3)
+# JS distance calculated between columns of input matrix
 jsDist(ex)
+
+
+# To demonstrate how the above JS Distance to the JS Divergence, 
+# we use the third-party function 'philentropy::JSD()', which 
+# computes the JS divergence between rows of the input matrix. 
+# The following will give the same results as 'jsDist(ex)':
+sqrt(philentropy::JSD(t(ex), est.prob = "empirical"))
+
+
+# Conversely, we can use the column-normalized matrix, 
+# and ignore the argument 'est.prob = "empirical"' from 'philentropy::JSD()', 
+# which calculates the relative frequencies of each vector are computed internally). 
+# This again will give the same results as 'jsDist(ex)':
+ex_cnorm = t( t(ex)/colSums(ex) )
+sqrt(philentropy::JSD(t(ex_cnorm)))
+
+
+# Again obviously 'jsDist(ex)**2' will be the JS divergence, 
+# equaling 'philentropy::JSD(t(ex_cnorm))' and 'philentropy::JSD(t(ex), est.prob = "empirical")'
+jsDist(ex)**2 
+philentropy::JSD(t(ex_cnorm))
+philentropy::JSD(t(ex), est.prob = "empirical")
+
 
 }

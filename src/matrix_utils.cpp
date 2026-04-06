@@ -6,17 +6,54 @@ using namespace Rcpp;
 //' Jensen–Shannon distance metric (i.e. the square root of the Jensen–Shannon divergence) between the columns of a dense matrix m
 //'
 //' @param m Input matrix
+//' @param ncores Number of threads to be set via omp_set_num_threads() for RcppArmadillo 
 //' @return Vectorized version of the lower triangle as an R distance object, stats::dist()
 //' @examples
 //' ex = matrix(1:9, nrow = 3, ncol = 3)
+//' # JS distance calculated between columns of input matrix
 //' jsDist(ex)
+//'
+//'
+//' # To demonstrate how the above JS Distance to the JS Divergence, 
+//' # we use the third-party function 'philentropy::JSD()', which 
+//' # computes the JS divergence between rows of the input matrix. 
+//' # The following will give the same results as 'jsDist(ex)':
+//' sqrt(philentropy::JSD(t(ex), est.prob = "empirical"))
+//'
+//'
+//' # Conversely, we can use the column-normalized matrix, 
+//' # and ignore the argument 'est.prob = "empirical"' from 'philentropy::JSD()', 
+//' # which calculates the relative frequencies of each vector are computed internally). 
+//' # This again will give the same results as 'jsDist(ex)':
+//' ex_cnorm = t( t(ex)/colSums(ex) )
+//' sqrt(philentropy::JSD(t(ex_cnorm)))
+//'
+//'
+//' # Again obviously 'jsDist(ex)**2' will be the JS divergence, 
+//' # equaling 'philentropy::JSD(t(ex_cnorm))' and 'philentropy::JSD(t(ex), est.prob = "empirical")'
+//' jsDist(ex)**2 
+//' philentropy::JSD(t(ex_cnorm))
+//' philentropy::JSD(t(ex), est.prob = "empirical")
+//'
 //'
 // [[Rcpp::export]]
 arma::mat jsDist(const arma::mat& m, int ncores=1) {
+
+
+  // internals of void armadillo_set_number_of_omp_threads(int n), 
+  // cf https://github.com/RcppCore/RcppArmadillo/blob/43708298d73f0e23328c6e5f20575c980147e3c5/src/RcppArmadillo.cpp#L107-L115
+  // 
+  #ifdef _OPENMP
+    omp_set_num_threads(ncores); 
+  #else
+    (void)(ncores);                  // prevent unused variable warning
+  #endif
+
   arma::mat x = m;                  
   arma::rowvec s = arma::sum(x, 0); 
-  if (arma::any(s <= 0))                            
+  if (arma::any(s <= 0)){
     Rcpp::stop("All columns must have positive sum.");
+  }                            
   x.each_row() /= s;
 
   arma::mat d(x.n_cols, x.n_cols, arma::fill::zeros);
