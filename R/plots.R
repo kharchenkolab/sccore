@@ -560,6 +560,98 @@ setMethod("embeddingPlot", signature("Seurat"), function(object, reduction=NULL,
 #'     marker.colour = col.markers, cluster.colour = col.clusters, cols=c("gray","purple"))
 #'
 #' @export
+dotPlotData <- function(markers,
+                        count.matrix,
+                        cell.groups,
+                        scale.center = FALSE,
+                        col.min = -2.5,
+                        col.max = 2.5,
+                        dot.min = 0,
+                        gene.order = NULL,
+                        verbose = FALSE) {
+  if (!is.character(markers)) {
+    stop("'markers' must be a character vector.")
+  }
+
+  missing.markers <- setdiff(markers, colnames(count.matrix))
+  if (length(missing.markers) > 0) {
+    message("Not all markers are in 'count.matrix'. The following are missing: ", paste(missing.markers, collapse = " "))
+    stop("Please update 'markers'.")
+  }
+
+  marker.table <- table(markers)
+  if (sum(marker.table > 1) != 0) {
+    message("The following genes are present more than once in 'markers': ", paste(names(marker.table[marker.table > 1]), collapse = " "), " These genes will only be plotted at first instace. Consider revising. ")
+  }
+  markers <- unique(markers)
+
+  if (is.null(names(cell.groups))) {
+    if (length(cell.groups) != nrow(count.matrix)) {
+      stop("'cell.groups' must be named by cell or have one value per row in 'count.matrix'.")
+    }
+    names(cell.groups) <- rownames(count.matrix)
+  }
+  missing.cells <- setdiff(names(cell.groups), rownames(count.matrix))
+  if (length(missing.cells) > 0) {
+    warning("Some cells in 'cell.groups' are absent from 'count.matrix' and will be ignored.")
+  }
+  valid.cells <- intersect(names(cell.groups)[!is.na(cell.groups)], rownames(count.matrix))
+  if (length(valid.cells) == 0) {
+    stop("No cells with non-missing groups are present in 'count.matrix'.")
+  }
+
+  if (verbose) {
+    message("Aggregating marker expression by group... ")
+  }
+  cell.groups <- as.factor(cell.groups[valid.cells])
+  x <- count.matrix[valid.cells, markers, drop = FALSE]
+  if (!inherits(x, "dgCMatrix")) {
+    x <- as(Matrix::Matrix(x, sparse = TRUE), "dgCMatrix")
+  }
+
+  group.index <- as.integer(cell.groups)
+  group.sizes <- as.numeric(tabulate(group.index, nbins = length(levels(cell.groups))))
+  sums <- colSumByFactor(x, cell.groups)[-1, , drop = FALSE]
+
+  nz <- x
+  nz@x <- rep(1, length(nz@x))
+  nonzero <- colSumByFactor(nz, cell.groups)[-1, , drop = FALSE]
+
+  avg.exp <- sums / nonzero
+  avg.exp[nonzero == 0] <- NaN
+  pct.exp <- sweep(nonzero, 1, group.sizes, "/") * 100
+
+  data.plot <- expand.grid(
+    cluster = levels(cell.groups),
+    gene = markers,
+    KEEP.OUT.ATTRS = FALSE,
+    stringsAsFactors = FALSE
+  )
+  data.plot$pct.exp <- as.numeric(pct.exp[cbind(match(data.plot$cluster, rownames(pct.exp)), match(data.plot$gene, colnames(pct.exp)))])
+  data.plot$avg.exp <- as.numeric(avg.exp[cbind(match(data.plot$cluster, rownames(avg.exp)), match(data.plot$gene, colnames(avg.exp)))])
+
+  if (is.logical(gene.order) && gene.order) {
+    gene.order <- markers
+  }
+  if (!is.null(gene.order)) {
+    data.plot$gene <- factor(as.character(data.plot$gene), levels = gene.order)
+  }
+
+  data.plot$cluster <- factor(data.plot$cluster, levels = rev(levels(cell.groups)))
+  data.plot <- data.plot[order(data.plot$gene), , drop = FALSE]
+
+  data.plot$avg.exp.scaled <- unlist(lapply(unique(as.character(data.plot$gene)), function(g) {
+    values <- data.plot$avg.exp[as.character(data.plot$gene) == g]
+    if (all(is.na(values))) {
+      return(rep(NA_real_, length(values)))
+    }
+    as.numeric(setMinMax(scale(values, center = scale.center), min = col.min, max = col.max))
+  }), use.names = FALSE)
+  data.plot$pct.exp[data.plot$pct.exp < dot.min] <- NA
+  data.plot
+}
+
+#' @export
 dotPlot <- function (markers,
                      count.matrix,
                      cell.groups,
@@ -583,87 +675,17 @@ dotPlot <- function (markers,
                      ...) {
 
   scale.func <- switch(scale.by, 'size' = scale_size, 'radius' = scale_radius, stop("'scale.by' must be either 'size' or 'radius'"))
-  if (!is.character(markers)) {
-    stop("'markers' must be a character vector.")
-  }
-
-  missing.markers <- setdiff(markers, colnames(count.matrix))
-  if (length(missing.markers)>0) {
-    message("Not all markers are in 'count.matrix'. The following are missing: ",paste(missing.markers, collapse=" "))
-    stop("Please update 'markers'.")
-  }
-
-  marker.table <- table(markers)
-  if (sum(marker.table>1)!=0) {
-    message("The following genes are present more than once in 'markers': ", paste(names(marker.table[marker.table>1]), collapse = " "), " These genes will only be plotted at first instace. Consider revising. ")
-  }
-  if (verbose) {
-    message("Extracting gene expression... ")
-  }
-
-  if (inherits(cell.groups,"factor")) {
-    tryCatch({
-      if(verbose){
-        message("Treating 'cell.groups' as a factor.")
-      }
-      cell.groups %<>%
-        as.factor()
-    }, error=function(e) stop("Could not convert 'cell.groups' to a factor\n", e))
-  }
-  # From CellAnnotatoR:::plotExpressionViolinMap, should be exchanged with generic function
-  p.df <- plapply(markers, function(g) data.frame(Expr = count.matrix[names(cell.groups), g], Type = cell.groups, Gene = g), n.cores=n.cores, progress=verbose, ...) %>%
-    bind_rows()
-  if (is.logical(gene.order) && gene.order) {
-    gene.order <- unique(markers)
-  }
-
-  if (!is.null(gene.order)) {
-    p.df %<>%
-      mutate(Gene = factor(as.character(.data$Gene), levels = gene.order))
-  }
-
-  # Adapted from Seurat:::DotPlot
-  if (verbose) {
-    message("Calculating expression distributions... ")
-  }
-
-  data.plot <- levels(cell.groups) %>%
-    plapply(function(t) {
-      markers %>%
-        lapply(function(g) {
-          df <- p.df %>%
-            filter(Type==t, Gene==g)
-          pct.exp <- sum(df$Expr>0)/nrow(df)*100
-          avg.exp <- mean(df$Expr[df$Expr>0])
-          res <- data.frame(gene=g,
-                            pct.exp=pct.exp,
-                            avg.exp=avg.exp)
-          return(res)
-        }) %>%
-        bind_rows()
-  }, n.cores=n.cores, progress=verbose, ...) %>%
-    setNames(levels(cell.groups)) %>%
-    bind_rows(., .id="cluster")
-
-  data.plot$cluster %<>%
-    factor(., levels=rev(unique(.)))
-
-  data.plot %<>%
-    arrange(gene)
-
-  data.plot$avg.exp.scaled <- data.plot$gene %>%
-    unique() %>%
-    sapply(function(g) {
-      data.plot %>%
-        filter(gene == g) %>%
-        select("avg.exp") %>%
-        scale(center = scale.center) %>%
-        setMinMax(min = col.min, max = col.max)
-    }) %>%
-    unlist() %>%
-    as.numeric()
-
-  data.plot$pct.exp[data.plot$pct.exp < dot.min] <- NA
+  data.plot <- dotPlotData(
+    markers = markers,
+    count.matrix = count.matrix,
+    cell.groups = cell.groups,
+    scale.center = scale.center,
+    col.min = col.min,
+    col.max = col.max,
+    dot.min = dot.min,
+    gene.order = gene.order,
+    verbose = verbose
+  )
 
   cluster.colour %<>%
     rev()
@@ -671,7 +693,7 @@ dotPlot <- function (markers,
   if (!is.null(gene.order)) data.plot %<>% mutate(gene = gene %>% factor(levels = gene.order))
 
   plot <- ggplot(data.plot, aes(gene, cluster)) +
-    geom_point(aes_string(size = "pct.exp", color = "avg.exp.scaled")) +
+    geom_point(aes(size = .data$pct.exp, color = .data$avg.exp.scaled)) +
     scale.func(range = c(0, dot.scale), limits = c(scale.min, scale.max)) +
     theme_classic() +
     theme(axis.text.x = element_text(angle=text.angle, hjust = 1, colour=marker.colour),
