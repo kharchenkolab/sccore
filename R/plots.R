@@ -606,7 +606,7 @@ dotPlotData <- function(markers,
   cell.groups <- as.factor(cell.groups[valid.cells])
   x <- count.matrix[valid.cells, markers, drop = FALSE]
   if (!inherits(x, "dgCMatrix")) {
-    x <- as(Matrix::Matrix(x, sparse = TRUE), "dgCMatrix")
+    x <- as(Matrix::Matrix(x, sparse = TRUE), "CsparseMatrix")
   }
 
   group.index <- as.integer(cell.groups)
