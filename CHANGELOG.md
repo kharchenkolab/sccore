@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.8] - June 15 2026
+
+- `dotPlot()` aggregation sped up: marker expression is now summarized with a vectorized
+  `colSumByFactor` pass (new exported helper `dotPlotData()`) instead of the per-(group, gene)
+  `dplyr::filter` loop.
+- Avoid the deprecated `Matrix` `dgCMatrix` coercion (use `CsparseMatrix`) in `dotPlotData()`.
+- `appendSpecificityMetricsToDE()` now computes AUC in closed form (Mann-Whitney identity) instead of
+  a per-column `pROC::auc()` loop — faster, and `pROC` moves from Imports to Suggests (used only by the
+  equivalence test). AUC is reported in the fixed up-regulation direction (equals
+  `pROC::auc(direction="<")`): identical to before for up-regulated markers; directionally meaningful
+  (can be <0.5) for down-regulated genes instead of pROC's median-based auto-flip.
+
 ## [1.0.7] - April 5 2026
 
 - The function 'jsDist()' fixed (by Peter) to accurately compute the Jensen–Shannon distance metric between matrix columns. 

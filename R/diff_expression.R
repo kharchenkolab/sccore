@@ -28,7 +28,19 @@ appendSpecificityMetricsToDE <- function(de.df, clusters, cluster.id, p2.counts,
   counts.bin.clust.sums <- Matrix::colSums(counts.bin * cluster.mask)
 
   if (append.auc) {
-    de.df$AUC <- apply(counts.bin, 2, function(col) pROC::auc(as.integer(cluster.mask), as.integer(col), quiet=TRUE))
+    ## AUC of each (binary) expression indicator vs cluster membership, in closed form via the
+    ## Mann-Whitney identity -- replaces a per-column pROC::auc() loop. counts.bin is binary, so with
+    ## a = #expressed in-cluster, c = #expressed out-of-cluster, and b/d the non-expressed complements,
+    ## AUC = (a*d + 0.5*(a*c + b*d)) / (n.pos*n.neg). This is the fixed up-regulation direction (higher
+    ## expression -> in-cluster; equals pROC::auc(direction="<")): >0.5 = up-marker, <0.5 = down,
+    ## consistent with the other (presence-oriented) metrics here. Constant predictors give 0.5.
+    n.pos <- sum(cluster.mask)
+    n.neg <- length(cluster.mask) - n.pos
+    a <- counts.bin.clust.sums
+    c <- counts.bin.sums - a
+    b <- n.pos - a
+    d <- n.neg - c
+    de.df$AUC <- (a * d + 0.5 * (a * c + b * d)) / (n.pos * n.neg)
   }
 
   de.df$Specificity <- (length(cluster.mask) - counts.bin.sums) / (length(cluster.mask) - counts.bin.clust.sums)
