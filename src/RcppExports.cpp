@@ -129,6 +129,28 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// avg_rank
+Rcpp::NumericVector avg_rank(Rcpp::NumericVector x);
+RcppExport SEXP _sccore_avg_rank(SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(avg_rank(x));
+    return rcpp_result_gen;
+END_RCPP
+}
+// sparse_matrix_column_ranks
+S4 sparse_matrix_column_ranks(const SEXP sY);
+RcppExport SEXP _sccore_sparse_matrix_column_ranks(SEXP sYSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const SEXP >::type sY(sYSEXP);
+    rcpp_result_gen = Rcpp::wrap(sparse_matrix_column_ranks(sY));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_sccore_as_factor", (DL_FUNC) &_sccore_as_factor, 1},
@@ -139,6 +161,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"_sccore_smooth_count_matrix", (DL_FUNC) &_sccore_smooth_count_matrix, 10},
     {"_sccore_adjacentVertices", (DL_FUNC) &_sccore_adjacentVertices, 1},
     {"_sccore_adjacent_vertex_weights", (DL_FUNC) &_sccore_adjacent_vertex_weights, 2},
+    {"_sccore_avg_rank", (DL_FUNC) &_sccore_avg_rank, 1},
+    {"_sccore_sparse_matrix_column_ranks", (DL_FUNC) &_sccore_sparse_matrix_column_ranks, 1},
     {NULL, NULL, 0}
 };
 

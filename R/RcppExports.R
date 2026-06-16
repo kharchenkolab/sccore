@@ -134,3 +134,24 @@ adjacent_vertex_weights <- function(edge_verts, edge_weights) {
     .Call('_sccore_adjacent_vertex_weights', PACKAGE = 'sccore', edge_verts, edge_weights)
 }
 
+#' Average ranks of a numeric vector (ties resolved by mid-rank)
+#'
+#' @param x numeric vector
+#' @return numeric vector of average ranks (1-based), NA values ranked last
+#' @keywords internal
+avg_rank <- function(x) {
+    .Call('_sccore_avg_rank', PACKAGE = 'sccore', x)
+}
+
+#' Per-column average ranks of a sparse (dgCMatrix) matrix, with implicit zeros ranked correctly
+#'
+#' Ranks the entries within each column (gene), shifting the non-zero ranks up by the number of zeros so
+#' that the (unstored) zeros occupy the lowest ranks. Used by matrixDE() for the Mann-Whitney statistic.
+#'
+#' @param sY a sparse column-compressed (dgCMatrix) matrix
+#' @return a dgCMatrix of the same sparsity pattern whose stored values are the within-column ranks
+#' @keywords internal
+sparse_matrix_column_ranks <- function(sY) {
+    .Call('_sccore_sparse_matrix_column_ranks', PACKAGE = 'sccore', sY)
+}
+
